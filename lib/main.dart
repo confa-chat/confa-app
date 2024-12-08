@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:grpc/grpc.dart' as grpc;
@@ -39,9 +41,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _join(List<String> users) async {
-    final mic = await Permission.microphone.request();
-    if (mic.isDenied) {
-      return;
+    if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
+      final status = await Permission.microphone.status;
+      if (status.isDenied) {
+        return;
+      }
+
+      final mic = await Permission.microphone.request();
+      if (mic.isDenied) {
+        return;
+      }
     }
 
     for (var listenUserId in users) {
@@ -62,8 +71,15 @@ class _MyAppState extends State<MyApp> {
         body: SafeArea(
           child: Column(
             children: [
-              TextField(
-                controller: userId,
+              Row(
+                children: [
+                  const SizedBox(width: 100, child: Text("Username")),
+                  Expanded(
+                    child: TextField(
+                      controller: userId,
+                    ),
+                  ),
+                ],
               ),
               StreamBuilder(
                 stream: _voiceServiceClient.subscribeChannelState(
