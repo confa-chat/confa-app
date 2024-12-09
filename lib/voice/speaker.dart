@@ -5,7 +5,7 @@ import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/voice.pb.dart';
 import 'package:konfa/voice/connection.dart';
 import 'package:konfa/voice/opus/opus.dart';
-import 'package:minisound/stream.dart' as minisound_stream;
+import 'package:streaming_sound/streaming_sound.dart';
 import 'package:opus_dart/opus_dart.dart';
 
 class VoiceChatSpeaker {
@@ -38,7 +38,7 @@ class VoiceChatSpeaker {
         .map((event) => event!.buffer.asFloat32List())
         .transform(StreamEventRateCounter("speaker:"));
 
-    return minisound_stream.playStream(sampleRate: sampleRate, soundStream: pcmStream);
+    return playSoundStream(pcmStream, sampleRate: sampleRate, outputName: userId);
   }
 
   // Uint8List prependWavHeader(Uint8List data) {

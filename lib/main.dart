@@ -54,9 +54,9 @@ class _MyAppState extends State<MyApp> {
     }
 
     for (var listenUserId in users) {
-      if (listenUserId == userId.text) {
-        continue;
-      }
+      // if (listenUserId == userId.text) {
+      //   continue;
+      // }
 
       (await _connection).listenToUser(serverId, channelId, listenUserId);
     }
