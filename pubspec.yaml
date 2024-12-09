@@ -26,10 +26,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  minisound:
-    path: ../minisound/minisound
-  minisound_ffi:
-    path: ../minisound/minisound_ffi
+  streaming_sound:
+    git: https://github.com/royalcat/streaming_sound.git
   protobuf: ^3.1.0
   grpc: ^4.0.1
   opus_flutter: ^3.0.3

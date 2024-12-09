@@ -1,16 +1,14 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/voice.pb.dart';
 import 'package:konfa/voice/connection.dart';
 
-import 'package:minisound/stream.dart';
-
 import 'package:opus_dart/opus_dart.dart';
 import 'package:konfa/voice/opus/opus.dart';
 
 import 'package:rxdart/rxdart.dart';
+import 'package:streaming_sound/streaming_sound.dart';
 
 const sampleSizeMS = 20;
 
@@ -24,7 +22,7 @@ class VoiceChatRecorder {
 
   Future<void> record() async {
     await _client.send(
-      recordStream(sampleRate: sampleRate)
+      recordSoundStream(sampleRate: sampleRate)
           .transform(StreamEventRateCounter("recorder:"))
           // .transform(SimpleStreamOpusEncoder(
           //   sampleRate: sampleRate,

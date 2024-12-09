@@ -7,7 +7,6 @@ import 'package:konfa/voice/recorder.dart';
 import 'package:konfa/voice/speaker.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
 import 'package:konfa/voice/opus/opus.dart' as opus_init;
-import 'package:minisound_ffi/minisound_ffi.dart' as minisound_ffi;
 
 const sampleRate = 48000;
 
@@ -72,7 +71,8 @@ void _isolateEntry(SendPort sendPort) async {
   sendPort.send(receivePort.sendPort);
 
   opus_init.setupOpus();
-  minisound_ffi.MinisoundFfi.registerWith();
+
+  // minisound_ffi.MinisoundFfi.registerWith();
 
   final channel = grpc.ClientChannel(
     serverAddress,
