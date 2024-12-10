@@ -80,6 +80,7 @@ jobs:
           name: windows
           path: ./artifacts/windows
 
+      - run: mkdir ./release
       - run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
 
       - name: Zip Linux Bundle
