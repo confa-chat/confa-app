@@ -27,7 +27,9 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   streaming_sound:
-    git: https://github.com/royalcat/streaming_sound.git
+    git:
+      url: https://github.com/royalcat/streaming_sound.git
+      ref: 6942a28c47f33b332402a3d71a862644ff36eaf3
   protobuf: ^3.1.0
   grpc: ^4.0.1
   opus_flutter: ^3.0.3
