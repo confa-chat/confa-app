@@ -465,8 +465,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "8d547c1994d3d51bb68ee31d6c7ad7e43217f47b"
+      ref: "23951ffc3e593481003b1e3e8726f581de3d63d5"
+      resolved-ref: "23951ffc3e593481003b1e3e8726f581de3d63d5"
       url: "https://github.com/royalcat/streaming_sound.git"
     source: git
     version: "0.0.1"
@@ -544,4 +544,4 @@ packages:
     version: "1.1.0"
 sdks:
   dart: ">=3.5.4 <4.0.0"
-  flutter: ">=3.24.0"
+  flutter: ">=3.24.5"
