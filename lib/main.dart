@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _join(List<String> users) async {
-    if (Platform.isAndroid || Platform.isIOS || Platform.isWindows) {
+    if (Platform.isAndroid || Platform.isIOS) {
       final status = await Permission.microphone.status;
       if (status.isDenied) {
         return;
