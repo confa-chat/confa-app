@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,8 +9,31 @@ import 'package:konfa/voice/connection.dart';
 import 'package:konfa/voice/globals.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:l/l.dart';
+
+void main([List<String>? args]) {
+  final logFile = File('log.txt').openWrite();
+
+  l.capture<void>(
+    () => runZonedGuarded<void>(
+      () => runApp(const MyApp()),
+      l.e,
+    ),
+    LogOptions(
+      handlePrint: true, // Whether to handle `print()` calls.
+      outputInRelease: true, // Whether to output in release mode.
+      printColors: true, // Whether to print colors in the console.
+      output: LogOutput.ignore, // Whether to use `print()` for output.
+      overrideOutput: (event) {
+        final msg = event.toString();
+        logFile.writeln(msg);
+        logFile.flush();
+        return msg;
+      },
+    ),
+  );
+
+  // logFile.close();
 }
 
 class MyApp extends StatefulWidget {

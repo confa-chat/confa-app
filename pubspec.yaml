@@ -36,6 +36,7 @@ dependencies:
   opus_dart: ^3.0.1
   rxdart: ^0.28.0
   permission_handler: ^11.3.1
+  l: ^5.0.0
 
 dev_dependencies:
   flutter_test:

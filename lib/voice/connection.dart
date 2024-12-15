@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
 
 import 'package:grpc/grpc.dart' as grpc;
@@ -7,6 +8,8 @@ import 'package:konfa/voice/recorder.dart';
 import 'package:konfa/voice/speaker.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
 import 'package:konfa/voice/opus/opus.dart' as opus_init;
+
+import 'package:l/l.dart';
 
 const sampleRate = 48000;
 
@@ -67,6 +70,29 @@ class _SpeakToChannek extends _ConnectionCommand {
 }
 
 void _isolateEntry(SendPort sendPort) async {
+  final logFile = File('voice_log.txt').openWrite();
+
+  l.capture(
+    () => runZonedGuarded(
+      () async => await _connectionListen(sendPort),
+      l.e,
+    ),
+    LogOptions(
+      handlePrint: true, // Whether to handle `print()` calls.
+      outputInRelease: true, // Whether to output in release mode.
+      printColors: true, // Whether to print colors in the console.
+      output: LogOutput.platform, // Whether to use `print()` for output.
+      overrideOutput: (event) {
+        final msg = event.toString();
+        logFile.writeln(msg);
+        logFile.flush();
+        return msg;
+      },
+    ),
+  );
+}
+
+Future<void> _connectionListen(SendPort sendPort) async {
   ReceivePort receivePort = ReceivePort();
   sendPort.send(receivePort.sendPort);
 

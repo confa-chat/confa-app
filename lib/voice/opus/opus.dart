@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:l/l.dart';
 import 'package:opus_dart/opus_dart.dart';
 
 export 'init_opus_default.dart' if (dart.library.io) 'init_opus_io.dart';
@@ -85,7 +86,7 @@ class StreamEventRateCounter<T> extends StreamTransformerBase<T, T> {
       lastEvent = DateTime.now();
 
       if (lastEvent.difference(lastPrint).inSeconds > 1) {
-        print("$_name event per second: ${count / lastEvent.difference(start).inSeconds}");
+        l.i("$_name event per second: ${count / lastEvent.difference(start).inSeconds}");
         lastPrint = lastEvent;
       }
 
