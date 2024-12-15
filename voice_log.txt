@@ -1,7 +1,0 @@
-Recording started.
-speaker: event per second: 45.0
-recorder: event per second: 48.5
-speaker: event per second: 47.5
-recorder: event per second: 49.25
-speaker: event per second: 48.5
-recorder: event per second: 49.666666666666664
