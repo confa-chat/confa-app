@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
   final channelId = 'test';
   final userId = TextEditingController(text: "test");
 
-  final Future<Connection> _connection = Connection.open();
+  final Future<VoiceConnection> _connection = VoiceConnection.open();
   late VoiceServiceClient _voiceServiceClient;
 
   @override

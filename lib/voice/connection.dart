@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:flutter/services.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:konfa/voice/globals.dart';
 import 'package:konfa/voice/recorder.dart';
@@ -13,17 +14,29 @@ import 'package:l/l.dart';
 
 const sampleRate = 48000;
 
-class Connection {
+class _VoiceConnectionInitData {
+  SendPort sendPort;
+  RootIsolateToken rootIsolateToken;
+
+  _VoiceConnectionInitData(this.sendPort, this.rootIsolateToken);
+}
+
+class VoiceConnection {
   final SendPort _isolateSendPort;
   final ReceivePort _isolateReceivePort;
   final Isolate _isolate;
 
-  Connection._(this._isolate, this._isolateSendPort, this._isolateReceivePort);
+  VoiceConnection._(this._isolate, this._isolateSendPort, this._isolateReceivePort);
 
-  static Future<Connection> open() async {
+  static Future<VoiceConnection> open() async {
     final isolateReceivePort = ReceivePort();
 
-    final isolate = await Isolate.spawn(_isolateEntry, isolateReceivePort.sendPort);
+    final initData = _VoiceConnectionInitData(
+      isolateReceivePort.sendPort,
+      RootIsolateToken.instance!,
+    );
+
+    final isolate = await Isolate.spawn<_VoiceConnectionInitData>(_isolateEntry, initData);
 
     final portReceiver = Completer<SendPort>();
 
@@ -35,7 +48,7 @@ class Connection {
 
     final isolateSendPort = await portReceiver.future;
 
-    return Connection._(isolate, isolateSendPort, isolateReceivePort);
+    return VoiceConnection._(isolate, isolateSendPort, isolateReceivePort);
   }
 
   void close() {
@@ -69,12 +82,16 @@ class _SpeakToChannek extends _ConnectionCommand {
   _SpeakToChannek(this.serverId, this.channelId, this.userId);
 }
 
-void _isolateEntry(SendPort sendPort) async {
+void _isolateEntry(_VoiceConnectionInitData data) async {
+  if (Platform.isWindows) {
+    BackgroundIsolateBinaryMessenger.ensureInitialized(data.rootIsolateToken);
+  }
+
   final logFile = File('voice_log.txt').openWrite();
 
   l.capture(
     () => runZonedGuarded(
-      () async => await _connectionListen(sendPort),
+      () async => await _connectionListen(data.sendPort),
       l.e,
     ),
     LogOptions(
