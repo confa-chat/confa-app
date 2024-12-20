@@ -20,10 +20,10 @@ void main([List<String>? args]) {
       l.e,
     ),
     LogOptions(
-      handlePrint: true, // Whether to handle `print()` calls.
-      outputInRelease: true, // Whether to output in release mode.
-      printColors: true, // Whether to print colors in the console.
-      output: LogOutput.ignore, // Whether to use `print()` for output.
+      handlePrint: true,
+      outputInRelease: true,
+      printColors: true,
+      output: LogOutput.ignore,
       overrideOutput: (event) {
         final msg = event.toString();
         logFile.writeln(msg);

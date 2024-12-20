@@ -1,24 +1,47 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:konfa/voice/globals.dart';
+import 'package:konfa/voice/opus/opus.dart';
 import 'package:konfa/voice/recorder.dart';
 import 'package:konfa/voice/speaker.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
-import 'package:konfa/voice/opus/opus.dart' as opus_init;
+import 'package:opus_flutter_platform_interface/opus_flutter_platform_interface.dart';
+import 'package:opus_dart/opus_dart.dart' as opus_dart;
+import 'package:web_ffi/web_ffi.dart' as web_ffi;
 
 import 'package:l/l.dart';
 
 const sampleRate = 48000;
 
+class _IsolateOpusFlutterPlatform extends OpusFlutterPlatform {
+  final OpusFlutterPlatform _platform = OpusFlutterPlatform.instance;
+
+  @override
+  Future load() {
+    throw Exception('already loaded');
+  }
+
+  OpusFlutterPlatform get platform => _platform;
+
+  set platform(OpusFlutterPlatform platform) {
+    throw Exception('cannot set platform');
+  }
+}
+
 class _VoiceConnectionInitData {
   SendPort sendPort;
-  RootIsolateToken rootIsolateToken;
+  late RootIsolateToken rootIsolateToken;
+  late web_ffi.DynamicLibrary opusLib;
 
-  _VoiceConnectionInitData(this.sendPort, this.rootIsolateToken);
+  _VoiceConnectionInitData(this.sendPort) {
+    rootIsolateToken = RootIsolateToken.instance!;
+  }
 }
 
 class VoiceConnection {
@@ -33,7 +56,6 @@ class VoiceConnection {
 
     final initData = _VoiceConnectionInitData(
       isolateReceivePort.sendPort,
-      RootIsolateToken.instance!,
     );
 
     final isolate = await Isolate.spawn<_VoiceConnectionInitData>(_isolateEntry, initData);
@@ -60,7 +82,7 @@ class VoiceConnection {
   }
 
   void speakToChannel(String serverId, String channelId, String userId) {
-    _isolateSendPort.send(_SpeakToChannek(serverId, channelId, userId));
+    _isolateSendPort.send(_SpeakToChannel(serverId, channelId, userId));
   }
 }
 
@@ -74,24 +96,20 @@ class _ListenToUser extends _ConnectionCommand {
   _ListenToUser(this.serverId, this.channelId, this.userId);
 }
 
-class _SpeakToChannek extends _ConnectionCommand {
+class _SpeakToChannel extends _ConnectionCommand {
   final String serverId;
   final String channelId;
   final String userId;
 
-  _SpeakToChannek(this.serverId, this.channelId, this.userId);
+  _SpeakToChannel(this.serverId, this.channelId, this.userId);
 }
 
 void _isolateEntry(_VoiceConnectionInitData data) async {
-  if (Platform.isWindows) {
-    BackgroundIsolateBinaryMessenger.ensureInitialized(data.rootIsolateToken);
-  }
-
   final logFile = File('voice_log.txt').openWrite();
 
   l.capture(
     () => runZonedGuarded(
-      () async => await _connectionListen(data.sendPort),
+      () async => await _connectionListen(data),
       l.e,
     ),
     LogOptions(
@@ -109,12 +127,18 @@ void _isolateEntry(_VoiceConnectionInitData data) async {
   );
 }
 
-Future<void> _connectionListen(SendPort sendPort) async {
+Future<void> _connectionListen(_VoiceConnectionInitData data) async {
+  final sendPort = data.sendPort;
   ReceivePort receivePort = ReceivePort();
   sendPort.send(receivePort.sendPort);
 
-  opus_init.setupOpus();
+  BackgroundIsolateBinaryMessenger.ensureInitialized(data.rootIsolateToken);
 
+  // if (Platform.isWindows) {
+  //   opus_dart.initOpus(DynamicLibrary.open('libopus.so') as dynamic);
+  // } else {
+  await setupOpus();
+  // }
   // minisound_ffi.MinisoundFfi.registerWith();
 
   final channel = grpc.ClientChannel(
@@ -139,7 +163,7 @@ Future<void> _connectionListen(SendPort sendPort) async {
           );
           speaker.listen();
         }
-      case _SpeakToChannek():
+      case _SpeakToChannel():
         {
           final recorder = VoiceChatRecorder(
             _voiceServiceClient,
