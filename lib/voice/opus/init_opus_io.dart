@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:opus_dart/opus_dart.dart' as opus_dart;
 import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
 
-void setupOpus() async {
+Future<void> setupOpus() async {
   if (Platform.isLinux) {
     opus_dart.initOpus(DynamicLibrary.open('libopus.so') as dynamic);
   } else if (Platform.isWindows) {
