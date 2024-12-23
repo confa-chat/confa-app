@@ -7,6 +7,8 @@ plugins:
     out: lib/gen/proto
     opt: grpc
 inputs:
+  - module: buf.build/protocolbuffers/wellknowntypes
   - directory: ../konfa-voice/proto
+  - directory: ../konfa-server/proto
   # - git_repo: https://github.com/konfa-voice/proto.git
   #   directory: proto

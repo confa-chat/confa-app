@@ -5,7 +5,7 @@ import 'dart:isolate';
 
 import 'package:flutter/services.dart';
 import 'package:grpc/grpc.dart' as grpc;
-import 'package:konfa/voice/globals.dart';
+import 'package:konfa/globals.dart';
 import 'package:konfa/voice/opus/opus.dart';
 import 'package:konfa/voice/recorder.dart';
 import 'package:konfa/voice/speaker.dart';
@@ -37,9 +37,7 @@ class VoiceConnection {
 
     final isolateReceivePort = ReceivePort();
 
-    final initData = _VoiceConnectionInitData(
-      isolateReceivePort.sendPort,
-    );
+    final initData = _VoiceConnectionInitData(isolateReceivePort.sendPort);
 
     final isolate = await Isolate.spawn<_VoiceConnectionInitData>(_isolateEntry, initData);
 
