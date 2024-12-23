@@ -50,7 +50,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final serverId = '0193e9cc-38d0-7af1-9d45-06043daa0da6';
   final userId = TextEditingController(text: "test");
 
   // final Future<VoiceConnection> _connection = VoiceConnection.open();
@@ -95,12 +94,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: KonfaTheme(
         child: Scaffold(
           body: SafeArea(
             child: ConnectScreen(
-              child: ServerScreen(serverID: serverId),
+              child: ServerScreen(serverID: konfachServerID),
               // child: Column(
               //   children: [
               //     Row(

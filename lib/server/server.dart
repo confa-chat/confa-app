@@ -48,7 +48,7 @@ class _ServerScreenState extends State<ServerScreen> {
             return Center(child: Text(snapshot.error.toString()));
           }
 
-          final channels = snapshot.data!;
+          final channels = snapshot.data!.toList();
 
           return Row(
             children: [

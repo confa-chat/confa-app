@@ -124,7 +124,7 @@ Future<void> _connectionListen(_VoiceConnectionInitData data) async {
 
   final channel = grpc.ClientChannel(
     serverAddress,
-    port: serverPort,
+    port: voiceServerPort,
     options: const grpc.ChannelOptions(credentials: grpc.ChannelCredentials.insecure()),
   );
 
