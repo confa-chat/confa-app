@@ -9,6 +9,7 @@ import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
+import 'package:konfa/repo/user.dart';
 import 'package:konfa/widgets/server.dart';
 import 'package:konfa/theme.dart';
 import 'package:konfa/voice/connection.dart';
@@ -174,7 +175,7 @@ class ConnectScreen extends StatefulWidget {
 }
 
 class _ConnectScreenState extends State<ConnectScreen> {
-  Future<List<SingleChildWidget>> _getConnections() async {
+  Future<List<SingleChildWidget>> _setupConnection() async {
     final credential = Provider.of<AuthState>(context, listen: false).credential;
 
     final callOptions = grpc.CallOptions(
@@ -212,13 +213,14 @@ class _ConnectScreenState extends State<ConnectScreen> {
       Provider<ServerServiceClient>.value(value: serverClient),
       Provider<ChatServiceClient>.value(value: chatClient),
       Provider<VoiceServiceClient>.value(value: voiceClient),
+      Provider<UserRepo>.value(value: UserRepo(serverClient)),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _getConnections(),
+        future: _setupConnection(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));

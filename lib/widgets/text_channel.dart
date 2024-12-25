@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:konfa/gen/proto/google/protobuf/timestamp.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
+import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
+import 'package:konfa/repo/user.dart';
 import 'package:provider/provider.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import 'package:fixnum/fixnum.dart';
@@ -20,6 +22,8 @@ class TextChatWidget extends StatefulWidget {
 class _TextChatWidgetState extends State<TextChatWidget> {
   bool _isLoading = false;
   bool _hasReachedMax = false;
+  late final UserRepo _userRepo;
+  final _users = <String, User>{};
   final List<Message> _messages = [];
   late final StreamSubscription<void> updateSubscription;
 
@@ -53,6 +57,10 @@ class _TextChatWidgetState extends State<TextChatWidget> {
       ),
     );
 
+    for (final msg in msgs.messages) {
+      _users[msg.senderId] ??= await _userRepo.getUser(msg.senderId);
+    }
+
     setState(() {
       if (msgs.messages.isEmpty) {
         _hasReachedMax = true;
@@ -66,6 +74,7 @@ class _TextChatWidgetState extends State<TextChatWidget> {
 
   @override
   void initState() {
+    _userRepo = Provider.of<UserRepo>(context, listen: false);
     final chatService = Provider.of<ChatServiceClient>(context, listen: false);
     final channelRef = TextChannelRef(
       channelId: widget.channelId,
@@ -79,6 +88,8 @@ class _TextChatWidgetState extends State<TextChatWidget> {
           messageId: event.messageId,
         ),
       );
+
+      _users[msg.message.senderId] ??= await _userRepo.getUser(msg.message.senderId);
 
       setState(() {
         _messages.insert(0, msg.message);
@@ -114,11 +125,9 @@ class _TextChatWidgetState extends State<TextChatWidget> {
             loadingBuilder: (context) => _hasReachedMax
                 ? const SizedBox()
                 : const Center(child: CircularProgressIndicator()),
-            itemBuilder: (context, index) => ListTile(
-              title: Text(_messages[index].senderId),
-              titleTextStyle: Theme.of(context).textTheme.labelSmall,
-              subtitle: Text(_messages[index].content),
-              subtitleTextStyle: Theme.of(context).textTheme.bodyLarge,
+            itemBuilder: (context, index) => MessageListTile(
+              user: _users[_messages[index].senderId]!,
+              message: _messages[index],
             ),
           ),
           // child: ListView.builder(
@@ -145,6 +154,28 @@ class _TextChatWidgetState extends State<TextChatWidget> {
           },
         ),
       ],
+    );
+  }
+}
+
+class MessageListTile extends StatefulWidget {
+  final Message message;
+  final User user;
+
+  const MessageListTile({super.key, required this.message, required this.user});
+
+  @override
+  State<MessageListTile> createState() => _MessageListTileState();
+}
+
+class _MessageListTileState extends State<MessageListTile> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(widget.user.username),
+      titleTextStyle: Theme.of(context).textTheme.labelSmall,
+      subtitle: Text(widget.message.content),
+      subtitleTextStyle: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }

@@ -39,3 +39,53 @@ final $typed_data.Uint8List listServerChannelsResponseDescriptor = $convert.base
     'ChpMaXN0U2VydmVyQ2hhbm5lbHNSZXNwb25zZRI1CghjaGFubmVscxgBIAMoCzIZLmtvbmZhLm'
     'NoYW5uZWwudjEuQ2hhbm5lbFIIY2hhbm5lbHM=');
 
+@$core.Deprecated('Use listServerUsersRequestDescriptor instead')
+const ListServerUsersRequest$json = {
+  '1': 'ListServerUsersRequest',
+  '2': [
+    {'1': 'server_id', '3': 1, '4': 1, '5': 9, '10': 'serverId'},
+  ],
+};
+
+/// Descriptor for `ListServerUsersRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listServerUsersRequestDescriptor = $convert.base64Decode(
+    'ChZMaXN0U2VydmVyVXNlcnNSZXF1ZXN0EhsKCXNlcnZlcl9pZBgBIAEoCVIIc2VydmVySWQ=');
+
+@$core.Deprecated('Use listServerUsersResponseDescriptor instead')
+const ListServerUsersResponse$json = {
+  '1': 'ListServerUsersResponse',
+  '2': [
+    {'1': 'users', '3': 1, '4': 3, '5': 11, '6': '.konfa.user.v1.User', '10': 'users'},
+  ],
+};
+
+/// Descriptor for `ListServerUsersResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listServerUsersResponseDescriptor = $convert.base64Decode(
+    'ChdMaXN0U2VydmVyVXNlcnNSZXNwb25zZRIpCgV1c2VycxgBIAMoCzITLmtvbmZhLnVzZXIudj'
+    'EuVXNlclIFdXNlcnM=');
+
+@$core.Deprecated('Use getUserRequestDescriptor instead')
+const GetUserRequest$json = {
+  '1': 'GetUserRequest',
+  '2': [
+    {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+/// Descriptor for `GetUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getUserRequestDescriptor = $convert.base64Decode(
+    'Cg5HZXRVc2VyUmVxdWVzdBIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQ=');
+
+@$core.Deprecated('Use getUserResponseDescriptor instead')
+const GetUserResponse$json = {
+  '1': 'GetUserResponse',
+  '2': [
+    {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.konfa.user.v1.User', '10': 'user'},
+  ],
+};
+
+/// Descriptor for `GetUserResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getUserResponseDescriptor = $convert.base64Decode(
+    'Cg9HZXRVc2VyUmVzcG9uc2USJwoEdXNlchgBIAEoCzITLmtvbmZhLnVzZXIudjEuVXNlclIEdX'
+    'Nlcg==');
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
+import 'package:konfa/repo/user.dart';
 import 'package:konfa/widgets/text_channel.dart';
 import 'package:konfa/widgets/voice_channel.dart';
 import 'package:provider/provider.dart';
@@ -17,14 +18,17 @@ class ServerScreen extends StatefulWidget {
 class _ServerScreenState extends State<ServerScreen> {
   String? _selectedTextChannelID;
 
-  late ServerServiceClient _serverClient;
   late Future<List<Channel>> channels;
 
   @override
   void initState() {
-    _serverClient = Provider.of<ServerServiceClient>(context, listen: false);
+    final serverClient = Provider.of<ServerServiceClient>(context, listen: false);
+    final userRepo = Provider.of<UserRepo>(context, listen: false);
+
     channels = Future(() async {
-      final response = await _serverClient.listServerChannels(
+      await userRepo.loadServerUsers(widget.serverID);
+
+      final response = await serverClient.listServerChannels(
         ListServerChannelsRequest(serverId: widget.serverID),
       );
       return response.channels;
