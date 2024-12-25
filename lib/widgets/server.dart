@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:konfa/chat/chat.dart';
 import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
+import 'package:konfa/widgets/text_channel.dart';
+import 'package:konfa/widgets/voice_channel.dart';
 import 'package:provider/provider.dart';
 
 class ServerScreen extends StatefulWidget {
@@ -94,13 +95,6 @@ class _ChannelListState extends State<_ChannelList> {
   String? selectedTextChannelID;
 
   @override
-  void initState() {
-    // selectedTextChannelID =
-    // widget.channels.firstWhere((channel) => channel.hasTextChannel()).textChannel.channelId;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -121,11 +115,9 @@ class _ChannelListState extends State<_ChannelList> {
                       });
                     });
               } else if (channel.hasVoiceChannel()) {
-                return ListTile(
-                  leading: const Icon(Icons.mic),
-                  title: Text(channel.voiceChannel.name),
-                );
+                return VoiceChannelListTile(channel: channel.voiceChannel);
               }
+
               return null;
             })
             .nonNulls

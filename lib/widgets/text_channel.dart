@@ -19,6 +19,7 @@ class TextChatWidget extends StatefulWidget {
 
 class _TextChatWidgetState extends State<TextChatWidget> {
   bool _isLoading = false;
+  bool _hasReachedMax = false;
   final List<Message> _messages = [];
   late final StreamSubscription<void> updateSubscription;
 
@@ -34,7 +35,7 @@ class _TextChatWidgetState extends State<TextChatWidget> {
     } else {
       final now = DateTime.now();
       lastMessageTimestamp = Timestamp(
-        seconds: Int64(now.microsecondsSinceEpoch ~/ 1000),
+        seconds: Int64(now.millisecondsSinceEpoch ~/ 1000),
         nanos: now.millisecond % 1000 * 1000,
       );
     }
@@ -53,6 +54,11 @@ class _TextChatWidgetState extends State<TextChatWidget> {
     );
 
     setState(() {
+      if (msgs.messages.isEmpty) {
+        _hasReachedMax = true;
+        return;
+      }
+
       _isLoading = false;
       _messages.addAll(msgs.messages);
     });
@@ -104,6 +110,10 @@ class _TextChatWidgetState extends State<TextChatWidget> {
             onFetchData: _fetchData,
             isLoading: _isLoading,
             reverse: true,
+            hasReachedMax: _hasReachedMax,
+            loadingBuilder: (context) => _hasReachedMax
+                ? const SizedBox()
+                : const Center(child: CircularProgressIndicator()),
             itemBuilder: (context, index) => ListTile(
               title: Text(_messages[index].senderId),
               titleTextStyle: Theme.of(context).textTheme.labelSmall,
@@ -152,10 +162,14 @@ class _MessageInputState extends State<MessageInput> {
   final _controller = TextEditingController();
 
   Future<void> _sendMessage() async {
-    await widget.send(_controller.text);
-    setState(() {
-      _controller.text = "";
-    });
+    final text = _controller.text.trim();
+
+    if (text.isEmpty) {
+      return;
+    }
+
+    _controller.clear();
+    await widget.send(text);
   }
 
   @override

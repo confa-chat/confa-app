@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:grpc/grpc.dart' as grpc;
+import 'package:konfa/auth/auth.dart';
 import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
-import 'package:konfa/server/server.dart';
+import 'package:konfa/widgets/server.dart';
 import 'package:konfa/theme.dart';
 import 'package:konfa/voice/connection.dart';
 import 'package:konfa/globals.dart';
@@ -16,6 +17,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:l/l.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 void main([List<String>? args]) {
   final logFile = File('log.txt').openWrite();
@@ -29,7 +31,7 @@ void main([List<String>? args]) {
       handlePrint: true,
       outputInRelease: true,
       printColors: true,
-      output: LogOutput.ignore,
+      output: LogOutput.platform,
       overrideOutput: (event) {
         final msg = event.toString();
         logFile.writeln(msg);
@@ -94,49 +96,28 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: KonfaTheme(
-        child: Scaffold(
-          body: SafeArea(
-            child: ConnectScreen(
-              child: ServerScreen(serverID: konfachServerID),
-              // child: Column(
-              //   children: [
-              //     Row(
-              //       children: [
-              //         const SizedBox(width: 100, child: Text("Username")),
-              //         Expanded(
-              //           child: TextField(
-              //             controller: userId,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //     StreamBuilder(
-              //       stream: _voiceServiceClient.subscribeChannelState(
-              //         SubscribeChannelStateRequest(
-              //           serverId: serverId,
-              //           channelId: channelId,
-              //         ),
-              //       ),
-              //       builder: (context, snapshot) {
-              //         if (!snapshot.hasData) {
-              //           return const CircularProgressIndicator();
-              //         }
-              //         final state = snapshot.data as SubscribeChannelStateResponse;
-              //         return Column(
-              //           children: [
-              //             Column(children: state.users.map((e) => Text(e)).toList()),
-              //             ElevatedButton(
-              //               child: const Text('Join'),
-              //               onPressed: () => _join(state.users),
-              //             ),
-              //           ],
-              //         );
-              //       },
-              //     ),
-              //   ],
-              // ),
+    return ChangeNotifierProvider.value(
+      value: AuthState(),
+      child: MaterialApp(
+        home: KonfaTheme(
+          child: Scaffold(
+            body: SafeArea(
+              child: Consumer<AuthState>(
+                builder: (context, authState, _) {
+                  if (authState.credential == null) {
+                    return Center(
+                      child: ElevatedButton(
+                        onPressed: () => authState.authenticate(),
+                        child: const Text('Login'),
+                      ),
+                    );
+                  }
+
+                  return const ConnectScreen(
+                    child: ServerScreen(serverID: konfachServerID),
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -144,6 +125,44 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+// child: Column(
+//   children: [
+//     Row(
+//       children: [
+//         const SizedBox(width: 100, child: Text("Username")),
+//         Expanded(
+//           child: TextField(
+//             controller: userId,
+//           ),
+//         ),
+//       ],
+//     ),
+//     StreamBuilder(
+//       stream: _voiceServiceClient.subscribeChannelState(
+//         SubscribeChannelStateRequest(
+//           serverId: serverId,
+//           channelId: channelId,
+//         ),
+//       ),
+//       builder: (context, snapshot) {
+//         if (!snapshot.hasData) {
+//           return const CircularProgressIndicator();
+//         }
+//         final state = snapshot.data as SubscribeChannelStateResponse;
+//         return Column(
+//           children: [
+//             Column(children: state.users.map((e) => Text(e)).toList()),
+//             ElevatedButton(
+//               child: const Text('Join'),
+//               onPressed: () => _join(state.users),
+//             ),
+//           ],
+//         );
+//       },
+//     ),
+//   ],
+// ),
 
 class ConnectScreen extends StatefulWidget {
   final Widget child;
@@ -155,31 +174,64 @@ class ConnectScreen extends StatefulWidget {
 }
 
 class _ConnectScreenState extends State<ConnectScreen> {
-  late ServerServiceClient _serverClient;
-  late ChatServiceClient _chatClient;
+  Future<List<SingleChildWidget>> _getConnections() async {
+    final credential = Provider.of<AuthState>(context, listen: false).credential;
 
-  @override
-  void initState() {
+    final callOptions = grpc.CallOptions(
+      // metadata: {
+      //   'authorization': 'Bearer ${token.accessToken}',
+      // },
+      providers: [
+        (metadata, uri) async {
+          final token = await credential!.getTokenResponse();
+          metadata['authorization'] = 'Bearer ${token.accessToken}';
+        },
+      ],
+    );
+
     final channel = grpc.ClientChannel(
       serverAddress,
-      port: 38100,
+      port: mainServerPort,
+      options: const grpc.ChannelOptions(
+        credentials: grpc.ChannelCredentials.insecure(),
+      ),
+    );
+
+    final serverClient = ServerServiceClient(channel, options: callOptions);
+    final chatClient = ChatServiceClient(channel, options: callOptions);
+
+    final voiceChannel = grpc.ClientChannel(
+      serverAddress,
+      port: voiceServerPort,
       options: const grpc.ChannelOptions(credentials: grpc.ChannelCredentials.insecure()),
     );
 
-    _serverClient = ServerServiceClient(channel);
-    _chatClient = ChatServiceClient(channel);
+    final voiceClient = VoiceServiceClient(voiceChannel, options: callOptions);
 
-    super.initState();
+    return [
+      Provider<ServerServiceClient>.value(value: serverClient),
+      Provider<ChatServiceClient>.value(value: chatClient),
+      Provider<VoiceServiceClient>.value(value: voiceClient),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<ServerServiceClient>.value(
-      value: _serverClient,
-      child: Provider<ChatServiceClient>.value(
-        value: _chatClient,
-        child: widget.child,
-      ),
-    );
+    return FutureBuilder(
+        future: _getConnections(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text(snapshot.error.toString()));
+          }
+
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return MultiProvider(
+            providers: snapshot.data!,
+            child: widget.child,
+          );
+        });
   }
 }
