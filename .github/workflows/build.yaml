@@ -90,10 +90,10 @@ jobs:
       - run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
 
       - name: Zip Linux Bundle
-        run: zip -r ./release/konfa-${{ github.ref_name }}-linux.zip ./artifacts/linux
+        run: cd ./artifacts/linux && zip -r ../../release/konfa-${{ github.ref_name }}-linux.zip konfa
 
       - name: Zip Windows Bundle
-        run: zip -r ./release/konfa-${{ github.ref_name }}-windows.zip ./artifacts/windows
+        run: cd ./artifacts/windows && zip -r ../../release/konfa-${{ github.ref_name }}-windows.zip konfa
 
       - name: Create Release Draft
         uses: softprops/action-gh-release@v2
