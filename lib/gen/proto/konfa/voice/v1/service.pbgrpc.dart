@@ -21,18 +21,18 @@ export 'service.pb.dart';
 
 @$pb.GrpcServiceName('konfa.voice.v1.VoiceService')
 class VoiceServiceClient extends $grpc.Client {
-  static final _$send = $grpc.ClientMethod<$0.SendRequest, $0.SendResponse>(
-      '/konfa.voice.v1.VoiceService/Send',
-      ($0.SendRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.SendResponse.fromBuffer(value));
-  static final _$receive = $grpc.ClientMethod<$0.ReceiveRequest, $0.ReceiveResponse>(
-      '/konfa.voice.v1.VoiceService/Receive',
-      ($0.ReceiveRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.ReceiveResponse.fromBuffer(value));
-  static final _$subscribeChannelState = $grpc.ClientMethod<$0.SubscribeChannelStateRequest, $0.SubscribeChannelStateResponse>(
-      '/konfa.voice.v1.VoiceService/SubscribeChannelState',
-      ($0.SubscribeChannelStateRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.SubscribeChannelStateResponse.fromBuffer(value));
+  static final _$speakToChannel = $grpc.ClientMethod<$0.SpeakToChannelRequest, $0.SpeakToChannelResponse>(
+      '/konfa.voice.v1.VoiceService/SpeakToChannel',
+      ($0.SpeakToChannelRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.SpeakToChannelResponse.fromBuffer(value));
+  static final _$listenToUser = $grpc.ClientMethod<$0.ListenToUserRequest, $0.ListenToUserResponse>(
+      '/konfa.voice.v1.VoiceService/ListenToUser',
+      ($0.ListenToUserRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ListenToUserResponse.fromBuffer(value));
+  static final _$joinChannel = $grpc.ClientMethod<$0.JoinChannelRequest, $0.JoinChannelResponse>(
+      '/konfa.voice.v1.VoiceService/JoinChannel',
+      ($0.JoinChannelRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.JoinChannelResponse.fromBuffer(value));
 
   VoiceServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -40,16 +40,16 @@ class VoiceServiceClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.SendResponse> send($async.Stream<$0.SendRequest> request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$send, request, options: options).single;
+  $grpc.ResponseFuture<$0.SpeakToChannelResponse> speakToChannel($async.Stream<$0.SpeakToChannelRequest> request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$speakToChannel, request, options: options).single;
   }
 
-  $grpc.ResponseStream<$0.ReceiveResponse> receive($0.ReceiveRequest request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$receive, $async.Stream.fromIterable([request]), options: options);
+  $grpc.ResponseStream<$0.ListenToUserResponse> listenToUser($0.ListenToUserRequest request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$listenToUser, $async.Stream.fromIterable([request]), options: options);
   }
 
-  $grpc.ResponseStream<$0.SubscribeChannelStateResponse> subscribeChannelState($0.SubscribeChannelStateRequest request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$subscribeChannelState, $async.Stream.fromIterable([request]), options: options);
+  $grpc.ResponseStream<$0.JoinChannelResponse> joinChannel($0.JoinChannelRequest request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$joinChannel, $async.Stream.fromIterable([request]), options: options);
   }
 }
 
@@ -58,38 +58,38 @@ abstract class VoiceServiceBase extends $grpc.Service {
   $core.String get $name => 'konfa.voice.v1.VoiceService';
 
   VoiceServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.SendRequest, $0.SendResponse>(
-        'Send',
-        send,
+    $addMethod($grpc.ServiceMethod<$0.SpeakToChannelRequest, $0.SpeakToChannelResponse>(
+        'SpeakToChannel',
+        speakToChannel,
         true,
         false,
-        ($core.List<$core.int> value) => $0.SendRequest.fromBuffer(value),
-        ($0.SendResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.ReceiveRequest, $0.ReceiveResponse>(
-        'Receive',
-        receive_Pre,
+        ($core.List<$core.int> value) => $0.SpeakToChannelRequest.fromBuffer(value),
+        ($0.SpeakToChannelResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ListenToUserRequest, $0.ListenToUserResponse>(
+        'ListenToUser',
+        listenToUser_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $0.ReceiveRequest.fromBuffer(value),
-        ($0.ReceiveResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.SubscribeChannelStateRequest, $0.SubscribeChannelStateResponse>(
-        'SubscribeChannelState',
-        subscribeChannelState_Pre,
+        ($core.List<$core.int> value) => $0.ListenToUserRequest.fromBuffer(value),
+        ($0.ListenToUserResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.JoinChannelRequest, $0.JoinChannelResponse>(
+        'JoinChannel',
+        joinChannel_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $0.SubscribeChannelStateRequest.fromBuffer(value),
-        ($0.SubscribeChannelStateResponse value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $0.JoinChannelRequest.fromBuffer(value),
+        ($0.JoinChannelResponse value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.ReceiveResponse> receive_Pre($grpc.ServiceCall call, $async.Future<$0.ReceiveRequest> request) async* {
-    yield* receive(call, await request);
+  $async.Stream<$0.ListenToUserResponse> listenToUser_Pre($grpc.ServiceCall call, $async.Future<$0.ListenToUserRequest> request) async* {
+    yield* listenToUser(call, await request);
   }
 
-  $async.Stream<$0.SubscribeChannelStateResponse> subscribeChannelState_Pre($grpc.ServiceCall call, $async.Future<$0.SubscribeChannelStateRequest> request) async* {
-    yield* subscribeChannelState(call, await request);
+  $async.Stream<$0.JoinChannelResponse> joinChannel_Pre($grpc.ServiceCall call, $async.Future<$0.JoinChannelRequest> request) async* {
+    yield* joinChannel(call, await request);
   }
 
-  $async.Future<$0.SendResponse> send($grpc.ServiceCall call, $async.Stream<$0.SendRequest> request);
-  $async.Stream<$0.ReceiveResponse> receive($grpc.ServiceCall call, $0.ReceiveRequest request);
-  $async.Stream<$0.SubscribeChannelStateResponse> subscribeChannelState($grpc.ServiceCall call, $0.SubscribeChannelStateRequest request);
+  $async.Future<$0.SpeakToChannelResponse> speakToChannel($grpc.ServiceCall call, $async.Stream<$0.SpeakToChannelRequest> request);
+  $async.Stream<$0.ListenToUserResponse> listenToUser($grpc.ServiceCall call, $0.ListenToUserRequest request);
+  $async.Stream<$0.JoinChannelResponse> joinChannel($grpc.ServiceCall call, $0.JoinChannelRequest request);
 }

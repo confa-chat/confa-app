@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:l/l.dart';
 import 'package:opus_dart/opus_dart.dart';
 
-export 'init_opus_default.dart' if (dart.library.io) 'init_opus_io.dart';
+export 'init_opus.dart';
 
 const sampleSizeMS = 20;
 

@@ -8,7 +8,7 @@ class AuthState extends ChangeNotifier {
 
   Credential? _credential;
 
-  Credential? get credential => _credential;
+  bool get isAuthenticated => _credential != null;
 
   Future<void> authenticate() async {
     final issuer = await Issuer.discover(_konfachSsoURI);
@@ -27,5 +27,12 @@ class AuthState extends ChangeNotifier {
   void logout() {
     _credential = null;
     notifyListeners();
+  }
+
+  Future<TokenResponse> getToken() async {
+    if (_credential == null) {
+      throw Exception('User is not authenticated');
+    }
+    return _credential!.getTokenResponse();
   }
 }

@@ -23,7 +23,7 @@ class _ServerScreenState extends State<ServerScreen> {
   @override
   void initState() {
     final serverClient = Provider.of<ServerServiceClient>(context, listen: false);
-    final userRepo = Provider.of<UserRepo>(context, listen: false);
+    final userRepo = Provider.of<UsersRepo>(context, listen: false);
 
     channels = Future(() async {
       await userRepo.loadServerUsers(widget.serverID);
@@ -89,7 +89,7 @@ class _ChannelList extends StatefulWidget {
   final void Function(String) textChannelSelected;
   final List<Channel> channels;
 
-  const _ChannelList({super.key, required this.channels, required this.textChannelSelected});
+  const _ChannelList({required this.channels, required this.textChannelSelected});
 
   @override
   State<_ChannelList> createState() => _ChannelListState();
@@ -97,6 +97,7 @@ class _ChannelList extends StatefulWidget {
 
 class _ChannelListState extends State<_ChannelList> {
   String? selectedTextChannelID;
+  String? activeVoiceChannelID;
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +120,16 @@ class _ChannelListState extends State<_ChannelList> {
                       });
                     });
               } else if (channel.hasVoiceChannel()) {
-                return VoiceChannelListTile(channel: channel.voiceChannel);
+                if (channel.voiceChannel.channelId == activeVoiceChannelID) {
+                  return ActiveVoiceChannelListTile(channel: channel.voiceChannel);
+                }
+
+                return VoiceChannelListTile(
+                  channel: channel.voiceChannel,
+                  onJoin: () => setState(() {
+                    activeVoiceChannelID = channel.voiceChannel.channelId;
+                  }),
+                );
               }
 
               return null;

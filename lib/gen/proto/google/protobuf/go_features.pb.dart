@@ -21,6 +21,7 @@ class GoFeatures extends $pb.GeneratedMessage {
   factory GoFeatures({
     $core.bool? legacyUnmarshalJsonEnum,
     GoFeatures_APILevel? apiLevel,
+    GoFeatures_StripEnumPrefix? stripEnumPrefix,
   }) {
     final $result = create();
     if (legacyUnmarshalJsonEnum != null) {
@@ -28,6 +29,9 @@ class GoFeatures extends $pb.GeneratedMessage {
     }
     if (apiLevel != null) {
       $result.apiLevel = apiLevel;
+    }
+    if (stripEnumPrefix != null) {
+      $result.stripEnumPrefix = stripEnumPrefix;
     }
     return $result;
   }
@@ -38,6 +42,7 @@ class GoFeatures extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GoFeatures', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'legacyUnmarshalJsonEnum')
     ..e<GoFeatures_APILevel>(2, _omitFieldNames ? '' : 'apiLevel', $pb.PbFieldType.OE, defaultOrMaker: GoFeatures_APILevel.API_LEVEL_UNSPECIFIED, valueOf: GoFeatures_APILevel.valueOf, enumValues: GoFeatures_APILevel.values)
+    ..e<GoFeatures_StripEnumPrefix>(3, _omitFieldNames ? '' : 'stripEnumPrefix', $pb.PbFieldType.OE, defaultOrMaker: GoFeatures_StripEnumPrefix.STRIP_ENUM_PREFIX_UNSPECIFIED, valueOf: GoFeatures_StripEnumPrefix.valueOf, enumValues: GoFeatures_StripEnumPrefix.values)
     ..hasRequiredFields = false
   ;
 
@@ -63,6 +68,7 @@ class GoFeatures extends $pb.GeneratedMessage {
   static GoFeatures? _defaultInstance;
 
   /// Whether or not to generate the deprecated UnmarshalJSON method for enums.
+  /// Can only be true for proto using the Open Struct api.
   @$pb.TagNumber(1)
   $core.bool get legacyUnmarshalJsonEnum => $_getBF(0);
   @$pb.TagNumber(1)
@@ -81,6 +87,15 @@ class GoFeatures extends $pb.GeneratedMessage {
   $core.bool hasApiLevel() => $_has(1);
   @$pb.TagNumber(2)
   void clearApiLevel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  GoFeatures_StripEnumPrefix get stripEnumPrefix => $_getN(2);
+  @$pb.TagNumber(3)
+  set stripEnumPrefix(GoFeatures_StripEnumPrefix v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStripEnumPrefix() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStripEnumPrefix() => clearField(3);
 }
 
 class Go_features {

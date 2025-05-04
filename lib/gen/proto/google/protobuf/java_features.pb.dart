@@ -21,6 +21,7 @@ class JavaFeatures extends $pb.GeneratedMessage {
   factory JavaFeatures({
     $core.bool? legacyClosedEnum,
     JavaFeatures_Utf8Validation? utf8Validation,
+    $core.bool? useOldOuterClassnameDefault,
   }) {
     final $result = create();
     if (legacyClosedEnum != null) {
@@ -28,6 +29,9 @@ class JavaFeatures extends $pb.GeneratedMessage {
     }
     if (utf8Validation != null) {
       $result.utf8Validation = utf8Validation;
+    }
+    if (useOldOuterClassnameDefault != null) {
+      $result.useOldOuterClassnameDefault = useOldOuterClassnameDefault;
     }
     return $result;
   }
@@ -38,6 +42,7 @@ class JavaFeatures extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JavaFeatures', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'legacyClosedEnum')
     ..e<JavaFeatures_Utf8Validation>(2, _omitFieldNames ? '' : 'utf8Validation', $pb.PbFieldType.OE, defaultOrMaker: JavaFeatures_Utf8Validation.UTF8_VALIDATION_UNKNOWN, valueOf: JavaFeatures_Utf8Validation.valueOf, enumValues: JavaFeatures_Utf8Validation.values)
+    ..aOB(4, _omitFieldNames ? '' : 'useOldOuterClassnameDefault')
     ..hasRequiredFields = false
   ;
 
@@ -83,6 +88,21 @@ class JavaFeatures extends $pb.GeneratedMessage {
   $core.bool hasUtf8Validation() => $_has(1);
   @$pb.TagNumber(2)
   void clearUtf8Validation() => clearField(2);
+
+  ///  Whether to use the old default outer class name scheme, or the new feature
+  ///  which adds a "Proto" suffix to the outer class name.
+  ///
+  ///  Users will not be able to set this option, because we removed it in the
+  ///  same edition that it was introduced. But we use it to determine which
+  ///  naming scheme to use for outer class name defaults.
+  @$pb.TagNumber(4)
+  $core.bool get useOldOuterClassnameDefault => $_getBF(2);
+  @$pb.TagNumber(4)
+  set useOldOuterClassnameDefault($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUseOldOuterClassnameDefault() => $_has(2);
+  @$pb.TagNumber(4)
+  void clearUseOldOuterClassnameDefault() => clearField(4);
 }
 
 class Java_features {

@@ -5,16 +5,14 @@ import 'package:flutter/material.dart';
 
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:konfa/auth/auth.dart';
-import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
 import 'package:konfa/repo/user.dart';
 import 'package:konfa/widgets/server.dart';
 import 'package:konfa/theme.dart';
-import 'package:konfa/voice/connection.dart';
+import 'package:konfa/voice/service.dart';
 import 'package:konfa/globals.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'package:l/l.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +34,6 @@ void main([List<String>? args]) {
       overrideOutput: (event) {
         final msg = event.toString();
         logFile.writeln(msg);
-        logFile.flush();
         return msg;
       },
     ),
@@ -105,7 +102,7 @@ class _MyAppState extends State<MyApp> {
             body: SafeArea(
               child: Consumer<AuthState>(
                 builder: (context, authState, _) {
-                  if (authState.credential == null) {
+                  if (!authState.isAuthenticated) {
                     return Center(
                       child: ElevatedButton(
                         onPressed: () => authState.authenticate(),
@@ -176,7 +173,9 @@ class ConnectScreen extends StatefulWidget {
 
 class _ConnectScreenState extends State<ConnectScreen> {
   Future<List<SingleChildWidget>> _setupConnection() async {
-    final credential = Provider.of<AuthState>(context, listen: false).credential;
+    // await initOpus();
+
+    final token = await Provider.of<AuthState>(context, listen: false).getToken();
 
     final callOptions = grpc.CallOptions(
       // metadata: {
@@ -184,7 +183,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
       // },
       providers: [
         (metadata, uri) async {
-          final token = await credential!.getTokenResponse();
           metadata['authorization'] = 'Bearer ${token.accessToken}';
         },
       ],
@@ -209,11 +207,16 @@ class _ConnectScreenState extends State<ConnectScreen> {
 
     final voiceClient = VoiceServiceClient(voiceChannel, options: callOptions);
 
+    final userRepo = await UsersRepo.create(serverClient);
+
+    final voiceService = VoiceService(voiceClient, userRepo.currentUserId);
+
     return [
       Provider<ServerServiceClient>.value(value: serverClient),
       Provider<ChatServiceClient>.value(value: chatClient),
       Provider<VoiceServiceClient>.value(value: voiceClient),
-      Provider<UserRepo>.value(value: UserRepo(serverClient)),
+      Provider<UsersRepo>.value(value: userRepo),
+      Provider<VoiceService>.value(value: voiceService),
     ];
   }
 

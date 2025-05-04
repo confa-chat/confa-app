@@ -15,10 +15,11 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'voice.pb.dart' as $1;
 
-class SubscribeChannelStateRequest extends $pb.GeneratedMessage {
-  factory SubscribeChannelStateRequest({
+class JoinChannelRequest extends $pb.GeneratedMessage {
+  factory JoinChannelRequest({
     $core.String? serverId,
     $core.String? channelId,
+    $core.String? userId,
   }) {
     final $result = create();
     if (serverId != null) {
@@ -27,15 +28,19 @@ class SubscribeChannelStateRequest extends $pb.GeneratedMessage {
     if (channelId != null) {
       $result.channelId = channelId;
     }
+    if (userId != null) {
+      $result.userId = userId;
+    }
     return $result;
   }
-  SubscribeChannelStateRequest._() : super();
-  factory SubscribeChannelStateRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SubscribeChannelStateRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  JoinChannelRequest._() : super();
+  factory JoinChannelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory JoinChannelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SubscribeChannelStateRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JoinChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..aOS(2, _omitFieldNames ? '' : 'channelId')
+    ..aOS(3, _omitFieldNames ? '' : 'userId')
     ..hasRequiredFields = false
   ;
 
@@ -43,22 +48,22 @@ class SubscribeChannelStateRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SubscribeChannelStateRequest clone() => SubscribeChannelStateRequest()..mergeFromMessage(this);
+  JoinChannelRequest clone() => JoinChannelRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SubscribeChannelStateRequest copyWith(void Function(SubscribeChannelStateRequest) updates) => super.copyWith((message) => updates(message as SubscribeChannelStateRequest)) as SubscribeChannelStateRequest;
+  JoinChannelRequest copyWith(void Function(JoinChannelRequest) updates) => super.copyWith((message) => updates(message as JoinChannelRequest)) as JoinChannelRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SubscribeChannelStateRequest create() => SubscribeChannelStateRequest._();
-  SubscribeChannelStateRequest createEmptyInstance() => create();
-  static $pb.PbList<SubscribeChannelStateRequest> createRepeated() => $pb.PbList<SubscribeChannelStateRequest>();
+  static JoinChannelRequest create() => JoinChannelRequest._();
+  JoinChannelRequest createEmptyInstance() => create();
+  static $pb.PbList<JoinChannelRequest> createRepeated() => $pb.PbList<JoinChannelRequest>();
   @$core.pragma('dart2js:noInline')
-  static SubscribeChannelStateRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubscribeChannelStateRequest>(create);
-  static SubscribeChannelStateRequest? _defaultInstance;
+  static JoinChannelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<JoinChannelRequest>(create);
+  static JoinChannelRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get serverId => $_getSZ(0);
@@ -77,24 +82,43 @@ class SubscribeChannelStateRequest extends $pb.GeneratedMessage {
   $core.bool hasChannelId() => $_has(1);
   @$pb.TagNumber(2)
   void clearChannelId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get userId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set userId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUserId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUserId() => clearField(3);
 }
 
-class SubscribeChannelStateResponse extends $pb.GeneratedMessage {
-  factory SubscribeChannelStateResponse({
-    $core.Iterable<$core.String>? users,
+enum JoinChannelResponse_State {
+  usersState, 
+  notSet
+}
+
+class JoinChannelResponse extends $pb.GeneratedMessage {
+  factory JoinChannelResponse({
+    UsersState? usersState,
   }) {
     final $result = create();
-    if (users != null) {
-      $result.users.addAll(users);
+    if (usersState != null) {
+      $result.usersState = usersState;
     }
     return $result;
   }
-  SubscribeChannelStateResponse._() : super();
-  factory SubscribeChannelStateResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SubscribeChannelStateResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  JoinChannelResponse._() : super();
+  factory JoinChannelResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory JoinChannelResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SubscribeChannelStateResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
-    ..pPS(1, _omitFieldNames ? '' : 'users')
+  static const $core.Map<$core.int, JoinChannelResponse_State> _JoinChannelResponse_StateByTag = {
+    1 : JoinChannelResponse_State.usersState,
+    0 : JoinChannelResponse_State.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JoinChannelResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+    ..oo(0, [1])
+    ..aOM<UsersState>(1, _omitFieldNames ? '' : 'usersState', subBuilder: UsersState.create)
     ..hasRequiredFields = false
   ;
 
@@ -102,35 +126,90 @@ class SubscribeChannelStateResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SubscribeChannelStateResponse clone() => SubscribeChannelStateResponse()..mergeFromMessage(this);
+  JoinChannelResponse clone() => JoinChannelResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SubscribeChannelStateResponse copyWith(void Function(SubscribeChannelStateResponse) updates) => super.copyWith((message) => updates(message as SubscribeChannelStateResponse)) as SubscribeChannelStateResponse;
+  JoinChannelResponse copyWith(void Function(JoinChannelResponse) updates) => super.copyWith((message) => updates(message as JoinChannelResponse)) as JoinChannelResponse;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SubscribeChannelStateResponse create() => SubscribeChannelStateResponse._();
-  SubscribeChannelStateResponse createEmptyInstance() => create();
-  static $pb.PbList<SubscribeChannelStateResponse> createRepeated() => $pb.PbList<SubscribeChannelStateResponse>();
+  static JoinChannelResponse create() => JoinChannelResponse._();
+  JoinChannelResponse createEmptyInstance() => create();
+  static $pb.PbList<JoinChannelResponse> createRepeated() => $pb.PbList<JoinChannelResponse>();
   @$core.pragma('dart2js:noInline')
-  static SubscribeChannelStateResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubscribeChannelStateResponse>(create);
-  static SubscribeChannelStateResponse? _defaultInstance;
+  static JoinChannelResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<JoinChannelResponse>(create);
+  static JoinChannelResponse? _defaultInstance;
+
+  JoinChannelResponse_State whichState() => _JoinChannelResponse_StateByTag[$_whichOneof(0)]!;
+  void clearState() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $core.List<$core.String> get users => $_getList(0);
+  UsersState get usersState => $_getN(0);
+  @$pb.TagNumber(1)
+  set usersState(UsersState v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUsersState() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUsersState() => clearField(1);
+  @$pb.TagNumber(1)
+  UsersState ensureUsersState() => $_ensure(0);
 }
 
-enum SendRequest_Request {
+class UsersState extends $pb.GeneratedMessage {
+  factory UsersState({
+    $core.Iterable<$core.String>? userIds,
+  }) {
+    final $result = create();
+    if (userIds != null) {
+      $result.userIds.addAll(userIds);
+    }
+    return $result;
+  }
+  UsersState._() : super();
+  factory UsersState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UsersState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UsersState', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'userIds')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UsersState clone() => UsersState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UsersState copyWith(void Function(UsersState) updates) => super.copyWith((message) => updates(message as UsersState)) as UsersState;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UsersState create() => UsersState._();
+  UsersState createEmptyInstance() => create();
+  static $pb.PbList<UsersState> createRepeated() => $pb.PbList<UsersState>();
+  @$core.pragma('dart2js:noInline')
+  static UsersState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UsersState>(create);
+  static UsersState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get userIds => $_getList(0);
+}
+
+enum SpeakToChannelRequest_Request {
   voiceInfo, 
   voiceData, 
   notSet
 }
 
-class SendRequest extends $pb.GeneratedMessage {
-  factory SendRequest({
+class SpeakToChannelRequest extends $pb.GeneratedMessage {
+  factory SpeakToChannelRequest({
     $1.VoiceInfo? voiceInfo,
     $1.VoiceData? voiceData,
   }) {
@@ -143,16 +222,16 @@ class SendRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  SendRequest._() : super();
-  factory SendRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SendRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SpeakToChannelRequest._() : super();
+  factory SpeakToChannelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SpeakToChannelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static const $core.Map<$core.int, SendRequest_Request> _SendRequest_RequestByTag = {
-    1 : SendRequest_Request.voiceInfo,
-    2 : SendRequest_Request.voiceData,
-    0 : SendRequest_Request.notSet
+  static const $core.Map<$core.int, SpeakToChannelRequest_Request> _SpeakToChannelRequest_RequestByTag = {
+    1 : SpeakToChannelRequest_Request.voiceInfo,
+    2 : SpeakToChannelRequest_Request.voiceData,
+    0 : SpeakToChannelRequest_Request.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SendRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpeakToChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<$1.VoiceInfo>(1, _omitFieldNames ? '' : 'voiceInfo', subBuilder: $1.VoiceInfo.create)
     ..aOM<$1.VoiceData>(2, _omitFieldNames ? '' : 'voiceData', subBuilder: $1.VoiceData.create)
@@ -163,24 +242,24 @@ class SendRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SendRequest clone() => SendRequest()..mergeFromMessage(this);
+  SpeakToChannelRequest clone() => SpeakToChannelRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SendRequest copyWith(void Function(SendRequest) updates) => super.copyWith((message) => updates(message as SendRequest)) as SendRequest;
+  SpeakToChannelRequest copyWith(void Function(SpeakToChannelRequest) updates) => super.copyWith((message) => updates(message as SpeakToChannelRequest)) as SpeakToChannelRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SendRequest create() => SendRequest._();
-  SendRequest createEmptyInstance() => create();
-  static $pb.PbList<SendRequest> createRepeated() => $pb.PbList<SendRequest>();
+  static SpeakToChannelRequest create() => SpeakToChannelRequest._();
+  SpeakToChannelRequest createEmptyInstance() => create();
+  static $pb.PbList<SpeakToChannelRequest> createRepeated() => $pb.PbList<SpeakToChannelRequest>();
   @$core.pragma('dart2js:noInline')
-  static SendRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SendRequest>(create);
-  static SendRequest? _defaultInstance;
+  static SpeakToChannelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SpeakToChannelRequest>(create);
+  static SpeakToChannelRequest? _defaultInstance;
 
-  SendRequest_Request whichRequest() => _SendRequest_RequestByTag[$_whichOneof(0)]!;
+  SpeakToChannelRequest_Request whichRequest() => _SpeakToChannelRequest_RequestByTag[$_whichOneof(0)]!;
   void clearRequest() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -206,13 +285,13 @@ class SendRequest extends $pb.GeneratedMessage {
   $1.VoiceData ensureVoiceData() => $_ensure(1);
 }
 
-class SendResponse extends $pb.GeneratedMessage {
-  factory SendResponse() => create();
-  SendResponse._() : super();
-  factory SendResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SendResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class SpeakToChannelResponse extends $pb.GeneratedMessage {
+  factory SpeakToChannelResponse() => create();
+  SpeakToChannelResponse._() : super();
+  factory SpeakToChannelResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SpeakToChannelResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SendResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpeakToChannelResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -220,26 +299,26 @@ class SendResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SendResponse clone() => SendResponse()..mergeFromMessage(this);
+  SpeakToChannelResponse clone() => SpeakToChannelResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SendResponse copyWith(void Function(SendResponse) updates) => super.copyWith((message) => updates(message as SendResponse)) as SendResponse;
+  SpeakToChannelResponse copyWith(void Function(SpeakToChannelResponse) updates) => super.copyWith((message) => updates(message as SpeakToChannelResponse)) as SpeakToChannelResponse;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SendResponse create() => SendResponse._();
-  SendResponse createEmptyInstance() => create();
-  static $pb.PbList<SendResponse> createRepeated() => $pb.PbList<SendResponse>();
+  static SpeakToChannelResponse create() => SpeakToChannelResponse._();
+  SpeakToChannelResponse createEmptyInstance() => create();
+  static $pb.PbList<SpeakToChannelResponse> createRepeated() => $pb.PbList<SpeakToChannelResponse>();
   @$core.pragma('dart2js:noInline')
-  static SendResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SendResponse>(create);
-  static SendResponse? _defaultInstance;
+  static SpeakToChannelResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SpeakToChannelResponse>(create);
+  static SpeakToChannelResponse? _defaultInstance;
 }
 
-class ReceiveRequest extends $pb.GeneratedMessage {
-  factory ReceiveRequest({
+class ListenToUserRequest extends $pb.GeneratedMessage {
+  factory ListenToUserRequest({
     $1.VoiceInfo? voiceInfo,
   }) {
     final $result = create();
@@ -248,11 +327,11 @@ class ReceiveRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ReceiveRequest._() : super();
-  factory ReceiveRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReceiveRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ListenToUserRequest._() : super();
+  factory ListenToUserRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListenToUserRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListenToUserRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
     ..aOM<$1.VoiceInfo>(1, _omitFieldNames ? '' : 'voiceInfo', subBuilder: $1.VoiceInfo.create)
     ..hasRequiredFields = false
   ;
@@ -261,22 +340,22 @@ class ReceiveRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ReceiveRequest clone() => ReceiveRequest()..mergeFromMessage(this);
+  ListenToUserRequest clone() => ListenToUserRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ReceiveRequest copyWith(void Function(ReceiveRequest) updates) => super.copyWith((message) => updates(message as ReceiveRequest)) as ReceiveRequest;
+  ListenToUserRequest copyWith(void Function(ListenToUserRequest) updates) => super.copyWith((message) => updates(message as ListenToUserRequest)) as ListenToUserRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ReceiveRequest create() => ReceiveRequest._();
-  ReceiveRequest createEmptyInstance() => create();
-  static $pb.PbList<ReceiveRequest> createRepeated() => $pb.PbList<ReceiveRequest>();
+  static ListenToUserRequest create() => ListenToUserRequest._();
+  ListenToUserRequest createEmptyInstance() => create();
+  static $pb.PbList<ListenToUserRequest> createRepeated() => $pb.PbList<ListenToUserRequest>();
   @$core.pragma('dart2js:noInline')
-  static ReceiveRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReceiveRequest>(create);
-  static ReceiveRequest? _defaultInstance;
+  static ListenToUserRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListenToUserRequest>(create);
+  static ListenToUserRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $1.VoiceInfo get voiceInfo => $_getN(0);
@@ -290,14 +369,14 @@ class ReceiveRequest extends $pb.GeneratedMessage {
   $1.VoiceInfo ensureVoiceInfo() => $_ensure(0);
 }
 
-enum ReceiveResponse_Response {
+enum ListenToUserResponse_Response {
   voiceInfo, 
   voiceData, 
   notSet
 }
 
-class ReceiveResponse extends $pb.GeneratedMessage {
-  factory ReceiveResponse({
+class ListenToUserResponse extends $pb.GeneratedMessage {
+  factory ListenToUserResponse({
     $1.VoiceInfo? voiceInfo,
     $1.VoiceData? voiceData,
   }) {
@@ -310,16 +389,16 @@ class ReceiveResponse extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ReceiveResponse._() : super();
-  factory ReceiveResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReceiveResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ListenToUserResponse._() : super();
+  factory ListenToUserResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListenToUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static const $core.Map<$core.int, ReceiveResponse_Response> _ReceiveResponse_ResponseByTag = {
-    1 : ReceiveResponse_Response.voiceInfo,
-    2 : ReceiveResponse_Response.voiceData,
-    0 : ReceiveResponse_Response.notSet
+  static const $core.Map<$core.int, ListenToUserResponse_Response> _ListenToUserResponse_ResponseByTag = {
+    1 : ListenToUserResponse_Response.voiceInfo,
+    2 : ListenToUserResponse_Response.voiceData,
+    0 : ListenToUserResponse_Response.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListenToUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<$1.VoiceInfo>(1, _omitFieldNames ? '' : 'voiceInfo', subBuilder: $1.VoiceInfo.create)
     ..aOM<$1.VoiceData>(2, _omitFieldNames ? '' : 'voiceData', subBuilder: $1.VoiceData.create)
@@ -330,24 +409,24 @@ class ReceiveResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ReceiveResponse clone() => ReceiveResponse()..mergeFromMessage(this);
+  ListenToUserResponse clone() => ListenToUserResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ReceiveResponse copyWith(void Function(ReceiveResponse) updates) => super.copyWith((message) => updates(message as ReceiveResponse)) as ReceiveResponse;
+  ListenToUserResponse copyWith(void Function(ListenToUserResponse) updates) => super.copyWith((message) => updates(message as ListenToUserResponse)) as ListenToUserResponse;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ReceiveResponse create() => ReceiveResponse._();
-  ReceiveResponse createEmptyInstance() => create();
-  static $pb.PbList<ReceiveResponse> createRepeated() => $pb.PbList<ReceiveResponse>();
+  static ListenToUserResponse create() => ListenToUserResponse._();
+  ListenToUserResponse createEmptyInstance() => create();
+  static $pb.PbList<ListenToUserResponse> createRepeated() => $pb.PbList<ListenToUserResponse>();
   @$core.pragma('dart2js:noInline')
-  static ReceiveResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReceiveResponse>(create);
-  static ReceiveResponse? _defaultInstance;
+  static ListenToUserResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListenToUserResponse>(create);
+  static ListenToUserResponse? _defaultInstance;
 
-  ReceiveResponse_Response whichResponse() => _ReceiveResponse_ResponseByTag[$_whichOneof(0)]!;
+  ListenToUserResponse_Response whichResponse() => _ListenToUserResponse_ResponseByTag[$_whichOneof(0)]!;
   void clearResponse() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)

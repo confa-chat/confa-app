@@ -1,5 +1,5 @@
-const serverAddress = "49.13.3.4";
-// const serverAddress = "localhost";
+// const serverAddress = "49.13.3.4";
+const serverAddress = "localhost";
 const mainServerPort = 38100;
 const voiceServerPort = 8081;
 

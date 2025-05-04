@@ -22,7 +22,7 @@ class TextChatWidget extends StatefulWidget {
 class _TextChatWidgetState extends State<TextChatWidget> {
   bool _isLoading = false;
   bool _hasReachedMax = false;
-  late final UserRepo _userRepo;
+  late final UsersRepo _userRepo;
   final _users = <String, User>{};
   final List<Message> _messages = [];
   late final StreamSubscription<void> updateSubscription;
@@ -74,7 +74,7 @@ class _TextChatWidgetState extends State<TextChatWidget> {
 
   @override
   void initState() {
-    _userRepo = Provider.of<UserRepo>(context, listen: false);
+    _userRepo = Provider.of<UsersRepo>(context, listen: false);
     final chatService = Provider.of<ChatServiceClient>(context, listen: false);
     final channelRef = TextChannelRef(
       channelId: widget.channelId,

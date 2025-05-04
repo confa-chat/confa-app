@@ -19,6 +19,7 @@ const JavaFeatures$json = {
   '2': [
     {'1': 'legacy_closed_enum', '3': 1, '4': 1, '5': 8, '8': {}, '10': 'legacyClosedEnum'},
     {'1': 'utf8_validation', '3': 2, '4': 1, '5': 14, '6': '.pb.JavaFeatures.Utf8Validation', '8': {}, '10': 'utf8Validation'},
+    {'1': 'use_old_outer_classname_default', '3': 4, '4': 1, '5': 8, '8': {}, '10': 'useOldOuterClassnameDefault'},
   ],
   '4': [JavaFeatures_Utf8Validation$json],
 };
@@ -45,7 +46,9 @@ final $typed_data.Uint8List javaFeaturesDescriptor = $convert.base64Decode(
     'RoZSBKYXZhLXNwZWNpZmljIHV0ZjggdmFsaWRhdGlvbiBmZWF0dXJlIGlzIGRlcHJlY2F0ZWQg'
     'YW5kIGlzIHNjaGVkdWxlZCB0byBiZSByZW1vdmVkIGluIGVkaXRpb24gMjAyNS4gIFV0Zjggdm'
     'FsaWRhdGlvbiBiZWhhdmlvciBzaG91bGQgdXNlIHRoZSBnbG9iYWwgY3Jvc3MtbGFuZ3VhZ2Ug'
-    'dXRmOF92YWxpZGF0aW9uIGZlYXR1cmUuUg51dGY4VmFsaWRhdGlvbiJGCg5VdGY4VmFsaWRhdG'
-    'lvbhIbChdVVEY4X1ZBTElEQVRJT05fVU5LTk9XThAAEgsKB0RFRkFVTFQQARIKCgZWRVJJRlkQ'
-    'Ag==');
+    'dXRmOF92YWxpZGF0aW9uIGZlYXR1cmUuUg51dGY4VmFsaWRhdGlvbhJuCh91c2Vfb2xkX291dG'
+    'VyX2NsYXNzbmFtZV9kZWZhdWx0GAQgASgIQiiIAQGYAQGiAQkSBHRydWUYhAeiAQoSBWZhbHNl'
+    'GOkHsgEGCOkHIOkHUht1c2VPbGRPdXRlckNsYXNzbmFtZURlZmF1bHQiRgoOVXRmOFZhbGlkYX'
+    'Rpb24SGwoXVVRGOF9WQUxJREFUSU9OX1VOS05PV04QABILCgdERUZBVUxUEAESCgoGVkVSSUZZ'
+    'EAI=');
 

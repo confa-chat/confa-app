@@ -13,8 +13,92 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../channel/v1/channels.pb.dart' as $3;
-import '../../user/v1/user.pb.dart' as $4;
+import '../../channel/v1/channels.pb.dart' as $4;
+import '../../user/v1/user.pb.dart' as $3;
+
+class CurrentUserRequest extends $pb.GeneratedMessage {
+  factory CurrentUserRequest() => create();
+  CurrentUserRequest._() : super();
+  factory CurrentUserRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CurrentUserRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CurrentUserRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CurrentUserRequest clone() => CurrentUserRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CurrentUserRequest copyWith(void Function(CurrentUserRequest) updates) => super.copyWith((message) => updates(message as CurrentUserRequest)) as CurrentUserRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserRequest create() => CurrentUserRequest._();
+  CurrentUserRequest createEmptyInstance() => create();
+  static $pb.PbList<CurrentUserRequest> createRepeated() => $pb.PbList<CurrentUserRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CurrentUserRequest>(create);
+  static CurrentUserRequest? _defaultInstance;
+}
+
+class CurrentUserResponse extends $pb.GeneratedMessage {
+  factory CurrentUserResponse({
+    $3.User? user,
+  }) {
+    final $result = create();
+    if (user != null) {
+      $result.user = user;
+    }
+    return $result;
+  }
+  CurrentUserResponse._() : super();
+  factory CurrentUserResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CurrentUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CurrentUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
+    ..aOM<$3.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $3.User.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CurrentUserResponse clone() => CurrentUserResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CurrentUserResponse copyWith(void Function(CurrentUserResponse) updates) => super.copyWith((message) => updates(message as CurrentUserResponse)) as CurrentUserResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserResponse create() => CurrentUserResponse._();
+  CurrentUserResponse createEmptyInstance() => create();
+  static $pb.PbList<CurrentUserResponse> createRepeated() => $pb.PbList<CurrentUserResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CurrentUserResponse>(create);
+  static CurrentUserResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $3.User get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user($3.User v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+  @$pb.TagNumber(1)
+  $3.User ensureUser() => $_ensure(0);
+}
 
 class ListServerChannelsRequest extends $pb.GeneratedMessage {
   factory ListServerChannelsRequest({
@@ -68,7 +152,7 @@ class ListServerChannelsRequest extends $pb.GeneratedMessage {
 
 class ListServerChannelsResponse extends $pb.GeneratedMessage {
   factory ListServerChannelsResponse({
-    $core.Iterable<$3.Channel>? channels,
+    $core.Iterable<$4.Channel>? channels,
   }) {
     final $result = create();
     if (channels != null) {
@@ -81,7 +165,7 @@ class ListServerChannelsResponse extends $pb.GeneratedMessage {
   factory ListServerChannelsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerChannelsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..pc<$3.Channel>(1, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: $3.Channel.create)
+    ..pc<$4.Channel>(1, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: $4.Channel.create)
     ..hasRequiredFields = false
   ;
 
@@ -107,7 +191,7 @@ class ListServerChannelsResponse extends $pb.GeneratedMessage {
   static ListServerChannelsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$3.Channel> get channels => $_getList(0);
+  $core.List<$4.Channel> get channels => $_getList(0);
 }
 
 class ListServerUsersRequest extends $pb.GeneratedMessage {
@@ -162,7 +246,7 @@ class ListServerUsersRequest extends $pb.GeneratedMessage {
 
 class ListServerUsersResponse extends $pb.GeneratedMessage {
   factory ListServerUsersResponse({
-    $core.Iterable<$4.User>? users,
+    $core.Iterable<$3.User>? users,
   }) {
     final $result = create();
     if (users != null) {
@@ -175,7 +259,7 @@ class ListServerUsersResponse extends $pb.GeneratedMessage {
   factory ListServerUsersResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerUsersResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..pc<$4.User>(1, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM, subBuilder: $4.User.create)
+    ..pc<$3.User>(1, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM, subBuilder: $3.User.create)
     ..hasRequiredFields = false
   ;
 
@@ -201,7 +285,7 @@ class ListServerUsersResponse extends $pb.GeneratedMessage {
   static ListServerUsersResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$4.User> get users => $_getList(0);
+  $core.List<$3.User> get users => $_getList(0);
 }
 
 class GetUserRequest extends $pb.GeneratedMessage {
@@ -256,7 +340,7 @@ class GetUserRequest extends $pb.GeneratedMessage {
 
 class GetUserResponse extends $pb.GeneratedMessage {
   factory GetUserResponse({
-    $4.User? user,
+    $3.User? user,
   }) {
     final $result = create();
     if (user != null) {
@@ -269,7 +353,7 @@ class GetUserResponse extends $pb.GeneratedMessage {
   factory GetUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..aOM<$4.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $4.User.create)
+    ..aOM<$3.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $3.User.create)
     ..hasRequiredFields = false
   ;
 
@@ -295,15 +379,15 @@ class GetUserResponse extends $pb.GeneratedMessage {
   static GetUserResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $4.User get user => $_getN(0);
+  $3.User get user => $_getN(0);
   @$pb.TagNumber(1)
-  set user($4.User v) { setField(1, v); }
+  set user($3.User v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearUser() => clearField(1);
   @$pb.TagNumber(1)
-  $4.User ensureUser() => $_ensure(0);
+  $3.User ensureUser() => $_ensure(0);
 }
 
 

@@ -13,6 +13,28 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use currentUserRequestDescriptor instead')
+const CurrentUserRequest$json = {
+  '1': 'CurrentUserRequest',
+};
+
+/// Descriptor for `CurrentUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List currentUserRequestDescriptor = $convert.base64Decode(
+    'ChJDdXJyZW50VXNlclJlcXVlc3Q=');
+
+@$core.Deprecated('Use currentUserResponseDescriptor instead')
+const CurrentUserResponse$json = {
+  '1': 'CurrentUserResponse',
+  '2': [
+    {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.konfa.user.v1.User', '10': 'user'},
+  ],
+};
+
+/// Descriptor for `CurrentUserResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List currentUserResponseDescriptor = $convert.base64Decode(
+    'ChNDdXJyZW50VXNlclJlc3BvbnNlEicKBHVzZXIYASABKAsyEy5rb25mYS51c2VyLnYxLlVzZX'
+    'JSBHVzZXI=');
+
 @$core.Deprecated('Use listServerChannelsRequestDescriptor instead')
 const ListServerChannelsRequest$json = {
   '1': 'ListServerChannelsRequest',

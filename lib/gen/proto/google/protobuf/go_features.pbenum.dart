@@ -32,5 +32,24 @@ class GoFeatures_APILevel extends $pb.ProtobufEnum {
   const GoFeatures_APILevel._($core.int v, $core.String n) : super(v, n);
 }
 
+class GoFeatures_StripEnumPrefix extends $pb.ProtobufEnum {
+  static const GoFeatures_StripEnumPrefix STRIP_ENUM_PREFIX_UNSPECIFIED = GoFeatures_StripEnumPrefix._(0, _omitEnumNames ? '' : 'STRIP_ENUM_PREFIX_UNSPECIFIED');
+  static const GoFeatures_StripEnumPrefix STRIP_ENUM_PREFIX_KEEP = GoFeatures_StripEnumPrefix._(1, _omitEnumNames ? '' : 'STRIP_ENUM_PREFIX_KEEP');
+  static const GoFeatures_StripEnumPrefix STRIP_ENUM_PREFIX_GENERATE_BOTH = GoFeatures_StripEnumPrefix._(2, _omitEnumNames ? '' : 'STRIP_ENUM_PREFIX_GENERATE_BOTH');
+  static const GoFeatures_StripEnumPrefix STRIP_ENUM_PREFIX_STRIP = GoFeatures_StripEnumPrefix._(3, _omitEnumNames ? '' : 'STRIP_ENUM_PREFIX_STRIP');
+
+  static const $core.List<GoFeatures_StripEnumPrefix> values = <GoFeatures_StripEnumPrefix> [
+    STRIP_ENUM_PREFIX_UNSPECIFIED,
+    STRIP_ENUM_PREFIX_KEEP,
+    STRIP_ENUM_PREFIX_GENERATE_BOTH,
+    STRIP_ENUM_PREFIX_STRIP,
+  ];
+
+  static final $core.Map<$core.int, GoFeatures_StripEnumPrefix> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static GoFeatures_StripEnumPrefix? valueOf($core.int value) => _byValue[value];
+
+  const GoFeatures_StripEnumPrefix._($core.int v, $core.String n) : super(v, n);
+}
+
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

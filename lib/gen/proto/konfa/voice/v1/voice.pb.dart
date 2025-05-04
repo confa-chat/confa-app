@@ -54,7 +54,7 @@ class VoiceInfo extends $pb.GeneratedMessage {
     $core.String? serverId,
     $core.String? channelId,
     $core.String? userId,
-    Codec? codec,
+    AudioCodec? codec,
   }) {
     final $result = create();
     if (serverId != null) {
@@ -79,7 +79,7 @@ class VoiceInfo extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..aOS(2, _omitFieldNames ? '' : 'channelId')
     ..aOS(3, _omitFieldNames ? '' : 'userId')
-    ..e<Codec>(4, _omitFieldNames ? '' : 'codec', $pb.PbFieldType.OE, defaultOrMaker: Codec.CODEC_UNSPECIFIED, valueOf: Codec.valueOf, enumValues: Codec.values)
+    ..e<AudioCodec>(4, _omitFieldNames ? '' : 'codec', $pb.PbFieldType.OE, defaultOrMaker: AudioCodec.AUDIO_CODEC_UNSPECIFIED, valueOf: AudioCodec.valueOf, enumValues: AudioCodec.values)
     ..hasRequiredFields = false
   ;
 
@@ -132,9 +132,9 @@ class VoiceInfo extends $pb.GeneratedMessage {
   void clearUserId() => clearField(3);
 
   @$pb.TagNumber(4)
-  Codec get codec => $_getN(3);
+  AudioCodec get codec => $_getN(3);
   @$pb.TagNumber(4)
-  set codec(Codec v) { setField(4, v); }
+  set codec(AudioCodec v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasCodec() => $_has(3);
   @$pb.TagNumber(4)
