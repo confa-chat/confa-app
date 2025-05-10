@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: konfa/voice/v1/voice.proto
+//  source: konfa/voice_relay/v1/voice.proto
 //
 // @dart = 2.12
 

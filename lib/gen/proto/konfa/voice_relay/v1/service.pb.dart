@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: konfa/voice/v1/service.proto
+//  source: konfa/voice_relay/v1/service.proto
 //
 // @dart = 2.12
 
@@ -37,7 +37,7 @@ class JoinChannelRequest extends $pb.GeneratedMessage {
   factory JoinChannelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory JoinChannelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JoinChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JoinChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..aOS(2, _omitFieldNames ? '' : 'channelId')
     ..aOS(3, _omitFieldNames ? '' : 'userId')
@@ -116,7 +116,7 @@ class JoinChannelResponse extends $pb.GeneratedMessage {
     1 : JoinChannelResponse_State.usersState,
     0 : JoinChannelResponse_State.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JoinChannelResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JoinChannelResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..oo(0, [1])
     ..aOM<UsersState>(1, _omitFieldNames ? '' : 'usersState', subBuilder: UsersState.create)
     ..hasRequiredFields = false
@@ -172,7 +172,7 @@ class UsersState extends $pb.GeneratedMessage {
   factory UsersState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UsersState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UsersState', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UsersState', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..pPS(1, _omitFieldNames ? '' : 'userIds')
     ..hasRequiredFields = false
   ;
@@ -231,7 +231,7 @@ class SpeakToChannelRequest extends $pb.GeneratedMessage {
     2 : SpeakToChannelRequest_Request.voiceData,
     0 : SpeakToChannelRequest_Request.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpeakToChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpeakToChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<$1.VoiceInfo>(1, _omitFieldNames ? '' : 'voiceInfo', subBuilder: $1.VoiceInfo.create)
     ..aOM<$1.VoiceData>(2, _omitFieldNames ? '' : 'voiceData', subBuilder: $1.VoiceData.create)
@@ -291,7 +291,7 @@ class SpeakToChannelResponse extends $pb.GeneratedMessage {
   factory SpeakToChannelResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SpeakToChannelResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpeakToChannelResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpeakToChannelResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -331,7 +331,7 @@ class ListenToUserRequest extends $pb.GeneratedMessage {
   factory ListenToUserRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ListenToUserRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListenToUserRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListenToUserRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..aOM<$1.VoiceInfo>(1, _omitFieldNames ? '' : 'voiceInfo', subBuilder: $1.VoiceInfo.create)
     ..hasRequiredFields = false
   ;
@@ -398,7 +398,7 @@ class ListenToUserResponse extends $pb.GeneratedMessage {
     2 : ListenToUserResponse_Response.voiceData,
     0 : ListenToUserResponse_Response.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListenToUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListenToUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<$1.VoiceInfo>(1, _omitFieldNames ? '' : 'voiceInfo', subBuilder: $1.VoiceInfo.create)
     ..aOM<$1.VoiceData>(2, _omitFieldNames ? '' : 'voiceData', subBuilder: $1.VoiceData.create)

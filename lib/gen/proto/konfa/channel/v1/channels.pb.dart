@@ -179,6 +179,7 @@ class VoiceChannel extends $pb.GeneratedMessage {
     $core.String? serverId,
     $core.String? channelId,
     $core.String? name,
+    $core.String? voiceRelayId,
   }) {
     final $result = create();
     if (serverId != null) {
@@ -190,6 +191,9 @@ class VoiceChannel extends $pb.GeneratedMessage {
     if (name != null) {
       $result.name = name;
     }
+    if (voiceRelayId != null) {
+      $result.voiceRelayId = voiceRelayId;
+    }
     return $result;
   }
   VoiceChannel._() : super();
@@ -200,6 +204,7 @@ class VoiceChannel extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..aOS(2, _omitFieldNames ? '' : 'channelId')
     ..aOS(3, _omitFieldNames ? '' : 'name')
+    ..aOS(4, _omitFieldNames ? '' : 'voiceRelayId')
     ..hasRequiredFields = false
   ;
 
@@ -250,6 +255,15 @@ class VoiceChannel extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(2);
   @$pb.TagNumber(3)
   void clearName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get voiceRelayId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set voiceRelayId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasVoiceRelayId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearVoiceRelayId() => clearField(4);
 }
 
 

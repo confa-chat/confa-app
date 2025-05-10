@@ -1,133 +1,132 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:konfa/bloc/voice_bloc.dart';
 import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
-import 'package:konfa/repo/user.dart';
-import 'package:konfa/voice/service.dart';
-import 'package:provider/provider.dart';
+import 'package:konfa/services/connection_manager.dart';
 
-class VoiceChannelListTile extends StatefulWidget {
+class VoiceChannelListTile extends StatelessWidget {
   final VoiceChannel channel;
-  final void Function()? onJoin;
 
-  const VoiceChannelListTile({super.key, required this.channel, this.onJoin});
+  const VoiceChannelListTile({super.key, required this.channel});
 
-  @override
-  State<VoiceChannelListTile> createState() => _VoiceChannelState();
-}
-
-class _VoiceChannelState extends State<VoiceChannelListTile> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.mic),
-      title: Text(widget.channel.name),
-      onTap: widget.onJoin,
+    return BlocBuilder<VoiceBloc, VoiceState>(
+      builder: (context, state) {
+        final bool isActive =
+            state is VoiceChannelConnected &&
+            state.channelId == channel.channelId &&
+            state.serverId == channel.serverId;
+
+        return ListTile(
+          leading: const Icon(Icons.mic),
+          title: Text(channel.name),
+          subtitle:
+              channel.hasVoiceRelayId()
+                  ? Text('Relay: ${channel.voiceRelayId}', style: TextStyle(fontSize: 10))
+                  : null,
+          selected: isActive,
+          onTap:
+              isActive
+                  ? () => context.read<VoiceBloc>().add(LeaveVoiceChannel())
+                  : () => context.read<VoiceBloc>().add(
+                    JoinVoiceChannel(
+                      conn: context.read<HubConnection>(),
+                      serverId: channel.serverId,
+                      channelId: channel.channelId,
+                      voiceRelayId: channel.voiceRelayId,
+                    ),
+                  ),
+        );
+      },
     );
-
-    // if (users == null || users.isEmpty) {
-    //   return ListTile(
-    //     leading: const Icon(Icons.mic),
-    //     title: Text(widget.channel.name),
-    //   );
-    // }
-
-    // return Column(
-    //   children: [
-    //     ListTile(
-    //       leading: const Icon(Icons.mic),
-    //       title: Text(widget.channel.name),
-    //     ),
-    //     Row(
-    //       children: [
-    //         const Spacer(flex: 1),
-    //         Flexible(
-    //           flex: 3,
-    //           child: Column(
-    //             children: users.map((e) => ListTile(title: Text(e))).toList(),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 }
 
-class ActiveVoiceChannelListTile extends StatefulWidget {
+class ActiveVoiceChannelWidget extends StatelessWidget {
   final VoiceChannel channel;
-  const ActiveVoiceChannelListTile({super.key, required this.channel});
 
-  @override
-  State<ActiveVoiceChannelListTile> createState() => _ActiveVoiceChannelListTileState();
-}
+  const ActiveVoiceChannelWidget({super.key, required this.channel});
 
-class _ActiveVoiceChannelListTileState extends State<ActiveVoiceChannelListTile> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: const Icon(Icons.mic),
-          title: Text(widget.channel.name),
-        ),
-        StreamBuilder(
-          stream: Provider.of<VoiceService>(context).joinChannel(
-            widget.channel.serverId,
-            widget.channel.channelId,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              throw snapshot.error!;
-              // return const Text('Error');
-            }
+    return BlocBuilder<VoiceBloc, VoiceState>(
+      builder: (context, state) {
+        if (state is VoiceLoading) {
+          return Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.mic),
+                title: Text(channel.name),
+                trailing: const CircularProgressIndicator(),
+              ),
+            ],
+          );
+        }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
+        if (state is VoiceChannelConnected &&
+            state.channelId == channel.channelId &&
+            state.serverId == channel.serverId) {
+          final users = state.usersState.userIds;
 
-            final users = snapshot.data!.userIds;
-
-            return Column(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.mic),
-                  title: Text(widget.channel.name),
+          return Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.mic),
+                title: Text(channel.name),
+                subtitle:
+                    channel.hasVoiceRelayId()
+                        ? Text('Relay: ${channel.voiceRelayId}', style: TextStyle(fontSize: 10))
+                        : null,
+                trailing: IconButton(
+                  icon: const Icon(Icons.call_end),
+                  onPressed: () => context.read<VoiceBloc>().add(LeaveVoiceChannel()),
                 ),
+              ),
+              if (users.isNotEmpty)
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Spacer(flex: 1),
-                    Flexible(
-                      flex: 3,
-                      child: Column(
-                        children: users
-                            .map((userID) => ListTile(
-                                  title: FutureBuilder(
-                                    future: Provider.of<UsersRepo>(context).getUser(userID),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState == ConnectionState.waiting) {
-                                        return const CircularProgressIndicator();
-                                      }
-
-                                      if (snapshot.hasError) {
-                                        throw snapshot.error!;
-                                        // return const Text('Error');
-                                      }
-
-                                      final user = snapshot.data!;
-
-                                      return Text(user.username);
-                                    },
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    ),
+                    const Icon(Icons.people),
+                    const SizedBox(width: 8),
+                    Text('${users.length} users connected'),
                   ],
                 ),
-              ],
-            );
-          },
-        ),
-      ],
+              if (users.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: SizedBox(
+                    height: users.length * 40,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:
+                          users.map((userId) {
+                            final displayName = state.userDisplayNames[userId] ?? userId;
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.person, size: 16),
+                                  const SizedBox(width: 8),
+                                  Text(displayName),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        }
+
+        return ListTile(
+          leading: const Icon(Icons.mic),
+          title: Text(channel.name),
+          trailing: const Icon(Icons.error),
+        );
+      },
     );
   }
 }

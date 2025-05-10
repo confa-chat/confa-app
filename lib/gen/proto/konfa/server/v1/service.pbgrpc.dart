@@ -15,28 +15,28 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'service.pb.dart' as $1;
+import 'service.pb.dart' as $2;
 
 export 'service.pb.dart';
 
 @$pb.GrpcServiceName('konfa.server.v1.ServerService')
 class ServerServiceClient extends $grpc.Client {
-  static final _$listServerChannels = $grpc.ClientMethod<$1.ListServerChannelsRequest, $1.ListServerChannelsResponse>(
+  static final _$listServerChannels = $grpc.ClientMethod<$2.ListServerChannelsRequest, $2.ListServerChannelsResponse>(
       '/konfa.server.v1.ServerService/ListServerChannels',
-      ($1.ListServerChannelsRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.ListServerChannelsResponse.fromBuffer(value));
-  static final _$listServerUsers = $grpc.ClientMethod<$1.ListServerUsersRequest, $1.ListServerUsersResponse>(
+      ($2.ListServerChannelsRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $2.ListServerChannelsResponse.fromBuffer(value));
+  static final _$listServerUsers = $grpc.ClientMethod<$2.ListServerUsersRequest, $2.ListServerUsersResponse>(
       '/konfa.server.v1.ServerService/ListServerUsers',
-      ($1.ListServerUsersRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.ListServerUsersResponse.fromBuffer(value));
-  static final _$getUser = $grpc.ClientMethod<$1.GetUserRequest, $1.GetUserResponse>(
+      ($2.ListServerUsersRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $2.ListServerUsersResponse.fromBuffer(value));
+  static final _$getUser = $grpc.ClientMethod<$2.GetUserRequest, $2.GetUserResponse>(
       '/konfa.server.v1.ServerService/GetUser',
-      ($1.GetUserRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.GetUserResponse.fromBuffer(value));
-  static final _$currentUser = $grpc.ClientMethod<$1.CurrentUserRequest, $1.CurrentUserResponse>(
+      ($2.GetUserRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $2.GetUserResponse.fromBuffer(value));
+  static final _$currentUser = $grpc.ClientMethod<$2.CurrentUserRequest, $2.CurrentUserResponse>(
       '/konfa.server.v1.ServerService/CurrentUser',
-      ($1.CurrentUserRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.CurrentUserResponse.fromBuffer(value));
+      ($2.CurrentUserRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $2.CurrentUserResponse.fromBuffer(value));
 
   ServerServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -44,19 +44,19 @@ class ServerServiceClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$1.ListServerChannelsResponse> listServerChannels($1.ListServerChannelsRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ListServerChannelsResponse> listServerChannels($2.ListServerChannelsRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listServerChannels, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.ListServerUsersResponse> listServerUsers($1.ListServerUsersRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ListServerUsersResponse> listServerUsers($2.ListServerUsersRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listServerUsers, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.GetUserResponse> getUser($1.GetUserRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.GetUserResponse> getUser($2.GetUserRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getUser, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.CurrentUserResponse> currentUser($1.CurrentUserRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.CurrentUserResponse> currentUser($2.CurrentUserRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$currentUser, request, options: options);
   }
 }
@@ -66,54 +66,54 @@ abstract class ServerServiceBase extends $grpc.Service {
   $core.String get $name => 'konfa.server.v1.ServerService';
 
   ServerServiceBase() {
-    $addMethod($grpc.ServiceMethod<$1.ListServerChannelsRequest, $1.ListServerChannelsResponse>(
+    $addMethod($grpc.ServiceMethod<$2.ListServerChannelsRequest, $2.ListServerChannelsResponse>(
         'ListServerChannels',
         listServerChannels_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.ListServerChannelsRequest.fromBuffer(value),
-        ($1.ListServerChannelsResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.ListServerUsersRequest, $1.ListServerUsersResponse>(
+        ($core.List<$core.int> value) => $2.ListServerChannelsRequest.fromBuffer(value),
+        ($2.ListServerChannelsResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$2.ListServerUsersRequest, $2.ListServerUsersResponse>(
         'ListServerUsers',
         listServerUsers_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.ListServerUsersRequest.fromBuffer(value),
-        ($1.ListServerUsersResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.GetUserRequest, $1.GetUserResponse>(
+        ($core.List<$core.int> value) => $2.ListServerUsersRequest.fromBuffer(value),
+        ($2.ListServerUsersResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$2.GetUserRequest, $2.GetUserResponse>(
         'GetUser',
         getUser_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.GetUserRequest.fromBuffer(value),
-        ($1.GetUserResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.CurrentUserRequest, $1.CurrentUserResponse>(
+        ($core.List<$core.int> value) => $2.GetUserRequest.fromBuffer(value),
+        ($2.GetUserResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$2.CurrentUserRequest, $2.CurrentUserResponse>(
         'CurrentUser',
         currentUser_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.CurrentUserRequest.fromBuffer(value),
-        ($1.CurrentUserResponse value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $2.CurrentUserRequest.fromBuffer(value),
+        ($2.CurrentUserResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$1.ListServerChannelsResponse> listServerChannels_Pre($grpc.ServiceCall call, $async.Future<$1.ListServerChannelsRequest> request) async {
+  $async.Future<$2.ListServerChannelsResponse> listServerChannels_Pre($grpc.ServiceCall call, $async.Future<$2.ListServerChannelsRequest> request) async {
     return listServerChannels(call, await request);
   }
 
-  $async.Future<$1.ListServerUsersResponse> listServerUsers_Pre($grpc.ServiceCall call, $async.Future<$1.ListServerUsersRequest> request) async {
+  $async.Future<$2.ListServerUsersResponse> listServerUsers_Pre($grpc.ServiceCall call, $async.Future<$2.ListServerUsersRequest> request) async {
     return listServerUsers(call, await request);
   }
 
-  $async.Future<$1.GetUserResponse> getUser_Pre($grpc.ServiceCall call, $async.Future<$1.GetUserRequest> request) async {
+  $async.Future<$2.GetUserResponse> getUser_Pre($grpc.ServiceCall call, $async.Future<$2.GetUserRequest> request) async {
     return getUser(call, await request);
   }
 
-  $async.Future<$1.CurrentUserResponse> currentUser_Pre($grpc.ServiceCall call, $async.Future<$1.CurrentUserRequest> request) async {
+  $async.Future<$2.CurrentUserResponse> currentUser_Pre($grpc.ServiceCall call, $async.Future<$2.CurrentUserRequest> request) async {
     return currentUser(call, await request);
   }
 
-  $async.Future<$1.ListServerChannelsResponse> listServerChannels($grpc.ServiceCall call, $1.ListServerChannelsRequest request);
-  $async.Future<$1.ListServerUsersResponse> listServerUsers($grpc.ServiceCall call, $1.ListServerUsersRequest request);
-  $async.Future<$1.GetUserResponse> getUser($grpc.ServiceCall call, $1.GetUserRequest request);
-  $async.Future<$1.CurrentUserResponse> currentUser($grpc.ServiceCall call, $1.CurrentUserRequest request);
+  $async.Future<$2.ListServerChannelsResponse> listServerChannels($grpc.ServiceCall call, $2.ListServerChannelsRequest request);
+  $async.Future<$2.ListServerUsersResponse> listServerUsers($grpc.ServiceCall call, $2.ListServerUsersRequest request);
+  $async.Future<$2.GetUserResponse> getUser($grpc.ServiceCall call, $2.GetUserRequest request);
+  $async.Future<$2.CurrentUserResponse> currentUser($grpc.ServiceCall call, $2.CurrentUserRequest request);
 }

@@ -5,6 +5,7 @@ import 'package:konfa/gen/proto/google/protobuf/timestamp.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
 import 'package:konfa/repo/user.dart';
+import 'package:konfa/services/connection_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import 'package:fixnum/fixnum.dart';
@@ -22,7 +23,6 @@ class TextChatWidget extends StatefulWidget {
 class _TextChatWidgetState extends State<TextChatWidget> {
   bool _isLoading = false;
   bool _hasReachedMax = false;
-  late final UsersRepo _userRepo;
   final _users = <String, User>{};
   final List<Message> _messages = [];
   late final StreamSubscription<void> updateSubscription;
@@ -34,6 +34,8 @@ class _TextChatWidgetState extends State<TextChatWidget> {
 
     late Timestamp lastMessageTimestamp;
 
+    final usersRepo = context.hub.usersRepo;
+
     if (_messages.isNotEmpty) {
       lastMessageTimestamp = _messages.last.timestamp;
     } else {
@@ -44,21 +46,16 @@ class _TextChatWidgetState extends State<TextChatWidget> {
       );
     }
 
-    final chatService = Provider.of<ChatServiceClient>(context, listen: false);
-
-    final msgs = await chatService.getMessageHistory(
+    final msgs = await context.hub.chatClient.getMessageHistory(
       GetMessageHistoryRequest(
-        channel: TextChannelRef(
-          channelId: widget.channelId,
-          serverId: widget.serverId,
-        ),
+        channel: TextChannelRef(channelId: widget.channelId, serverId: widget.serverId),
         from: lastMessageTimestamp,
         count: 20,
       ),
     );
 
     for (final msg in msgs.messages) {
-      _users[msg.senderId] ??= await _userRepo.getUser(msg.senderId);
+      _users[msg.senderId] ??= await usersRepo.getUser(msg.senderId);
     }
 
     setState(() {
@@ -74,29 +71,23 @@ class _TextChatWidgetState extends State<TextChatWidget> {
 
   @override
   void initState() {
-    _userRepo = Provider.of<UsersRepo>(context, listen: false);
-    final chatService = Provider.of<ChatServiceClient>(context, listen: false);
-    final channelRef = TextChannelRef(
-      channelId: widget.channelId,
-      serverId: widget.serverId,
-    );
+    final hub = context.hub;
+
+    final channelRef = TextChannelRef(channelId: widget.channelId, serverId: widget.serverId);
 
     newMessageHandler(StreamNewMessagesResponse event) async {
-      final msg = await chatService.getMessage(
-        GetMessageRequest(
-          channel: channelRef,
-          messageId: event.messageId,
-        ),
+      final msg = await hub.chatClient.getMessage(
+        GetMessageRequest(channel: channelRef, messageId: event.messageId),
       );
 
-      _users[msg.message.senderId] ??= await _userRepo.getUser(msg.message.senderId);
+      _users[msg.message.senderId] ??= await hub.usersRepo.getUser(msg.message.senderId);
 
       setState(() {
         _messages.insert(0, msg.message);
       });
     }
 
-    updateSubscription = chatService
+    updateSubscription = hub.chatClient
         .streamNewMessages(StreamNewMessagesRequest(channel: channelRef))
         .listen(newMessageHandler);
 
@@ -122,13 +113,16 @@ class _TextChatWidgetState extends State<TextChatWidget> {
             isLoading: _isLoading,
             reverse: true,
             hasReachedMax: _hasReachedMax,
-            loadingBuilder: (context) => _hasReachedMax
-                ? const SizedBox()
-                : const Center(child: CircularProgressIndicator()),
-            itemBuilder: (context, index) => MessageListTile(
-              user: _users[_messages[index].senderId]!,
-              message: _messages[index],
-            ),
+            loadingBuilder:
+                (context) =>
+                    _hasReachedMax
+                        ? const SizedBox()
+                        : const Center(child: CircularProgressIndicator()),
+            itemBuilder:
+                (context, index) => MessageListTile(
+                  user: _users[_messages[index].senderId]!,
+                  message: _messages[index],
+                ),
           ),
           // child: ListView.builder(
           //   reverse: true,
@@ -142,12 +136,9 @@ class _TextChatWidgetState extends State<TextChatWidget> {
         ),
         MessageInput(
           send: (text) async {
-            Provider.of<ChatServiceClient>(context, listen: false).sendMessage(
+            context.hub.chatClient.sendMessage(
               SendMessageRequest(
-                channel: TextChannelRef(
-                  channelId: widget.channelId,
-                  serverId: widget.serverId,
-                ),
+                channel: TextChannelRef(channelId: widget.channelId, serverId: widget.serverId),
                 content: text,
               ),
             );
@@ -212,18 +203,12 @@ class _MessageInputState extends State<MessageInput> {
         children: [
           Expanded(
             child: TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Message',
-              ),
+              decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Message'),
               controller: _controller,
               onSubmitted: (_) => _sendMessage(),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.send),
-            onPressed: _sendMessage,
-          ),
+          IconButton(icon: const Icon(Icons.send), onPressed: _sendMessage),
         ],
       ),
     );

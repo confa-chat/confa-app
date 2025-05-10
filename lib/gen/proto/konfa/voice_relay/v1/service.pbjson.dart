@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: konfa/voice/v1/service.proto
+//  source: konfa/voice_relay/v1/service.proto
 //
 // @dart = 2.12
 
@@ -32,7 +32,7 @@ final $typed_data.Uint8List joinChannelRequestDescriptor = $convert.base64Decode
 const JoinChannelResponse$json = {
   '1': 'JoinChannelResponse',
   '2': [
-    {'1': 'users_state', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice.v1.UsersState', '9': 0, '10': 'usersState'},
+    {'1': 'users_state', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice_relay.v1.UsersState', '9': 0, '10': 'usersState'},
   ],
   '8': [
     {'1': 'state'},
@@ -41,8 +41,8 @@ const JoinChannelResponse$json = {
 
 /// Descriptor for `JoinChannelResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List joinChannelResponseDescriptor = $convert.base64Decode(
-    'ChNKb2luQ2hhbm5lbFJlc3BvbnNlEj0KC3VzZXJzX3N0YXRlGAEgASgLMhoua29uZmEudm9pY2'
-    'UudjEuVXNlcnNTdGF0ZUgAUgp1c2Vyc1N0YXRlQgcKBXN0YXRl');
+    'ChNKb2luQ2hhbm5lbFJlc3BvbnNlEkMKC3VzZXJzX3N0YXRlGAEgASgLMiAua29uZmEudm9pY2'
+    'VfcmVsYXkudjEuVXNlcnNTdGF0ZUgAUgp1c2Vyc1N0YXRlQgcKBXN0YXRl');
 
 @$core.Deprecated('Use usersStateDescriptor instead')
 const UsersState$json = {
@@ -60,8 +60,8 @@ final $typed_data.Uint8List usersStateDescriptor = $convert.base64Decode(
 const SpeakToChannelRequest$json = {
   '1': 'SpeakToChannelRequest',
   '2': [
-    {'1': 'voice_info', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice.v1.VoiceInfo', '9': 0, '10': 'voiceInfo'},
-    {'1': 'voice_data', '3': 2, '4': 1, '5': 11, '6': '.konfa.voice.v1.VoiceData', '9': 0, '10': 'voiceData'},
+    {'1': 'voice_info', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice_relay.v1.VoiceInfo', '9': 0, '10': 'voiceInfo'},
+    {'1': 'voice_data', '3': 2, '4': 1, '5': 11, '6': '.konfa.voice_relay.v1.VoiceData', '9': 0, '10': 'voiceData'},
   ],
   '8': [
     {'1': 'request'},
@@ -70,9 +70,10 @@ const SpeakToChannelRequest$json = {
 
 /// Descriptor for `SpeakToChannelRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List speakToChannelRequestDescriptor = $convert.base64Decode(
-    'ChVTcGVha1RvQ2hhbm5lbFJlcXVlc3QSOgoKdm9pY2VfaW5mbxgBIAEoCzIZLmtvbmZhLnZvaW'
-    'NlLnYxLlZvaWNlSW5mb0gAUgl2b2ljZUluZm8SOgoKdm9pY2VfZGF0YRgCIAEoCzIZLmtvbmZh'
-    'LnZvaWNlLnYxLlZvaWNlRGF0YUgAUgl2b2ljZURhdGFCCQoHcmVxdWVzdA==');
+    'ChVTcGVha1RvQ2hhbm5lbFJlcXVlc3QSQAoKdm9pY2VfaW5mbxgBIAEoCzIfLmtvbmZhLnZvaW'
+    'NlX3JlbGF5LnYxLlZvaWNlSW5mb0gAUgl2b2ljZUluZm8SQAoKdm9pY2VfZGF0YRgCIAEoCzIf'
+    'LmtvbmZhLnZvaWNlX3JlbGF5LnYxLlZvaWNlRGF0YUgAUgl2b2ljZURhdGFCCQoHcmVxdWVzdA'
+    '==');
 
 @$core.Deprecated('Use speakToChannelResponseDescriptor instead')
 const SpeakToChannelResponse$json = {
@@ -87,21 +88,21 @@ final $typed_data.Uint8List speakToChannelResponseDescriptor = $convert.base64De
 const ListenToUserRequest$json = {
   '1': 'ListenToUserRequest',
   '2': [
-    {'1': 'voice_info', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice.v1.VoiceInfo', '10': 'voiceInfo'},
+    {'1': 'voice_info', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice_relay.v1.VoiceInfo', '10': 'voiceInfo'},
   ],
 };
 
 /// Descriptor for `ListenToUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listenToUserRequestDescriptor = $convert.base64Decode(
-    'ChNMaXN0ZW5Ub1VzZXJSZXF1ZXN0EjgKCnZvaWNlX2luZm8YASABKAsyGS5rb25mYS52b2ljZS'
-    '52MS5Wb2ljZUluZm9SCXZvaWNlSW5mbw==');
+    'ChNMaXN0ZW5Ub1VzZXJSZXF1ZXN0Ej4KCnZvaWNlX2luZm8YASABKAsyHy5rb25mYS52b2ljZV'
+    '9yZWxheS52MS5Wb2ljZUluZm9SCXZvaWNlSW5mbw==');
 
 @$core.Deprecated('Use listenToUserResponseDescriptor instead')
 const ListenToUserResponse$json = {
   '1': 'ListenToUserResponse',
   '2': [
-    {'1': 'voice_info', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice.v1.VoiceInfo', '9': 0, '10': 'voiceInfo'},
-    {'1': 'voice_data', '3': 2, '4': 1, '5': 11, '6': '.konfa.voice.v1.VoiceData', '9': 0, '10': 'voiceData'},
+    {'1': 'voice_info', '3': 1, '4': 1, '5': 11, '6': '.konfa.voice_relay.v1.VoiceInfo', '9': 0, '10': 'voiceInfo'},
+    {'1': 'voice_data', '3': 2, '4': 1, '5': 11, '6': '.konfa.voice_relay.v1.VoiceData', '9': 0, '10': 'voiceData'},
   ],
   '8': [
     {'1': 'response'},
@@ -110,7 +111,8 @@ const ListenToUserResponse$json = {
 
 /// Descriptor for `ListenToUserResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listenToUserResponseDescriptor = $convert.base64Decode(
-    'ChRMaXN0ZW5Ub1VzZXJSZXNwb25zZRI6Cgp2b2ljZV9pbmZvGAEgASgLMhkua29uZmEudm9pY2'
-    'UudjEuVm9pY2VJbmZvSABSCXZvaWNlSW5mbxI6Cgp2b2ljZV9kYXRhGAIgASgLMhkua29uZmEu'
-    'dm9pY2UudjEuVm9pY2VEYXRhSABSCXZvaWNlRGF0YUIKCghyZXNwb25zZQ==');
+    'ChRMaXN0ZW5Ub1VzZXJSZXNwb25zZRJACgp2b2ljZV9pbmZvGAEgASgLMh8ua29uZmEudm9pY2'
+    'VfcmVsYXkudjEuVm9pY2VJbmZvSABSCXZvaWNlSW5mbxJACgp2b2ljZV9kYXRhGAIgASgLMh8u'
+    'a29uZmEudm9pY2VfcmVsYXkudjEuVm9pY2VEYXRhSABSCXZvaWNlRGF0YUIKCghyZXNwb25zZQ'
+    '==');
 

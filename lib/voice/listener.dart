@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:grpc/grpc.dart';
-import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/voice/v1/voice.pb.dart';
+import 'package:konfa/gen/proto/konfa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:konfa/gen/proto/konfa/voice_relay/v1/voice.pb.dart';
 import 'package:konfa/voice/service.dart';
 import 'package:konfa/voice/opus/opus.dart';
 import 'package:streaming_sound/streaming_sound.dart';
 
 class VoiceChatListener {
-  final VoiceServiceClient _client;
+  final VoiceRelayServiceClient _client;
 
   final String serverId;
   final String channelId;
@@ -20,14 +20,16 @@ class VoiceChatListener {
   VoiceChatListener(this._client, this.serverId, this.channelId, this.userId);
 
   Future<void> listen() async {
-    _request = _client.listenToUser(ListenToUserRequest(
-      voiceInfo: VoiceInfo(
-        codec: AudioCodec.AUDIO_CODEC_PCM_F32,
-        serverId: serverId,
-        channelId: channelId,
-        userId: userId,
+    _request = _client.listenToUser(
+      ListenToUserRequest(
+        voiceInfo: VoiceInfo(
+          codec: AudioCodec.AUDIO_CODEC_PCM_F32,
+          serverId: serverId,
+          channelId: channelId,
+          userId: userId,
+        ),
       ),
-    ));
+    );
 
     final pcmStream = _request!
         .where((event) => event.hasVoiceData())

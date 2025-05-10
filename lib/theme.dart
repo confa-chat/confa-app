@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 
 const _brandBlue = Color(0xFF1E88E5);
 
-class KonfaTheme extends StatelessWidget {
-  final Widget child;
+class KonfaColorBuilder extends StatelessWidget {
+  final Widget Function(ThemeData, ThemeData) builder;
 
-  const KonfaTheme({super.key, required this.child});
-
-  static const title = 'Complete example';
+  const KonfaColorBuilder({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +30,16 @@ class KonfaTheme extends StatelessWidget {
           darkColorScheme = darkColorScheme.copyWith(secondary: _brandBlue);
         } else {
           // Otherwise, use fallback schemes.
-          lightColorScheme = ColorScheme.fromSeed(
-            seedColor: _brandBlue,
-          );
+          lightColorScheme = ColorScheme.fromSeed(seedColor: _brandBlue);
           darkColorScheme = ColorScheme.fromSeed(
             seedColor: _brandBlue,
             brightness: Brightness.dark,
           );
         }
 
-        return MaterialApp(
-          theme: ThemeData(
-            colorScheme: lightColorScheme,
-          ),
-          darkTheme: ThemeData(
-            colorScheme: darkColorScheme,
-          ),
-          home: child,
-          debugShowCheckedModeBanner: false,
+        return builder(
+          ThemeData(colorScheme: lightColorScheme),
+          ThemeData(colorScheme: darkColorScheme),
         );
       },
     );

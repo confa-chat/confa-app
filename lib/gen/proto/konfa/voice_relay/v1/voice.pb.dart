@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: konfa/voice/v1/voice.proto
+//  source: konfa/voice_relay/v1/voice.proto
 //
 // @dart = 2.12
 
@@ -23,7 +23,7 @@ class SendMeta extends $pb.GeneratedMessage {
   factory SendMeta.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SendMeta.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SendMeta', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SendMeta', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -75,7 +75,7 @@ class VoiceInfo extends $pb.GeneratedMessage {
   factory VoiceInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory VoiceInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..aOS(2, _omitFieldNames ? '' : 'channelId')
     ..aOS(3, _omitFieldNames ? '' : 'userId')
@@ -147,7 +147,7 @@ class ReceiveMeta extends $pb.GeneratedMessage {
   factory ReceiveMeta.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ReceiveMeta.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveMeta', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveMeta', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -187,7 +187,7 @@ class VoiceData extends $pb.GeneratedMessage {
   factory VoiceData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory VoiceData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceData', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceData', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.voice_relay.v1'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;

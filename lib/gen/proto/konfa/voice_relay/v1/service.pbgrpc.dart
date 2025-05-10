@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: konfa/voice/v1/service.proto
+//  source: konfa/voice_relay/v1/service.proto
 //
 // @dart = 2.12
 
@@ -19,22 +19,22 @@ import 'service.pb.dart' as $0;
 
 export 'service.pb.dart';
 
-@$pb.GrpcServiceName('konfa.voice.v1.VoiceService')
-class VoiceServiceClient extends $grpc.Client {
+@$pb.GrpcServiceName('konfa.voice_relay.v1.VoiceRelayService')
+class VoiceRelayServiceClient extends $grpc.Client {
   static final _$speakToChannel = $grpc.ClientMethod<$0.SpeakToChannelRequest, $0.SpeakToChannelResponse>(
-      '/konfa.voice.v1.VoiceService/SpeakToChannel',
+      '/konfa.voice_relay.v1.VoiceRelayService/SpeakToChannel',
       ($0.SpeakToChannelRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.SpeakToChannelResponse.fromBuffer(value));
   static final _$listenToUser = $grpc.ClientMethod<$0.ListenToUserRequest, $0.ListenToUserResponse>(
-      '/konfa.voice.v1.VoiceService/ListenToUser',
+      '/konfa.voice_relay.v1.VoiceRelayService/ListenToUser',
       ($0.ListenToUserRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ListenToUserResponse.fromBuffer(value));
   static final _$joinChannel = $grpc.ClientMethod<$0.JoinChannelRequest, $0.JoinChannelResponse>(
-      '/konfa.voice.v1.VoiceService/JoinChannel',
+      '/konfa.voice_relay.v1.VoiceRelayService/JoinChannel',
       ($0.JoinChannelRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.JoinChannelResponse.fromBuffer(value));
 
-  VoiceServiceClient($grpc.ClientChannel channel,
+  VoiceRelayServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options,
@@ -53,11 +53,11 @@ class VoiceServiceClient extends $grpc.Client {
   }
 }
 
-@$pb.GrpcServiceName('konfa.voice.v1.VoiceService')
-abstract class VoiceServiceBase extends $grpc.Service {
-  $core.String get $name => 'konfa.voice.v1.VoiceService';
+@$pb.GrpcServiceName('konfa.voice_relay.v1.VoiceRelayService')
+abstract class VoiceRelayServiceBase extends $grpc.Service {
+  $core.String get $name => 'konfa.voice_relay.v1.VoiceRelayService';
 
-  VoiceServiceBase() {
+  VoiceRelayServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.SpeakToChannelRequest, $0.SpeakToChannelResponse>(
         'SpeakToChannel',
         speakToChannel,

@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:flutter/services.dart';
 import 'package:grpc/grpc.dart';
-import 'package:konfa/gen/proto/konfa/voice/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/voice/v1/voice.pb.dart';
+import 'package:konfa/gen/proto/konfa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:konfa/gen/proto/konfa/voice_relay/v1/voice.pb.dart';
 import 'package:konfa/voice/service.dart';
 
 import 'package:konfa/voice/opus/opus.dart';
@@ -15,7 +14,7 @@ import 'package:streaming_sound/streaming_sound.dart';
 const sampleSizeMS = 20;
 
 class VoiceChatRecorder {
-  final VoiceServiceClient _client;
+  final VoiceRelayServiceClient _client;
   final String _serverId;
   final String _channelId;
   final String _userId;
@@ -42,14 +41,16 @@ class VoiceChatRecorder {
             (event) =>
                 SpeakToChannelRequest(voiceData: VoiceData(data: event.buffer.asUint8List())),
           )
-          .startWith(SpeakToChannelRequest(
-            voiceInfo: VoiceInfo(
-              codec: AudioCodec.AUDIO_CODEC_PCM_F32,
-              serverId: _serverId,
-              channelId: _channelId,
-              userId: _userId,
+          .startWith(
+            SpeakToChannelRequest(
+              voiceInfo: VoiceInfo(
+                codec: AudioCodec.AUDIO_CODEC_PCM_F32,
+                serverId: _serverId,
+                channelId: _channelId,
+                userId: _userId,
+              ),
             ),
-          )),
+          ),
     );
   }
 

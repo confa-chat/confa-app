@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: konfa/voice/v1/voice.proto
+//  source: konfa/voice_relay/v1/voice.proto
 //
 // @dart = 2.12
 
@@ -44,15 +44,15 @@ const VoiceInfo$json = {
     {'1': 'server_id', '3': 1, '4': 1, '5': 9, '10': 'serverId'},
     {'1': 'channel_id', '3': 2, '4': 1, '5': 9, '10': 'channelId'},
     {'1': 'user_id', '3': 3, '4': 1, '5': 9, '10': 'userId'},
-    {'1': 'codec', '3': 4, '4': 1, '5': 14, '6': '.konfa.voice.v1.AudioCodec', '10': 'codec'},
+    {'1': 'codec', '3': 4, '4': 1, '5': 14, '6': '.konfa.voice_relay.v1.AudioCodec', '10': 'codec'},
   ],
 };
 
 /// Descriptor for `VoiceInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List voiceInfoDescriptor = $convert.base64Decode(
     'CglWb2ljZUluZm8SGwoJc2VydmVyX2lkGAEgASgJUghzZXJ2ZXJJZBIdCgpjaGFubmVsX2lkGA'
-    'IgASgJUgljaGFubmVsSWQSFwoHdXNlcl9pZBgDIAEoCVIGdXNlcklkEjAKBWNvZGVjGAQgASgO'
-    'Mhoua29uZmEudm9pY2UudjEuQXVkaW9Db2RlY1IFY29kZWM=');
+    'IgASgJUgljaGFubmVsSWQSFwoHdXNlcl9pZBgDIAEoCVIGdXNlcklkEjYKBWNvZGVjGAQgASgO'
+    'MiAua29uZmEudm9pY2VfcmVsYXkudjEuQXVkaW9Db2RlY1IFY29kZWM=');
 
 @$core.Deprecated('Use receiveMetaDescriptor instead')
 const ReceiveMeta$json = {

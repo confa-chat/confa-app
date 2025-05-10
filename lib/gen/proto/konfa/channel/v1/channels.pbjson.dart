@@ -53,11 +53,13 @@ const VoiceChannel$json = {
     {'1': 'server_id', '3': 1, '4': 1, '5': 9, '10': 'serverId'},
     {'1': 'channel_id', '3': 2, '4': 1, '5': 9, '10': 'channelId'},
     {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'voice_relay_id', '3': 4, '4': 1, '5': 9, '10': 'voiceRelayId'},
   ],
 };
 
 /// Descriptor for `VoiceChannel`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List voiceChannelDescriptor = $convert.base64Decode(
     'CgxWb2ljZUNoYW5uZWwSGwoJc2VydmVyX2lkGAEgASgJUghzZXJ2ZXJJZBIdCgpjaGFubmVsX2'
-    'lkGAIgASgJUgljaGFubmVsSWQSEgoEbmFtZRgDIAEoCVIEbmFtZQ==');
+    'lkGAIgASgJUgljaGFubmVsSWQSEgoEbmFtZRgDIAEoCVIEbmFtZRIkCg52b2ljZV9yZWxheV9p'
+    'ZBgEIAEoCVIMdm9pY2VSZWxheUlk');
 

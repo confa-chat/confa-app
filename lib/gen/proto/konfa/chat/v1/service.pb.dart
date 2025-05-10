@@ -13,7 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/timestamp.pb.dart' as $2;
+import '../../../google/protobuf/timestamp.pb.dart' as $3;
 
 class TextChannelRef extends $pb.GeneratedMessage {
   factory TextChannelRef({
@@ -200,7 +200,7 @@ class Message extends $pb.GeneratedMessage {
     $core.String? messageId,
     $core.String? senderId,
     $core.String? content,
-    $2.Timestamp? timestamp,
+    $3.Timestamp? timestamp,
   }) {
     final $result = create();
     if (messageId != null) {
@@ -225,7 +225,7 @@ class Message extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'messageId')
     ..aOS(4, _omitFieldNames ? '' : 'senderId')
     ..aOS(5, _omitFieldNames ? '' : 'content')
-    ..aOM<$2.Timestamp>(6, _omitFieldNames ? '' : 'timestamp', subBuilder: $2.Timestamp.create)
+    ..aOM<$3.Timestamp>(6, _omitFieldNames ? '' : 'timestamp', subBuilder: $3.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -278,21 +278,21 @@ class Message extends $pb.GeneratedMessage {
   void clearContent() => clearField(5);
 
   @$pb.TagNumber(6)
-  $2.Timestamp get timestamp => $_getN(3);
+  $3.Timestamp get timestamp => $_getN(3);
   @$pb.TagNumber(6)
-  set timestamp($2.Timestamp v) { setField(6, v); }
+  set timestamp($3.Timestamp v) { setField(6, v); }
   @$pb.TagNumber(6)
   $core.bool hasTimestamp() => $_has(3);
   @$pb.TagNumber(6)
   void clearTimestamp() => clearField(6);
   @$pb.TagNumber(6)
-  $2.Timestamp ensureTimestamp() => $_ensure(3);
+  $3.Timestamp ensureTimestamp() => $_ensure(3);
 }
 
 class GetMessageHistoryRequest extends $pb.GeneratedMessage {
   factory GetMessageHistoryRequest({
     TextChannelRef? channel,
-    $2.Timestamp? from,
+    $3.Timestamp? from,
     $core.int? count,
   }) {
     final $result = create();
@@ -313,7 +313,7 @@ class GetMessageHistoryRequest extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetMessageHistoryRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.chat.v1'), createEmptyInstance: create)
     ..aOM<TextChannelRef>(1, _omitFieldNames ? '' : 'channel', subBuilder: TextChannelRef.create)
-    ..aOM<$2.Timestamp>(2, _omitFieldNames ? '' : 'from', subBuilder: $2.Timestamp.create)
+    ..aOM<$3.Timestamp>(2, _omitFieldNames ? '' : 'from', subBuilder: $3.Timestamp.create)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'count', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
@@ -351,15 +351,15 @@ class GetMessageHistoryRequest extends $pb.GeneratedMessage {
   TextChannelRef ensureChannel() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $2.Timestamp get from => $_getN(1);
+  $3.Timestamp get from => $_getN(1);
   @$pb.TagNumber(2)
-  set from($2.Timestamp v) { setField(2, v); }
+  set from($3.Timestamp v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasFrom() => $_has(1);
   @$pb.TagNumber(2)
   void clearFrom() => clearField(2);
   @$pb.TagNumber(2)
-  $2.Timestamp ensureFrom() => $_ensure(1);
+  $3.Timestamp ensureFrom() => $_ensure(1);
 
   @$pb.TagNumber(3)
   $core.int get count => $_getIZ(2);

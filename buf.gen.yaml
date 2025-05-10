@@ -8,7 +8,11 @@ plugins:
     opt: grpc
 inputs:
   - module: buf.build/protocolbuffers/wellknowntypes
-  - directory: ../konfa-voice/proto
-  - directory: ../konfa-server/proto
-  # - git_repo: https://github.com/konfa-voice/proto.git
-  #   directory: proto
+
+  # - git_repo: https://github.com/konfa-chat/hub
+  # subdir: proto
+  - directory: ../konfa-hub/proto
+
+  # - git_repo: https://github.com/konfa-chat/voice-relay
+  # subdir: proto
+  - directory: ../konfa-voice-relay/proto

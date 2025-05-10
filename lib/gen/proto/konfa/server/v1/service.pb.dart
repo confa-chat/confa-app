@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../channel/v1/channels.pb.dart' as $4;
-import '../../user/v1/user.pb.dart' as $3;
+import '../../channel/v1/channels.pb.dart' as $6;
+import '../../user/v1/user.pb.dart' as $5;
 
 class CurrentUserRequest extends $pb.GeneratedMessage {
   factory CurrentUserRequest() => create();
@@ -50,7 +50,7 @@ class CurrentUserRequest extends $pb.GeneratedMessage {
 
 class CurrentUserResponse extends $pb.GeneratedMessage {
   factory CurrentUserResponse({
-    $3.User? user,
+    $5.User? user,
   }) {
     final $result = create();
     if (user != null) {
@@ -63,7 +63,7 @@ class CurrentUserResponse extends $pb.GeneratedMessage {
   factory CurrentUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CurrentUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..aOM<$3.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $3.User.create)
+    ..aOM<$5.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $5.User.create)
     ..hasRequiredFields = false
   ;
 
@@ -89,15 +89,15 @@ class CurrentUserResponse extends $pb.GeneratedMessage {
   static CurrentUserResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $3.User get user => $_getN(0);
+  $5.User get user => $_getN(0);
   @$pb.TagNumber(1)
-  set user($3.User v) { setField(1, v); }
+  set user($5.User v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearUser() => clearField(1);
   @$pb.TagNumber(1)
-  $3.User ensureUser() => $_ensure(0);
+  $5.User ensureUser() => $_ensure(0);
 }
 
 class ListServerChannelsRequest extends $pb.GeneratedMessage {
@@ -152,7 +152,7 @@ class ListServerChannelsRequest extends $pb.GeneratedMessage {
 
 class ListServerChannelsResponse extends $pb.GeneratedMessage {
   factory ListServerChannelsResponse({
-    $core.Iterable<$4.Channel>? channels,
+    $core.Iterable<$6.Channel>? channels,
   }) {
     final $result = create();
     if (channels != null) {
@@ -165,7 +165,7 @@ class ListServerChannelsResponse extends $pb.GeneratedMessage {
   factory ListServerChannelsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerChannelsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..pc<$4.Channel>(1, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: $4.Channel.create)
+    ..pc<$6.Channel>(1, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: $6.Channel.create)
     ..hasRequiredFields = false
   ;
 
@@ -191,7 +191,7 @@ class ListServerChannelsResponse extends $pb.GeneratedMessage {
   static ListServerChannelsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$4.Channel> get channels => $_getList(0);
+  $core.List<$6.Channel> get channels => $_getList(0);
 }
 
 class ListServerUsersRequest extends $pb.GeneratedMessage {
@@ -246,7 +246,7 @@ class ListServerUsersRequest extends $pb.GeneratedMessage {
 
 class ListServerUsersResponse extends $pb.GeneratedMessage {
   factory ListServerUsersResponse({
-    $core.Iterable<$3.User>? users,
+    $core.Iterable<$5.User>? users,
   }) {
     final $result = create();
     if (users != null) {
@@ -259,7 +259,7 @@ class ListServerUsersResponse extends $pb.GeneratedMessage {
   factory ListServerUsersResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerUsersResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..pc<$3.User>(1, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM, subBuilder: $3.User.create)
+    ..pc<$5.User>(1, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM, subBuilder: $5.User.create)
     ..hasRequiredFields = false
   ;
 
@@ -285,7 +285,7 @@ class ListServerUsersResponse extends $pb.GeneratedMessage {
   static ListServerUsersResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$3.User> get users => $_getList(0);
+  $core.List<$5.User> get users => $_getList(0);
 }
 
 class GetUserRequest extends $pb.GeneratedMessage {
@@ -340,7 +340,7 @@ class GetUserRequest extends $pb.GeneratedMessage {
 
 class GetUserResponse extends $pb.GeneratedMessage {
   factory GetUserResponse({
-    $3.User? user,
+    $5.User? user,
   }) {
     final $result = create();
     if (user != null) {
@@ -353,7 +353,7 @@ class GetUserResponse extends $pb.GeneratedMessage {
   factory GetUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
-    ..aOM<$3.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $3.User.create)
+    ..aOM<$5.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $5.User.create)
     ..hasRequiredFields = false
   ;
 
@@ -379,15 +379,15 @@ class GetUserResponse extends $pb.GeneratedMessage {
   static GetUserResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $3.User get user => $_getN(0);
+  $5.User get user => $_getN(0);
   @$pb.TagNumber(1)
-  set user($3.User v) { setField(1, v); }
+  set user($5.User v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearUser() => clearField(1);
   @$pb.TagNumber(1)
-  $3.User ensureUser() => $_ensure(0);
+  $5.User ensureUser() => $_ensure(0);
 }
 
 
