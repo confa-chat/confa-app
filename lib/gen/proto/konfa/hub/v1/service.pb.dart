@@ -13,6 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import '../../user/v1/user.pb.dart' as $5;
 import 'auth_provider.pb.dart' as $4;
 
 class ListServersRequest extends $pb.GeneratedMessage {
@@ -319,6 +320,192 @@ class ListAuthProvidersResponse extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$4.AuthProvider> get authProviders => $_getList(0);
+}
+
+class GetUserRequest extends $pb.GeneratedMessage {
+  factory GetUserRequest({
+    $core.String? id,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    return $result;
+  }
+  GetUserRequest._() : super();
+  factory GetUserRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetUserRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetUserRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.hub.v1'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetUserRequest clone() => GetUserRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetUserRequest copyWith(void Function(GetUserRequest) updates) => super.copyWith((message) => updates(message as GetUserRequest)) as GetUserRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetUserRequest create() => GetUserRequest._();
+  GetUserRequest createEmptyInstance() => create();
+  static $pb.PbList<GetUserRequest> createRepeated() => $pb.PbList<GetUserRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetUserRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetUserRequest>(create);
+  static GetUserRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
+class GetUserResponse extends $pb.GeneratedMessage {
+  factory GetUserResponse({
+    $5.User? user,
+  }) {
+    final $result = create();
+    if (user != null) {
+      $result.user = user;
+    }
+    return $result;
+  }
+  GetUserResponse._() : super();
+  factory GetUserResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.hub.v1'), createEmptyInstance: create)
+    ..aOM<$5.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $5.User.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetUserResponse clone() => GetUserResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetUserResponse copyWith(void Function(GetUserResponse) updates) => super.copyWith((message) => updates(message as GetUserResponse)) as GetUserResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetUserResponse create() => GetUserResponse._();
+  GetUserResponse createEmptyInstance() => create();
+  static $pb.PbList<GetUserResponse> createRepeated() => $pb.PbList<GetUserResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GetUserResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetUserResponse>(create);
+  static GetUserResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $5.User get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user($5.User v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+  @$pb.TagNumber(1)
+  $5.User ensureUser() => $_ensure(0);
+}
+
+class CurrentUserRequest extends $pb.GeneratedMessage {
+  factory CurrentUserRequest() => create();
+  CurrentUserRequest._() : super();
+  factory CurrentUserRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CurrentUserRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CurrentUserRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.hub.v1'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CurrentUserRequest clone() => CurrentUserRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CurrentUserRequest copyWith(void Function(CurrentUserRequest) updates) => super.copyWith((message) => updates(message as CurrentUserRequest)) as CurrentUserRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserRequest create() => CurrentUserRequest._();
+  CurrentUserRequest createEmptyInstance() => create();
+  static $pb.PbList<CurrentUserRequest> createRepeated() => $pb.PbList<CurrentUserRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CurrentUserRequest>(create);
+  static CurrentUserRequest? _defaultInstance;
+}
+
+class CurrentUserResponse extends $pb.GeneratedMessage {
+  factory CurrentUserResponse({
+    $5.User? user,
+  }) {
+    final $result = create();
+    if (user != null) {
+      $result.user = user;
+    }
+    return $result;
+  }
+  CurrentUserResponse._() : super();
+  factory CurrentUserResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CurrentUserResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CurrentUserResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.hub.v1'), createEmptyInstance: create)
+    ..aOM<$5.User>(1, _omitFieldNames ? '' : 'user', subBuilder: $5.User.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CurrentUserResponse clone() => CurrentUserResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CurrentUserResponse copyWith(void Function(CurrentUserResponse) updates) => super.copyWith((message) => updates(message as CurrentUserResponse)) as CurrentUserResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserResponse create() => CurrentUserResponse._();
+  CurrentUserResponse createEmptyInstance() => create();
+  static $pb.PbList<CurrentUserResponse> createRepeated() => $pb.PbList<CurrentUserResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CurrentUserResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CurrentUserResponse>(create);
+  static CurrentUserResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $5.User get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user($5.User v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+  @$pb.TagNumber(1)
+  $5.User ensureUser() => $_ensure(0);
 }
 
 

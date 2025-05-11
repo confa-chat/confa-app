@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:konfa/auth/auth.dart';
+import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
+import 'package:konfa/gen/proto/konfa/hub/v1/service.pb.dart';
+import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
 import 'package:konfa/screens/server_selection_screen.dart';
 import 'dart:io' show Platform;
 import 'package:konfa/services/connection_manager.dart';
@@ -32,6 +35,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // Selected federation and hub
   late final FederationInfo _selectedFederation;
   late HubInfo _selectedHub;
+  late HubConnection _hubConnection;
 
   // Lists to store voice relays and auth providers fetched from hub
   List<VoiceRelayInfo> voiceRelays = [];
@@ -45,7 +49,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   ];
 
   // Known hubs
-  final List<HubInfo> knownHubs = [HubInfo(name: "Konfach Hub", address: "http://49.13.3.4:38100")];
+  final List<HubInfo> knownHubs = [HubInfo(name: "Konfach Hub", address: "dns://49.13.3.4:38100")];
 
   @override
   void initState() {
@@ -57,7 +61,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
     _hubAddressController.text = _selectedHub.address;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Fetch voice relays and auth providers when the widget is built
       _fetchHubData();
     });
   }
@@ -68,23 +71,20 @@ class _ConnectScreenState extends State<ConnectScreen> {
     super.dispose();
   }
 
-  // Fetch voice relays and auth providers from the hub
   Future<void> _fetchHubData() async {
     setState(() {
       _isLoading = true;
     });
 
-    try {
-      final hubClient = context.manager;
+    final hubUri = Uri.parse(_hubAddressController.text);
 
-      final hubUri = Uri.parse(_hubAddressController.text);
-      final authProvidersResp = await hubClient.listAuthProviders(hubUri);
+    try {
+      final authProvidersResp = await context.manager.listAuthProviders(hubUri);
 
       // Update the state with the fetched data
       setState(() {
         authProviders =
             authProvidersResp.map((provider) {
-              // Determine the protocol type and icon based on the provider's structure
               String protocolType = "Unknown";
               IconData protocolIcon = Icons.question_mark;
 
@@ -98,13 +98,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 name: provider.name,
                 protocolType: protocolType,
                 icon: protocolIcon,
-                isDefault: provider.id == authProvidersResp.first.id, // Mark first one as default
-                onSelected: () async {
-                  final uri = Uri.parse(_hubAddressController.text);
-                  final authState = await context.manager.authOnProvider(uri, provider);
-                  setState(() {
-                    _authState = authState;
-                  });
+                onSelected: () {
+                  _authenticate(hubUri, provider);
                 },
               );
             }).toList();
@@ -117,25 +112,39 @@ class _ConnectScreenState extends State<ConnectScreen> {
         _isLoading = false;
       });
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Failed to connect to hub: ${e.toString()}')));
+      _showError('Failed to connect to hub: ${e.toString()}');
     }
   }
 
-  void _connectToHub() async {
-    final hubUri = Uri.parse(_hubAddressController.text);
-    // if (addressAndPort == null) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('Invalid address format. Must include port (e.g., server:38100)'),
-    //     ),
-    //   );
-    //   return;
-    // }
+  Future<void> _authenticate(Uri hubUri, AuthProvider provider) async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    await context.manager.connect(hubUri, _authState!);
+    try {
+      final manager = context.manager;
+      final authState = await manager.authOnProvider(hubUri, provider);
+      _hubConnection = await manager.connect(hubUri, authState);
+      setState(() {
+        _authState = authState;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
 
+      _showError('Failed to authenticate: ${e.toString()}');
+    }
+  }
+
+  void _showError(String message) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    }
+  }
+
+  void _goToHubScreen() async {
     ServerSelectionScreenRoute(hubID: _selectedHub.address).go(context);
   }
 
@@ -174,7 +183,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: _connectToHub,
+                  onPressed: _goToHubScreen,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
@@ -198,25 +207,93 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 
   Widget _buildAuthProviderItem(AuthProviderInfo provider, bool isCompact) {
-    if (isCompact) {
-      return ListTile(
-        leading: Icon(provider.icon, size: 20),
-        title: Text(provider.name, style: const TextStyle(fontSize: 14)),
-        dense: true,
-        onTap: provider.onSelected,
-      );
-    } else {
-      return Card(
-        margin: const EdgeInsets.only(bottom: 8),
-        child: ListTile(
-          leading: Icon(provider.icon),
-          title: Text(provider.name),
-          subtitle: Text('Protocol: ${provider.protocolType}'),
-          trailing: provider.isDefault ? const Chip(label: Text('Default')) : null,
-          onTap: provider.onSelected,
-        ),
-      );
-    }
+    return ListTile(
+      leading: Icon(provider.icon),
+      title: Text(provider.name),
+      subtitle: Text('Protocol: ${provider.protocolType}'),
+      // trailing: provider.isDefault ? const Chip(label: Text('Default')) : null,
+      onTap: provider.onSelected,
+    );
+  }
+
+  Future<User> _getCurrentUser() async {
+    final resp = await context
+        .getHub(_selectedHub.address)
+        .hubClient
+        .currentUser(CurrentUserRequest());
+    return resp.user;
+  }
+
+  Widget _buildUserProfileWidget(bool isCompact) {
+    return FutureBuilder(
+      future: _getCurrentUser(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final user = snapshot.data!;
+
+        return Card(
+          elevation: 2,
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: isCompact ? 24 : 30,
+                      backgroundColor: Theme.of(context).primaryColor.withAlpha(0x33),
+                      child: Icon(
+                        Icons.person,
+                        size: isCompact ? 24 : 30,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.username,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: isCompact ? 16 : 18,
+                            ),
+                          ),
+                          Text(
+                            'Authenticated via ${_authState?.providerName ?? 'Unknown Provider'}',
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.logout, size: 16),
+                  label: const Text('Sign Out'),
+                  onPressed: () {
+                    setState(() {
+                      _authState = null;
+                    });
+                  },
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    foregroundColor: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildVoiceRelaySection(bool isCompact) {
@@ -293,157 +370,158 @@ class _ConnectScreenState extends State<ConnectScreen> {
   Widget build(BuildContext context) {
     final isDesktop = Platform.isLinux || Platform.isWindows || Platform.isMacOS;
     final isCompact = isDesktop;
-    final containerWidth = isCompact ? 400.0 : MediaQuery.of(context).size.width;
-    final containerPadding = isCompact ? const EdgeInsets.all(12.0) : const EdgeInsets.all(16.0);
 
     return Scaffold(
       body: Center(
-        child: Container(
-          width: containerWidth,
-          padding: containerPadding,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 400),
           child: Column(
             mainAxisSize: isCompact ? MainAxisSize.min : MainAxisSize.max,
+            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Connect to Hub',
-                style: TextStyle(fontSize: isCompact ? 20 : 24, fontWeight: FontWeight.bold),
+                // style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextTheme.of(context).headlineLarge,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: isCompact ? 12 : 16),
+              SizedBox(height: 16),
               Card(
                 child: Padding(
-                  padding: isCompact ? const EdgeInsets.all(12.0) : const EdgeInsets.all(16.0),
-                  child: Column(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.public,
-                            color: Theme.of(context).primaryColor,
-                            size: isCompact ? 18 : 24,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Text(
-                                  'Federation',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: isCompact ? 12 : 14,
-                                  ),
-                                ),
-                                Text(
-                                  _selectedFederation.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: isCompact ? 14 : 16,
+                                Icon(Icons.public),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Federation',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: isCompact ? 12 : 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        _selectedFederation.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: isCompact ? 14 : 16,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: isCompact ? 8 : 12),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.hub,
-                            color: Theme.of(context).primaryColor,
-                            size: isCompact ? 18 : 24,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            SizedBox(height: 12),
+                            Row(
                               children: [
-                                Text(
-                                  'Hub',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: isCompact ? 12 : 14,
+                                Icon(Icons.hub),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Hub',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: isCompact ? 12 : 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        _selectedHub.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: isCompact ? 14 : 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        _selectedHub.address,
+                                        style: TextStyle(fontSize: isCompact ? 10 : 12),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  _selectedHub.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: isCompact ? 14 : 16,
-                                  ),
-                                ),
-                                Text(
-                                  _selectedHub.address,
-                                  style: TextStyle(fontSize: isCompact ? 10 : 12),
                                 ),
                               ],
                             ),
-                          ),
-                          TextButton.icon(
-                            onPressed: _toggleCustomHubInput,
-                            icon: const Icon(Icons.edit, size: 16),
-                            label: Text('Custom', style: TextStyle(fontSize: isCompact ? 12 : 14)),
-                            style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      if (_showCustomHubInput) _buildCustomHubInput(),
+                      TextButton.icon(
+                        onPressed: null,
+                        // TODO onPressed: _toggleCustomHubInput,
+                        icon: const Icon(Icons.edit),
+                        label: Text('Edit'),
+                      ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: isCompact ? 12 : 16),
-              Flexible(
-                child: Card(
-                  child: Padding(
-                    padding: isCompact ? const EdgeInsets.all(12.0) : const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: isCompact ? MainAxisSize.min : MainAxisSize.max,
-                      children: [
-                        if (voiceRelays.isNotEmpty) _buildVoiceRelaySection(isCompact),
-                        Text(
-                          'Authentication',
-                          style: TextStyle(
-                            fontSize: isCompact ? 14 : 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: isCompact ? 4 : 8),
-                        if (_isLoading)
-                          const Center(child: CircularProgressIndicator())
-                        else if (authProviders.isEmpty)
-                          Center(
-                            child: Text(
-                              'No authentication providers available',
-                              style: TextStyle(fontSize: isCompact ? 12 : 14),
+              SizedBox(height: 16),
+              // Show profile card if authenticated
+              if (_authState != null)
+                _buildUserProfileWidget(isCompact)
+              else
+                Flexible(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: isCompact ? MainAxisSize.min : MainAxisSize.max,
+                        children: [
+                          if (voiceRelays.isNotEmpty) _buildVoiceRelaySection(isCompact),
+                          Text('Authentication', style: TextTheme.of(context).titleMedium),
+                          SizedBox(height: 8),
+                          if (_isLoading)
+                            const Center(child: CircularProgressIndicator())
+                          else if (authProviders.isEmpty)
+                            Center(
+                              child: Text(
+                                'No authentication providers available',
+                                style: TextTheme.of(context).titleMedium,
+                              ),
+                            )
+                          else
+                            Flexible(
+                              child: ListView.builder(
+                                shrinkWrap: isCompact,
+                                itemCount: authProviders.length,
+                                itemBuilder: (context, index) {
+                                  return _buildAuthProviderItem(authProviders[index], isCompact);
+                                },
+                              ),
                             ),
-                          )
-                        else
-                          Flexible(
-                            child: ListView.builder(
-                              shrinkWrap: isCompact,
-                              itemCount: authProviders.length,
-                              itemBuilder: (context, index) {
-                                return _buildAuthProviderItem(authProviders[index], isCompact);
-                              },
-                            ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              // Show voice relays card only if authenticated and if there are voice relays
+              if (_authState != null && voiceRelays.isNotEmpty)
+                Flexible(
+                  child: Card(
+                    child: Padding(
+                      padding: isCompact ? const EdgeInsets.all(12.0) : const EdgeInsets.all(16.0),
+                      child: _buildVoiceRelaySection(isCompact),
+                    ),
+                  ),
+                ),
               SizedBox(height: isCompact ? 12 : 16),
               ElevatedButton(
-                onPressed: _authState == null ? null : _connectToHub,
+                onPressed: _authState == null ? null : _goToHubScreen,
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: isCompact ? 8 : 12),
                   minimumSize: Size(double.infinity, isCompact ? 40 : 48),
@@ -471,7 +549,6 @@ class AuthProviderInfo {
   final String name;
   final String protocolType;
   final IconData icon;
-  final bool isDefault;
   final VoidCallback onSelected;
 
   AuthProviderInfo({
@@ -479,7 +556,6 @@ class AuthProviderInfo {
     required this.name,
     required this.protocolType,
     required this.icon,
-    required this.isDefault,
     required this.onSelected,
   });
 }

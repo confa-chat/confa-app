@@ -93,3 +93,50 @@ final $typed_data.Uint8List listAuthProvidersResponseDescriptor = $convert.base6
     'ChlMaXN0QXV0aFByb3ZpZGVyc1Jlc3BvbnNlEkEKDmF1dGhfcHJvdmlkZXJzGAEgAygLMhoua2'
     '9uZmEuaHViLnYxLkF1dGhQcm92aWRlclINYXV0aFByb3ZpZGVycw==');
 
+@$core.Deprecated('Use getUserRequestDescriptor instead')
+const GetUserRequest$json = {
+  '1': 'GetUserRequest',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `GetUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getUserRequestDescriptor = $convert.base64Decode(
+    'Cg5HZXRVc2VyUmVxdWVzdBIOCgJpZBgBIAEoCVICaWQ=');
+
+@$core.Deprecated('Use getUserResponseDescriptor instead')
+const GetUserResponse$json = {
+  '1': 'GetUserResponse',
+  '2': [
+    {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.konfa.user.v1.User', '10': 'user'},
+  ],
+};
+
+/// Descriptor for `GetUserResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getUserResponseDescriptor = $convert.base64Decode(
+    'Cg9HZXRVc2VyUmVzcG9uc2USJwoEdXNlchgBIAEoCzITLmtvbmZhLnVzZXIudjEuVXNlclIEdX'
+    'Nlcg==');
+
+@$core.Deprecated('Use currentUserRequestDescriptor instead')
+const CurrentUserRequest$json = {
+  '1': 'CurrentUserRequest',
+};
+
+/// Descriptor for `CurrentUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List currentUserRequestDescriptor = $convert.base64Decode(
+    'ChJDdXJyZW50VXNlclJlcXVlc3Q=');
+
+@$core.Deprecated('Use currentUserResponseDescriptor instead')
+const CurrentUserResponse$json = {
+  '1': 'CurrentUserResponse',
+  '2': [
+    {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.konfa.user.v1.User', '10': 'user'},
+  ],
+};
+
+/// Descriptor for `CurrentUserResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List currentUserResponseDescriptor = $convert.base64Decode(
+    'ChNDdXJyZW50VXNlclJlc3BvbnNlEicKBHVzZXIYASABKAsyEy5rb25mYS51c2VyLnYxLlVzZX'
+    'JSBHVzZXI=');
+

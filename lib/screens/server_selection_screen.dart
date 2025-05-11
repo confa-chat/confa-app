@@ -41,7 +41,7 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
 
   Future<List<ServerInfo>> _loadServers() async {
     final response = await context
-        .connection(widget.hubID)
+        .getHub(widget.hubID)
         .hubClient
         .listServerIDs(ListServersRequest());
 

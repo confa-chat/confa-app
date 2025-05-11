@@ -102,7 +102,6 @@ class ActiveVoiceChannelWidget extends StatelessWidget {
                       children:
                           users.map((userId) {
                             final displayName = state.userDisplayNames[userId] ?? userId;
-
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 4.0),
                               child: Row(

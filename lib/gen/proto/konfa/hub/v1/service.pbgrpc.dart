@@ -21,6 +21,14 @@ export 'service.pb.dart';
 
 @$pb.GrpcServiceName('konfa.hub.v1.HubService')
 class HubServiceClient extends $grpc.Client {
+  static final _$getUser = $grpc.ClientMethod<$1.GetUserRequest, $1.GetUserResponse>(
+      '/konfa.hub.v1.HubService/GetUser',
+      ($1.GetUserRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.GetUserResponse.fromBuffer(value));
+  static final _$currentUser = $grpc.ClientMethod<$1.CurrentUserRequest, $1.CurrentUserResponse>(
+      '/konfa.hub.v1.HubService/CurrentUser',
+      ($1.CurrentUserRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.CurrentUserResponse.fromBuffer(value));
   static final _$listServerIDs = $grpc.ClientMethod<$1.ListServersRequest, $1.ListServersResponse>(
       '/konfa.hub.v1.HubService/ListServerIDs',
       ($1.ListServersRequest value) => value.writeToBuffer(),
@@ -40,6 +48,14 @@ class HubServiceClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
+  $grpc.ResponseFuture<$1.GetUserResponse> getUser($1.GetUserRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getUser, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.CurrentUserResponse> currentUser($1.CurrentUserRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$currentUser, request, options: options);
+  }
+
   $grpc.ResponseFuture<$1.ListServersResponse> listServerIDs($1.ListServersRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listServerIDs, request, options: options);
   }
@@ -58,6 +74,20 @@ abstract class HubServiceBase extends $grpc.Service {
   $core.String get $name => 'konfa.hub.v1.HubService';
 
   HubServiceBase() {
+    $addMethod($grpc.ServiceMethod<$1.GetUserRequest, $1.GetUserResponse>(
+        'GetUser',
+        getUser_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.GetUserRequest.fromBuffer(value),
+        ($1.GetUserResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CurrentUserRequest, $1.CurrentUserResponse>(
+        'CurrentUser',
+        currentUser_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.CurrentUserRequest.fromBuffer(value),
+        ($1.CurrentUserResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.ListServersRequest, $1.ListServersResponse>(
         'ListServerIDs',
         listServerIDs_Pre,
@@ -81,6 +111,14 @@ abstract class HubServiceBase extends $grpc.Service {
         ($1.ListAuthProvidersResponse value) => value.writeToBuffer()));
   }
 
+  $async.Future<$1.GetUserResponse> getUser_Pre($grpc.ServiceCall call, $async.Future<$1.GetUserRequest> request) async {
+    return getUser(call, await request);
+  }
+
+  $async.Future<$1.CurrentUserResponse> currentUser_Pre($grpc.ServiceCall call, $async.Future<$1.CurrentUserRequest> request) async {
+    return currentUser(call, await request);
+  }
+
   $async.Future<$1.ListServersResponse> listServerIDs_Pre($grpc.ServiceCall call, $async.Future<$1.ListServersRequest> request) async {
     return listServerIDs(call, await request);
   }
@@ -93,6 +131,8 @@ abstract class HubServiceBase extends $grpc.Service {
     return listAuthProviders(call, await request);
   }
 
+  $async.Future<$1.GetUserResponse> getUser($grpc.ServiceCall call, $1.GetUserRequest request);
+  $async.Future<$1.CurrentUserResponse> currentUser($grpc.ServiceCall call, $1.CurrentUserRequest request);
   $async.Future<$1.ListServersResponse> listServerIDs($grpc.ServiceCall call, $1.ListServersRequest request);
   $async.Future<$1.ListVoiceRelaysResponse> listVoiceRelays($grpc.ServiceCall call, $1.ListVoiceRelaysRequest request);
   $async.Future<$1.ListAuthProvidersResponse> listAuthProviders($grpc.ServiceCall call, $1.ListAuthProvidersRequest request);

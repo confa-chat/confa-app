@@ -41,7 +41,7 @@ class HubsManager {
 
   Future<AuthState> authOnProvider(Uri uri, AuthProvider provider) async {
     final state = AuthState();
-    state.authenticate(provider);
+    await state.authenticate(provider);
     return state;
   }
 
@@ -95,7 +95,7 @@ class HubConnection {
     final serverClient = ServerServiceClient(channel, options: callOptions);
     final chatClient = ChatServiceClient(channel, options: callOptions);
 
-    final userRepo = await UsersRepo.create(serverClient);
+    final userRepo = await UsersRepo.create(hubClient, serverClient);
 
     return HubConnection._(authState, hubClient, serverClient, chatClient, userRepo);
   }
@@ -143,9 +143,11 @@ class HubConnection {
 /// Extension methods to easily access services from BuildContext
 extension HubConnectionExtension on BuildContext {
   HubsManager get manager => read<HubsManager>();
-  HubConnection connection(String hubID) {
+  HubConnection getHub(String hubID) {
+    final HubsManager hubsManager = read<HubsManager>();
     final uri = Uri.parse(hubID);
-    return read<HubsManager>()._serviceConnections[uri] ??
+
+    return hubsManager._serviceConnections[uri] ??
         (throw Exception('No connection found for hubID: $hubID'));
   }
 

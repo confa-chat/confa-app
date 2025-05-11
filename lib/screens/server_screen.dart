@@ -42,7 +42,7 @@ class _ServerScreenState extends State<ServerScreen> {
     super.initState();
 
     channels = context
-        .connection(widget.hubID)
+        .getHub(widget.hubID)
         .serverClient
         .listServerChannels(ListServerChannelsRequest(serverId: widget.serverID))
         .then((p0) {
@@ -53,7 +53,7 @@ class _ServerScreenState extends State<ServerScreen> {
   @override
   Widget build(BuildContext context) {
     return Provider<HubConnection>.value(
-      value: context.connection(widget.hubID),
+      value: context.getHub(widget.hubID),
       child: Scaffold(
         appBar: AppBar(title: Text('Server ${widget.serverID}')),
         body: FutureBuilder(

@@ -7,7 +7,8 @@ import 'package:konfa/screens/connect_screen.dart';
 class AuthState extends ChangeNotifier {
   Credential? _credential;
 
-  bool get isAuthenticated => _credential != null;
+  String get providerName => _providerName ?? 'Not Authenticated';
+  String? _providerName;
 
   Future<void> authenticate(AuthProvider authProvider) async {
     // Use the provided OpenID Connect settings if available
@@ -19,6 +20,8 @@ class AuthState extends ChangeNotifier {
           clientSecret: authProvider.openidConnect.clientSecret,
         ),
       );
+
+      _providerName = authProvider.name;
     } else {
       throw Exception('Trying to authenticate with unknown provider');
     }
