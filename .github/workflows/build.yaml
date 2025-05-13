@@ -60,25 +60,11 @@ jobs:
         with:
           name: windows
           path: build/windows/x64/runner/Release
-  macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2.18.0
-        with:
-          channel: stable
-          flutter-version-file: pubspec.yaml
-      - run: flutter build macos --release
-      - uses: actions/upload-artifact@v4
-        with:
-          name: macos
-          path: build/macos/Build/Products/Release
 
   draft-release:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-    needs: [android, linux, windows, macos]
+    needs: [android, linux, windows]
     permissions:
       contents: write
     steps:
@@ -100,12 +86,6 @@ jobs:
           name: windows
           path: ./artifacts/windows/konfa
 
-      - name: Download MacOS Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: macos
-          path: ./artifacts/macos/konfa
-
       - run: mkdir ./release
       - run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
 
@@ -114,9 +94,6 @@ jobs:
 
       - name: Zip Windows Bundle
         run: cd ./artifacts/windows && zip -r ../../release/konfa-${{ github.ref_name }}-windows.zip konfa
-
-      - name: Zip MacOS Bundle
-        run: cd ./artifacts/macos && zip -r ../../release/konfa-${{ github.ref_name }}-macos.zip konfa
 
       - name: Create Release Draft
         uses: softprops/action-gh-release@v2

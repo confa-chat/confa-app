@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:konfa/auth/openid.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
 import 'package:openid_client/openid_client.dart';
+import 'openid.dart';
 import 'package:konfa/screens/connect_screen.dart';
 
 class AuthState extends ChangeNotifier {
