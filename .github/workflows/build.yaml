@@ -114,16 +114,18 @@ jobs:
           path: ./artifacts/macos
 
       - run: mkdir ./release
-      - run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
+
+      - name: Android APK
+        run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
+
+      - name: MacOS App
+        run: cp ./artifacts/macos/*.app ./release/konfa-${{ github.ref_name }}-macos.app
 
       - name: Zip Linux Bundle
         run: cd ./artifacts/linux && zip -r ../../release/konfa-${{ github.ref_name }}-linux.zip konfa
 
       - name: Zip Windows Bundle
         run: cd ./artifacts/windows && zip -r ../../release/konfa-${{ github.ref_name }}-windows.zip konfa
-
-      - name: MacOS App
-        run: cp ./artifacts/macos/*.app && ./release/konfa-${{ github.ref_name }}-macos.app
 
       - name: Create Release Draft
         uses: softprops/action-gh-release@v2
