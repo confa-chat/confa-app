@@ -141,10 +141,7 @@ class _ChannelListState extends State<_ChannelList> {
                       },
                     );
                   } else if (channel.hasVoiceChannel()) {
-                    if (channel.voiceChannel.channelId == activeVoiceChannelID) {
-                      return ActiveVoiceChannelWidget(channel: channel.voiceChannel);
-                    }
-                    return VoiceChannelListTile(channel: channel.voiceChannel);
+                    return VoiceChannelWidget(channel: channel.voiceChannel);
                   }
                   return null;
                 })
