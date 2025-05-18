@@ -131,6 +131,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           draft: true
-          release_name: Release ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           prerelease: ${{ contains(github.ref_name, '-') }}
           files: ./release/*
