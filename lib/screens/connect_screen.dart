@@ -120,6 +120,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
     try {
       final manager = context.manager;
       final authState = await manager.authOnProvider(hubUri, provider);
+      await manager.connect(hubUri, authState);
       setState(() {
         _authState = authState;
         _isLoading = false;
