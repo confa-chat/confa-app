@@ -29,7 +29,7 @@ dependencies:
   streaming_sound:
     git:
       url: https://github.com/royalcat/streaming_sound.git
-      ref: 62d69c0d44c3f92aa8b5ffaf3f504eb65ff1cad7
+      ref: 03d053c1b5ae71b12842cf5ac89ae76b4b6ecc7d
   protobuf: ^4.0.0
   grpc: ^4.0.1
   opus_dart: ^3.0.1
