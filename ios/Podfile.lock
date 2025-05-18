@@ -1,0 +1,40 @@
+PODS:
+  - Flutter (1.0.0)
+  - opus_flutter_ios (0.0.2):
+    - Flutter
+  - permission_handler_apple (9.3.0):
+    - Flutter
+  - streaming_sound (0.0.1):
+    - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - opus_flutter_ios (from `.symlinks/plugins/opus_flutter_ios/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - streaming_sound (from `.symlinks/plugins/streaming_sound/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  opus_flutter_ios:
+    :path: ".symlinks/plugins/opus_flutter_ios/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  streaming_sound:
+    :path: ".symlinks/plugins/streaming_sound/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  opus_flutter_ios: 3df5f9d5bedf0818e7e2c9b94b7baf8d837101c4
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  streaming_sound: d50e4a2581158f95ce9076ccc847a49f1ce2ff6d
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+
+PODFILE CHECKSUM: 251cb053df7158f337c0712f2ab29f4e0fa474ce
+
+COCOAPODS: 1.16.2
