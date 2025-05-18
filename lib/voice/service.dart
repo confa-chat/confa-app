@@ -106,8 +106,6 @@ class VoiceRelay {
       recorder.stop();
       listeners.forEach((_, listener) => listener.stop());
     } catch (e) {
-      // Handle any connection errors
-      print('Error connecting to voice relay $relayId: $e');
       rethrow;
     }
   }

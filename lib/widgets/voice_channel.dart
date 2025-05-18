@@ -40,7 +40,7 @@ class VoiceChannelWidget extends StatelessWidget {
 class _InactiveVoiceChannelListTile extends StatelessWidget {
   final VoiceChannel channel;
 
-  const _InactiveVoiceChannelListTile({super.key, required this.channel});
+  const _InactiveVoiceChannelListTile({required this.channel});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _ActiveVoiceChannelListTile extends StatelessWidget {
   final VoiceChannel channel;
   final VoiceChannelConnected state;
 
-  const _ActiveVoiceChannelListTile({super.key, required this.channel, required this.state});
+  const _ActiveVoiceChannelListTile({required this.channel, required this.state});
 
   @override
   Widget build(BuildContext context) {

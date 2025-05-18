@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:konfa/gen/proto/google/protobuf/timestamp.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
-import 'package:konfa/repo/user.dart';
 import 'package:konfa/services/connection_manager.dart';
-import 'package:provider/provider.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import 'package:fixnum/fixnum.dart';
 

@@ -27,7 +27,6 @@ class ConnectScreen extends StatefulWidget {
 }
 
 class _ConnectScreenState extends State<ConnectScreen> {
-  final _formKey = GlobalKey<FormState>();
   final _hubAddressController = TextEditingController();
 
   AuthState? _authState;
@@ -35,13 +34,11 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // Selected federation and hub
   late final FederationInfo _selectedFederation;
   late HubInfo _selectedHub;
-  late HubConnection _hubConnection;
 
   // Lists to store voice relays and auth providers fetched from hub
   List<VoiceRelayInfo> voiceRelays = [];
   List<AuthProviderInfo> authProviders = [];
   bool _isLoading = false;
-  bool _showCustomHubInput = false;
 
   // Sample federations
   final List<FederationInfo> knownFederations = [
@@ -105,7 +102,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
             }).toList();
 
         _isLoading = false;
-        _showCustomHubInput = false;
       });
     } catch (e) {
       setState(() {
@@ -124,7 +120,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
     try {
       final manager = context.manager;
       final authState = await manager.authOnProvider(hubUri, provider);
-      _hubConnection = await manager.connect(hubUri, authState);
       setState(() {
         _authState = authState;
         _isLoading = false;
@@ -148,63 +143,63 @@ class _ConnectScreenState extends State<ConnectScreen> {
     ServerSelectionScreenRoute(hubID: _selectedHub.address).go(context);
   }
 
-  void _toggleCustomHubInput() {
-    setState(() {
-      _showCustomHubInput = !_showCustomHubInput;
-    });
-  }
+  // void _toggleCustomHubInput() {
+  //   setState(() {
+  //     _showCustomHubInput = !_showCustomHubInput;
+  //   });
+  // }
 
-  Widget _buildCustomHubInput() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: _hubAddressController,
-            decoration: const InputDecoration(
-              labelText: 'Hub Address',
-              hintText: 'Enter hub address and port (e.g., https://server:38100)',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a hub address';
-              }
-              if (Uri.tryParse(value) == null) {
-                return 'Invalid address format (e.g., https://server:38100)';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: _goToHubScreen,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  child:
-                      _isLoading
-                          ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                          : const Text('Connect'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              OutlinedButton(onPressed: _toggleCustomHubInput, child: const Text('Cancel')),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildCustomHubInput() {
+  //   return Form(
+  //     key: _formKey,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         const SizedBox(height: 8),
+  //         TextFormField(
+  //           controller: _hubAddressController,
+  //           decoration: const InputDecoration(
+  //             labelText: 'Hub Address',
+  //             hintText: 'Enter hub address and port (e.g., https://server:38100)',
+  //             border: OutlineInputBorder(),
+  //           ),
+  //           validator: (value) {
+  //             if (value == null || value.isEmpty) {
+  //               return 'Please enter a hub address';
+  //             }
+  //             if (Uri.tryParse(value) == null) {
+  //               return 'Invalid address format (e.g., https://server:38100)';
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //         const SizedBox(height: 16),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               child: ElevatedButton(
+  //                 onPressed: _goToHubScreen,
+  //                 style: ElevatedButton.styleFrom(
+  //                   padding: const EdgeInsets.symmetric(vertical: 12),
+  //                 ),
+  //                 child:
+  //                     _isLoading
+  //                         ? const SizedBox(
+  //                           height: 20,
+  //                           width: 20,
+  //                           child: CircularProgressIndicator(strokeWidth: 2),
+  //                         )
+  //                         : const Text('Connect'),
+  //               ),
+  //             ),
+  //             const SizedBox(width: 8),
+  //             OutlinedButton(onPressed: _toggleCustomHubInput, child: const Text('Cancel')),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildAuthProviderItem(AuthProviderInfo provider, bool isCompact) {
     return ListTile(
@@ -558,14 +553,6 @@ class AuthProviderInfo {
     required this.icon,
     required this.onSelected,
   });
-}
-
-class OpenIdSettings {
-  final String issuer;
-  final String clientId;
-  final String clientSecret;
-
-  OpenIdSettings({required this.issuer, required this.clientId, required this.clientSecret});
 }
 
 class HubInfo {

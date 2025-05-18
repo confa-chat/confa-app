@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
 import 'package:openid_client/openid_client.dart';
 import 'openid.dart';
-import 'package:konfa/screens/connect_screen.dart';
+
+class OpenIdSettings {
+  final String issuer;
+  final String clientId;
+  final String clientSecret;
+
+  OpenIdSettings({required this.issuer, required this.clientId, required this.clientSecret});
+}
 
 class AuthState extends ChangeNotifier {
   Credential? _credential;
