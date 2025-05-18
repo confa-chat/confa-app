@@ -227,6 +227,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
           return const Center(child: CircularProgressIndicator());
         }
 
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
         final user = snapshot.data!;
 
         return Card(
