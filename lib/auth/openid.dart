@@ -16,7 +16,7 @@ Future<Credential> authenticateOIDC(Client client, {List<String> scopes = const 
   }
 
   // create an authenticator
-  var authenticator = io.Authenticator(client, scopes: scopes, port: 4000, urlLancher: urlLauncher);
+  var authenticator = io.Authenticator(client, scopes: scopes, port: 31646, urlLancher: urlLauncher);
 
   // starts the authentication
   var c = await authenticator.authorize();
