@@ -817,8 +817,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "03d053c1b5ae71b12842cf5ac89ae76b4b6ecc7d"
-      resolved-ref: "03d053c1b5ae71b12842cf5ac89ae76b4b6ecc7d"
+      ref: "5de8f1c42b15a263c81e1583d8df8be8fdc0fdc5"
+      resolved-ref: "5de8f1c42b15a263c81e1583d8df8be8fdc0fdc5"
       url: "https://github.com/royalcat/streaming_sound.git"
     source: git
     version: "0.0.1"

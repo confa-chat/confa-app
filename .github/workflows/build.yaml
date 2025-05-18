@@ -111,7 +111,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: macos
-          path: ./artifacts/macos
+          path: ./artifacts/macos/konfa
 
       - run: mkdir ./release
 
@@ -119,7 +119,7 @@ jobs:
         run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
 
       - name: MacOS App
-        run: cp ./artifacts/macos/*.app ./release/konfa-${{ github.ref_name }}-macos.app
+        run: cd ./artifacts/macos && zip -r ../../release/konfa-${{ github.ref_name }}-macos.zip konfa
 
       - name: Zip Linux Bundle
         run: cd ./artifacts/linux && zip -r ../../release/konfa-${{ github.ref_name }}-linux.zip konfa
