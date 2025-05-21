@@ -24,7 +24,7 @@ class UserProfileWidget extends StatelessWidget {
       case UserStatus.online:
         return Icon(Icons.circle, size: statusSize, color: Colors.green);
       case UserStatus.idle:
-        return Icon(Icons.circle, size: statusSize, color: Colors.orange);
+        return Icon(Icons.mode_standby, size: statusSize, color: Colors.orange);
       case UserStatus.doNotDisturb:
         return Icon(Icons.do_not_disturb_on, size: statusSize, color: Colors.red);
       case UserStatus.offline:
