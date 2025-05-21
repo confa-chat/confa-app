@@ -203,12 +203,17 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // }
 
   Widget _buildAuthProviderItem(AuthProviderInfo provider, bool isCompact) {
-    return ListTile(
-      leading: Icon(provider.icon),
-      title: Text(provider.name),
-      subtitle: Text('Protocol: ${provider.protocolType}'),
-      // trailing: provider.isDefault ? const Chip(label: Text('Default')) : null,
-      onTap: provider.onSelected,
+    return OutlinedButton(
+      onPressed: provider.onSelected,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(width: 8, child: Icon(provider.icon)),
+          Text(provider.name),
+          const SizedBox(width: 8),
+        ],
+      ),
     );
   }
 
@@ -239,42 +244,37 @@ class _ConnectScreenState extends State<ConnectScreen> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: isCompact ? 24 : 30,
-                      backgroundColor: Theme.of(context).primaryColor.withAlpha(0x33),
-                      child: Icon(
-                        Icons.person,
-                        size: isCompact ? 24 : 30,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user.username,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: isCompact ? 16 : 18,
-                            ),
-                          ),
-                          Text(
-                            'Authenticated via ${_authState?.providerName ?? 'Unknown Provider'}',
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                CircleAvatar(
+                  radius: isCompact ? 24 : 30,
+                  backgroundColor: Theme.of(context).primaryColor.withAlpha(0x33),
+                  child: Icon(
+                    Icons.person,
+                    size: isCompact ? 24 : 30,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user.username,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: isCompact ? 16 : 18,
+                        ),
+                      ),
+                      Text(
+                        'Authenticated via ${_authState?.providerName ?? 'Unknown Provider'}',
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
                 OutlinedButton.icon(
                   icon: const Icon(Icons.logout, size: 16),
                   label: const Text('Sign Out'),

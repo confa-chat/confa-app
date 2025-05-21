@@ -33,10 +33,11 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   List<AuthProviderInfo> authProviders = [];
   List<VoiceRelayInfo> voiceRelays = [];
 
-  void _fetchServers() {
-    setState(() {
-      _serversFuture = _loadServers();
-    });
+  @override
+  void initState() {
+    _serversFuture = _loadServers();
+
+    super.initState();
   }
 
   Future<List<ServerInfo>> _loadServers() async {
@@ -103,104 +104,90 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
               Text('Available Servers', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 16),
               Expanded(
-                child:
-                    _serversFuture == null
-                        ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: _fetchServers,
-                                icon: const Icon(Icons.refresh),
-                                label: const Text('Load Servers'),
-                              ),
-                            ],
-                          ),
-                        )
-                        : FutureBuilder<List<ServerInfo>>(
-                          future: _serversFuture,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    CircularProgressIndicator(),
-                                    SizedBox(height: 16),
-                                    Text('Loading servers...'),
-                                  ],
-                                ),
-                              );
-                            }
-                            if (snapshot.hasError) {
-                              return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      'Error Loading Servers',
-                                      style: Theme.of(context).textTheme.titleMedium,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(snapshot.error.toString(), textAlign: TextAlign.center),
-                                    const SizedBox(height: 16),
-                                    ElevatedButton.icon(
-                                      // onPressed: null,
-                                      onPressed: null,
-                                      icon: const Icon(Icons.refresh),
-                                      label: const Text('Try Again'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                            final servers = snapshot.data!;
-                            if (servers.isEmpty) {
-                              return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.dns_outlined, size: 48, color: Colors.grey),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      'No Servers Available',
-                                      style: Theme.of(context).textTheme.titleMedium,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text(
-                                      'There are no servers available on this hub.',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    ElevatedButton.icon(
-                                      // onPressed: _refreshServers,
-                                      onPressed: null,
-                                      icon: const Icon(Icons.refresh),
-                                      label: const Text('Refresh'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                            return ListView.builder(
-                              itemCount: servers.length,
-                              itemBuilder: (context, index) {
-                                final server = servers[index];
-                                return Card(
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  child: ListTile(
-                                    leading: const Icon(Icons.dns),
-                                    title: Text(server.name),
-                                    subtitle: Text(server.description),
-                                    onTap: () => _selectServer(server),
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                child: FutureBuilder<List<ServerInfo>>(
+                  future: _serversFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 16),
+                            Text('Loading servers...'),
+                          ],
                         ),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Error Loading Servers',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(snapshot.error.toString(), textAlign: TextAlign.center),
+                            const SizedBox(height: 16),
+                            ElevatedButton.icon(
+                              // onPressed: null,
+                              onPressed: null,
+                              icon: const Icon(Icons.refresh),
+                              label: const Text('Try Again'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    final servers = snapshot.data!;
+                    if (servers.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.dns_outlined, size: 48, color: Colors.grey),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No Servers Available',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'There are no servers available on this hub.',
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton.icon(
+                              // onPressed: _refreshServers,
+                              onPressed: null,
+                              icon: const Icon(Icons.refresh),
+                              label: const Text('Refresh'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      itemCount: servers.length,
+                      itemBuilder: (context, index) {
+                        final server = servers[index];
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: ListTile(
+                            leading: const Icon(Icons.dns),
+                            title: Text(server.name),
+                            subtitle: Text(server.description),
+                            onTap: () => _selectServer(server),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
