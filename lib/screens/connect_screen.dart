@@ -202,7 +202,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   //   );
   // }
 
-  Widget _buildAuthProviderItem(AuthProviderInfo provider, bool isCompact) {
+  Widget _buildAuthProviderItem(AuthProviderInfo provider) {
     return OutlinedButton(
       onPressed: provider.onSelected,
       child: Row(
@@ -225,7 +225,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
     return resp.user;
   }
 
-  Widget _buildUserProfileWidget(bool isCompact) {
+  Widget _buildUserProfileWidget() {
     return FutureBuilder(
       future: _getCurrentUser(),
       builder: (context, snapshot) {
@@ -247,13 +247,9 @@ class _ConnectScreenState extends State<ConnectScreen> {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: isCompact ? 24 : 30,
+                  radius: 24,
                   backgroundColor: Theme.of(context).primaryColor.withAlpha(0x33),
-                  child: Icon(
-                    Icons.person,
-                    size: isCompact ? 24 : 30,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  child: Icon(Icons.person, size: 24, color: Theme.of(context).primaryColor),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -262,10 +258,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     children: [
                       Text(
                         user.username,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: isCompact ? 16 : 18,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       Text(
                         'Authenticated via ${_authState?.providerName ?? 'Unknown Provider'}',
@@ -296,87 +289,45 @@ class _ConnectScreenState extends State<ConnectScreen> {
     );
   }
 
-  Widget _buildVoiceRelaySection(bool isCompact) {
+  Widget _buildVoiceRelaySection() {
     if (voiceRelays.isEmpty) return const SizedBox.shrink();
 
-    if (isCompact) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Voice Relays', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          ...voiceRelays.map(
-            (relay) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Row(
-                children: [
-                  const Icon(Icons.mic, size: 14),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      relay.name,
-                      style: const TextStyle(fontSize: 12),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Voice Relays', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        ...voiceRelays.map(
+          (relay) => Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Row(
+              children: [
+                const Icon(Icons.mic, size: 14),
+                const SizedBox(width: 4),
+                Expanded(
+                  child: Text(
+                    relay.name,
+                    style: const TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          const Divider(),
-        ],
-      );
-    } else {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Available Voice Relays',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: voiceRelays.length,
-              itemBuilder: (context, index) {
-                final relay = voiceRelays[index];
-                return Card(
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.mic, size: 24),
-                        Text(relay.name),
-                        Text('ID: ${relay.id}', style: const TextStyle(fontSize: 10)),
-                        Text(relay.address, style: const TextStyle(fontSize: 10)),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 16),
-        ],
-      );
-    }
+        ),
+        const Divider(),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop = Platform.isLinux || Platform.isWindows || Platform.isMacOS;
-    final isCompact = isDesktop;
-
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 400),
           child: Column(
-            mainAxisSize: isCompact ? MainAxisSize.min : MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -407,17 +358,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
                                     children: [
                                       Text(
                                         'Federation',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: isCompact ? 12 : 14,
-                                        ),
+                                        style: TextStyle(color: Colors.grey, fontSize: 12),
                                       ),
                                       Text(
                                         _selectedFederation.name,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: isCompact ? 14 : 16,
-                                        ),
+                                        style: TextTheme.of(context).titleLarge,
+                                        // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                     ],
                                   ),
@@ -435,22 +381,13 @@ class _ConnectScreenState extends State<ConnectScreen> {
                                     children: [
                                       Text(
                                         'Hub',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: isCompact ? 12 : 14,
-                                        ),
+                                        style: TextStyle(color: Colors.grey, fontSize: 12),
                                       ),
                                       Text(
                                         _selectedHub.name,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: isCompact ? 14 : 16,
-                                        ),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
-                                      Text(
-                                        _selectedHub.address,
-                                        style: TextStyle(fontSize: isCompact ? 10 : 12),
-                                      ),
+                                      Text(_selectedHub.address, style: TextStyle(fontSize: 10)),
                                     ],
                                   ),
                                 ),
@@ -472,19 +409,20 @@ class _ConnectScreenState extends State<ConnectScreen> {
               SizedBox(height: 16),
               // Show profile card if authenticated
               if (_authState != null)
-                _buildUserProfileWidget(isCompact)
+                _buildUserProfileWidget()
               else
                 Flexible(
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: isCompact ? MainAxisSize.min : MainAxisSize.max,
+
                         children: [
-                          if (voiceRelays.isNotEmpty) _buildVoiceRelaySection(isCompact),
-                          Text('Authentication', style: TextTheme.of(context).titleMedium),
-                          SizedBox(height: 8),
+                          if (voiceRelays.isNotEmpty) _buildVoiceRelaySection(),
+                          Text('Authentication', style: TextTheme.of(context).headlineSmall),
+                          SizedBox(height: 10),
                           if (_isLoading)
                             const Center(child: CircularProgressIndicator())
                           else if (authProviders.isEmpty)
@@ -495,15 +433,15 @@ class _ConnectScreenState extends State<ConnectScreen> {
                               ),
                             )
                           else
-                            Flexible(
-                              child: ListView.builder(
-                                shrinkWrap: isCompact,
-                                itemCount: authProviders.length,
-                                itemBuilder: (context, index) {
-                                  return _buildAuthProviderItem(authProviders[index], isCompact);
-                                },
-                              ),
-                            ),
+                            Column(children: authProviders.map(_buildAuthProviderItem).toList()),
+                          // Flexible(
+                          //   child: ListView.builder(
+                          //     itemCount: authProviders.length,
+                          //     itemBuilder: (context, index) {
+                          //       return _buildAuthProviderItem(authProviders[index]);
+                          //     },
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -514,19 +452,19 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 Flexible(
                   child: Card(
                     child: Padding(
-                      padding: isCompact ? const EdgeInsets.all(12.0) : const EdgeInsets.all(16.0),
-                      child: _buildVoiceRelaySection(isCompact),
+                      padding: const EdgeInsets.all(12.0),
+                      child: _buildVoiceRelaySection(),
                     ),
                   ),
                 ),
-              SizedBox(height: isCompact ? 12 : 16),
+              SizedBox(height: 12),
               ElevatedButton(
                 onPressed: _authState == null ? null : _goToHubScreen,
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: isCompact ? 8 : 12),
-                  minimumSize: Size(double.infinity, isCompact ? 40 : 48),
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  minimumSize: Size(double.infinity, 40),
                 ),
-                child: Text('Connect', style: TextStyle(fontSize: isCompact ? 14 : 16)),
+                child: Text('Connect', style: TextStyle(fontSize: 14)),
               ),
             ],
           ),
