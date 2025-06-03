@@ -13,8 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-/// The UTF8 validation strategy to use.  See go/editions-utf8-validation for
-/// more information on this feature.
+/// The UTF8 validation strategy to use.
 class JavaFeatures_Utf8Validation extends $pb.ProtobufEnum {
   static const JavaFeatures_Utf8Validation UTF8_VALIDATION_UNKNOWN = JavaFeatures_Utf8Validation._(0, _omitEnumNames ? '' : 'UTF8_VALIDATION_UNKNOWN');
   static const JavaFeatures_Utf8Validation DEFAULT = JavaFeatures_Utf8Validation._(1, _omitEnumNames ? '' : 'DEFAULT');
@@ -30,6 +29,25 @@ class JavaFeatures_Utf8Validation extends $pb.ProtobufEnum {
   static JavaFeatures_Utf8Validation? valueOf($core.int value) => _byValue[value];
 
   const JavaFeatures_Utf8Validation._($core.int v, $core.String n) : super(v, n);
+}
+
+class JavaFeatures_NestInFileClassFeature_NestInFileClass extends $pb.ProtobufEnum {
+  static const JavaFeatures_NestInFileClassFeature_NestInFileClass NEST_IN_FILE_CLASS_UNKNOWN = JavaFeatures_NestInFileClassFeature_NestInFileClass._(0, _omitEnumNames ? '' : 'NEST_IN_FILE_CLASS_UNKNOWN');
+  static const JavaFeatures_NestInFileClassFeature_NestInFileClass NO = JavaFeatures_NestInFileClassFeature_NestInFileClass._(1, _omitEnumNames ? '' : 'NO');
+  static const JavaFeatures_NestInFileClassFeature_NestInFileClass YES = JavaFeatures_NestInFileClassFeature_NestInFileClass._(2, _omitEnumNames ? '' : 'YES');
+  static const JavaFeatures_NestInFileClassFeature_NestInFileClass LEGACY = JavaFeatures_NestInFileClassFeature_NestInFileClass._(3, _omitEnumNames ? '' : 'LEGACY');
+
+  static const $core.List<JavaFeatures_NestInFileClassFeature_NestInFileClass> values = <JavaFeatures_NestInFileClassFeature_NestInFileClass> [
+    NEST_IN_FILE_CLASS_UNKNOWN,
+    NO,
+    YES,
+    LEGACY,
+  ];
+
+  static final $core.Map<$core.int, JavaFeatures_NestInFileClassFeature_NestInFileClass> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static JavaFeatures_NestInFileClassFeature_NestInFileClass? valueOf($core.int value) => _byValue[value];
+
+  const JavaFeatures_NestInFileClassFeature_NestInFileClass._($core.int v, $core.String n) : super(v, n);
 }
 
 

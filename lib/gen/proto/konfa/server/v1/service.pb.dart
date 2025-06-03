@@ -19,8 +19,8 @@ import 'service.pbenum.dart';
 
 export 'service.pbenum.dart';
 
-class ListServerChannelsRequest extends $pb.GeneratedMessage {
-  factory ListServerChannelsRequest({
+class ListChannelsRequest extends $pb.GeneratedMessage {
+  factory ListChannelsRequest({
     $core.String? serverId,
   }) {
     final $result = create();
@@ -29,11 +29,11 @@ class ListServerChannelsRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ListServerChannelsRequest._() : super();
-  factory ListServerChannelsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ListServerChannelsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ListChannelsRequest._() : super();
+  factory ListChannelsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListChannelsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerChannelsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListChannelsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..hasRequiredFields = false
   ;
@@ -42,22 +42,22 @@ class ListServerChannelsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ListServerChannelsRequest clone() => ListServerChannelsRequest()..mergeFromMessage(this);
+  ListChannelsRequest clone() => ListChannelsRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListServerChannelsRequest copyWith(void Function(ListServerChannelsRequest) updates) => super.copyWith((message) => updates(message as ListServerChannelsRequest)) as ListServerChannelsRequest;
+  ListChannelsRequest copyWith(void Function(ListChannelsRequest) updates) => super.copyWith((message) => updates(message as ListChannelsRequest)) as ListChannelsRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ListServerChannelsRequest create() => ListServerChannelsRequest._();
-  ListServerChannelsRequest createEmptyInstance() => create();
-  static $pb.PbList<ListServerChannelsRequest> createRepeated() => $pb.PbList<ListServerChannelsRequest>();
+  static ListChannelsRequest create() => ListChannelsRequest._();
+  ListChannelsRequest createEmptyInstance() => create();
+  static $pb.PbList<ListChannelsRequest> createRepeated() => $pb.PbList<ListChannelsRequest>();
   @$core.pragma('dart2js:noInline')
-  static ListServerChannelsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListServerChannelsRequest>(create);
-  static ListServerChannelsRequest? _defaultInstance;
+  static ListChannelsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListChannelsRequest>(create);
+  static ListChannelsRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get serverId => $_getSZ(0);
@@ -69,8 +69,8 @@ class ListServerChannelsRequest extends $pb.GeneratedMessage {
   void clearServerId() => clearField(1);
 }
 
-class ListServerChannelsResponse extends $pb.GeneratedMessage {
-  factory ListServerChannelsResponse({
+class ListChannelsResponse extends $pb.GeneratedMessage {
+  factory ListChannelsResponse({
     $core.Iterable<$6.Channel>? channels,
   }) {
     final $result = create();
@@ -79,11 +79,11 @@ class ListServerChannelsResponse extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ListServerChannelsResponse._() : super();
-  factory ListServerChannelsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ListServerChannelsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ListChannelsResponse._() : super();
+  factory ListChannelsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListChannelsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerChannelsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListChannelsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
     ..pc<$6.Channel>(1, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: $6.Channel.create)
     ..hasRequiredFields = false
   ;
@@ -92,29 +92,29 @@ class ListServerChannelsResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ListServerChannelsResponse clone() => ListServerChannelsResponse()..mergeFromMessage(this);
+  ListChannelsResponse clone() => ListChannelsResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListServerChannelsResponse copyWith(void Function(ListServerChannelsResponse) updates) => super.copyWith((message) => updates(message as ListServerChannelsResponse)) as ListServerChannelsResponse;
+  ListChannelsResponse copyWith(void Function(ListChannelsResponse) updates) => super.copyWith((message) => updates(message as ListChannelsResponse)) as ListChannelsResponse;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ListServerChannelsResponse create() => ListServerChannelsResponse._();
-  ListServerChannelsResponse createEmptyInstance() => create();
-  static $pb.PbList<ListServerChannelsResponse> createRepeated() => $pb.PbList<ListServerChannelsResponse>();
+  static ListChannelsResponse create() => ListChannelsResponse._();
+  ListChannelsResponse createEmptyInstance() => create();
+  static $pb.PbList<ListChannelsResponse> createRepeated() => $pb.PbList<ListChannelsResponse>();
   @$core.pragma('dart2js:noInline')
-  static ListServerChannelsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListServerChannelsResponse>(create);
-  static ListServerChannelsResponse? _defaultInstance;
+  static ListChannelsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListChannelsResponse>(create);
+  static ListChannelsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$6.Channel> get channels => $_getList(0);
 }
 
-class ListServerUsersRequest extends $pb.GeneratedMessage {
-  factory ListServerUsersRequest({
+class ListUsersRequest extends $pb.GeneratedMessage {
+  factory ListUsersRequest({
     $core.String? serverId,
   }) {
     final $result = create();
@@ -123,11 +123,11 @@ class ListServerUsersRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ListServerUsersRequest._() : super();
-  factory ListServerUsersRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ListServerUsersRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ListUsersRequest._() : super();
+  factory ListUsersRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListUsersRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerUsersRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListUsersRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
     ..hasRequiredFields = false
   ;
@@ -136,22 +136,22 @@ class ListServerUsersRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ListServerUsersRequest clone() => ListServerUsersRequest()..mergeFromMessage(this);
+  ListUsersRequest clone() => ListUsersRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListServerUsersRequest copyWith(void Function(ListServerUsersRequest) updates) => super.copyWith((message) => updates(message as ListServerUsersRequest)) as ListServerUsersRequest;
+  ListUsersRequest copyWith(void Function(ListUsersRequest) updates) => super.copyWith((message) => updates(message as ListUsersRequest)) as ListUsersRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ListServerUsersRequest create() => ListServerUsersRequest._();
-  ListServerUsersRequest createEmptyInstance() => create();
-  static $pb.PbList<ListServerUsersRequest> createRepeated() => $pb.PbList<ListServerUsersRequest>();
+  static ListUsersRequest create() => ListUsersRequest._();
+  ListUsersRequest createEmptyInstance() => create();
+  static $pb.PbList<ListUsersRequest> createRepeated() => $pb.PbList<ListUsersRequest>();
   @$core.pragma('dart2js:noInline')
-  static ListServerUsersRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListServerUsersRequest>(create);
-  static ListServerUsersRequest? _defaultInstance;
+  static ListUsersRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListUsersRequest>(create);
+  static ListUsersRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get serverId => $_getSZ(0);
@@ -163,8 +163,8 @@ class ListServerUsersRequest extends $pb.GeneratedMessage {
   void clearServerId() => clearField(1);
 }
 
-class ListServerUsersResponse extends $pb.GeneratedMessage {
-  factory ListServerUsersResponse({
+class ListUsersResponse extends $pb.GeneratedMessage {
+  factory ListUsersResponse({
     $core.Iterable<$5.User>? users,
   }) {
     final $result = create();
@@ -173,11 +173,11 @@ class ListServerUsersResponse extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ListServerUsersResponse._() : super();
-  factory ListServerUsersResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ListServerUsersResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ListUsersResponse._() : super();
+  factory ListUsersResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListUsersResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListServerUsersResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListUsersResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.server.v1'), createEmptyInstance: create)
     ..pc<$5.User>(1, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM, subBuilder: $5.User.create)
     ..hasRequiredFields = false
   ;
@@ -186,22 +186,22 @@ class ListServerUsersResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ListServerUsersResponse clone() => ListServerUsersResponse()..mergeFromMessage(this);
+  ListUsersResponse clone() => ListUsersResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListServerUsersResponse copyWith(void Function(ListServerUsersResponse) updates) => super.copyWith((message) => updates(message as ListServerUsersResponse)) as ListServerUsersResponse;
+  ListUsersResponse copyWith(void Function(ListUsersResponse) updates) => super.copyWith((message) => updates(message as ListUsersResponse)) as ListUsersResponse;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ListServerUsersResponse create() => ListServerUsersResponse._();
-  ListServerUsersResponse createEmptyInstance() => create();
-  static $pb.PbList<ListServerUsersResponse> createRepeated() => $pb.PbList<ListServerUsersResponse>();
+  static ListUsersResponse create() => ListUsersResponse._();
+  ListUsersResponse createEmptyInstance() => create();
+  static $pb.PbList<ListUsersResponse> createRepeated() => $pb.PbList<ListUsersResponse>();
   @$core.pragma('dart2js:noInline')
-  static ListServerUsersResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListServerUsersResponse>(create);
-  static ListServerUsersResponse? _defaultInstance;
+  static ListUsersResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListUsersResponse>(create);
+  static ListUsersResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$5.User> get users => $_getList(0);

@@ -45,11 +45,11 @@ class _ServerScreenState extends State<ServerScreen> {
     super.initState();
 
     final hub = context.getHub(widget.hubID);
-    channels = hub.serverClient
-        .listServerChannels(ListServerChannelsRequest(serverId: widget.serverID))
-        .then((p0) {
-          return p0.channels;
-        });
+    channels = hub.serverClient.listChannels(ListChannelsRequest(serverId: widget.serverID)).then((
+      p0,
+    ) {
+      return p0.channels;
+    });
 
     currentUser = hub.usersRepo.currentUser();
   }

@@ -1,12 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:isolate_generator_annotation/isolate_generator_annotation.dart';
 import 'package:konfa/auth/auth.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/service.pb.dart';
 import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
 import 'package:konfa/screens/server_selection_screen.dart';
-import 'dart:io' show Platform;
 import 'package:konfa/services/connection_manager.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konfa/widgets/loading.dart';
 
 part 'connect_screen.g.dart';
 
@@ -38,7 +40,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // Lists to store voice relays and auth providers fetched from hub
   List<VoiceRelayInfo> voiceRelays = [];
   List<AuthProviderInfo> authProviders = [];
-  bool _isLoading = false;
 
   // Sample federations
   final List<FederationInfo> knownFederations = [
@@ -46,7 +47,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
   ];
 
   // Known hubs
-  final List<HubInfo> knownHubs = [HubInfo(name: "Konfach Hub", address: "dns://49.13.3.4:38100")];
+  final List<HubInfo> knownHubs = [
+    if (kDebugMode) HubInfo(name: "Local", address: "http://localhost:38100"),
+    HubInfo(name: "Konfach Hub", address: "http://49.13.3.4:38100"),
+  ];
 
   @override
   void initState() {
@@ -54,84 +58,13 @@ class _ConnectScreenState extends State<ConnectScreen> {
     // Set default federation and hub automatically
     _selectedFederation = knownFederations.first;
     _selectedHub = knownHubs.first;
-
     _hubAddressController.text = _selectedHub.address;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _fetchHubData();
-    });
   }
 
   @override
   void dispose() {
     _hubAddressController.dispose();
     super.dispose();
-  }
-
-  Future<void> _fetchHubData() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    final hubUri = Uri.parse(_hubAddressController.text);
-
-    try {
-      final authProvidersResp = await context.manager.listAuthProviders(hubUri);
-
-      // Update the state with the fetched data
-      setState(() {
-        authProviders =
-            authProvidersResp.map((provider) {
-              String protocolType = "Unknown";
-              IconData protocolIcon = Icons.question_mark;
-
-              if (provider.hasOpenidConnect()) {
-                protocolType = "OpenID Connect";
-                protocolIcon = Icons.security;
-              }
-
-              return AuthProviderInfo(
-                id: provider.id,
-                name: provider.name,
-                protocolType: protocolType,
-                icon: protocolIcon,
-                onSelected: () {
-                  _authenticate(hubUri, provider);
-                },
-              );
-            }).toList();
-
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-
-      _showError('Failed to connect to hub: ${e.toString()}');
-    }
-  }
-
-  Future<void> _authenticate(Uri hubUri, AuthProvider provider) async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final manager = context.manager;
-      final authState = await manager.authOnProvider(hubUri, provider);
-      await manager.connect(hubUri, authState);
-      setState(() {
-        _authState = authState;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-
-      _showError('Failed to authenticate: ${e.toString()}');
-    }
   }
 
   void _showError(String message) {
@@ -201,93 +134,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
   //     ),
   //   );
   // }
-
-  Widget _buildAuthProviderItem(AuthProviderInfo provider) {
-    return OutlinedButton(
-      onPressed: provider.onSelected,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SizedBox(width: 8, child: Icon(provider.icon)),
-          Text(provider.name),
-          const SizedBox(width: 8),
-        ],
-      ),
-    );
-  }
-
-  Future<User> _getCurrentUser() async {
-    final resp = await context
-        .getHub(_selectedHub.address)
-        .hubClient
-        .currentUser(CurrentUserRequest());
-    return resp.user;
-  }
-
-  Widget _buildUserProfileWidget() {
-    return FutureBuilder(
-      future: _getCurrentUser(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-
-        final user = snapshot.data!;
-
-        return Card(
-          elevation: 2,
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 24,
-                  backgroundColor: Theme.of(context).primaryColor.withAlpha(0x33),
-                  child: Icon(Icons.person, size: 24, color: Theme.of(context).primaryColor),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        user.username,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Text(
-                        'Authenticated via ${_authState?.providerName ?? 'Unknown Provider'}',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 16),
-                OutlinedButton.icon(
-                  icon: const Icon(Icons.logout, size: 16),
-                  label: const Text('Sign Out'),
-                  onPressed: () {
-                    setState(() {
-                      _authState = null;
-                    });
-                  },
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    foregroundColor: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   Widget _buildVoiceRelaySection() {
     if (voiceRelays.isEmpty) return const SizedBox.shrink();
@@ -408,58 +254,16 @@ class _ConnectScreenState extends State<ConnectScreen> {
               ),
               SizedBox(height: 16),
               // Show profile card if authenticated
-              if (_authState != null)
-                _buildUserProfileWidget()
-              else
-                Flexible(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-                          if (voiceRelays.isNotEmpty) _buildVoiceRelaySection(),
-                          Text('Authentication', style: TextTheme.of(context).headlineSmall),
-                          SizedBox(height: 10),
-                          if (_isLoading)
-                            const Center(child: CircularProgressIndicator())
-                          else if (authProviders.isEmpty)
-                            Center(
-                              child: Text(
-                                'No authentication providers available',
-                                style: TextTheme.of(context).titleMedium,
-                              ),
-                            )
-                          else
-                            Column(children: authProviders.map(_buildAuthProviderItem).toList()),
-                          // Flexible(
-                          //   child: ListView.builder(
-                          //     itemCount: authProviders.length,
-                          //     itemBuilder: (context, index) {
-                          //       return _buildAuthProviderItem(authProviders[index]);
-                          //     },
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              // Show voice relays card only if authenticated and if there are voice relays
-              if (_authState != null && voiceRelays.isNotEmpty)
-                Flexible(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: _buildVoiceRelaySection(),
-                    ),
-                  ),
-                ),
+              _AuthWidget(
+                hubUri: Uri.parse(_selectedHub.address),
+                onAuthStateChanged:
+                    (authState) => setState(() {
+                      _authState = authState;
+                    }),
+              ),
               SizedBox(height: 12),
               ElevatedButton(
-                onPressed: _authState == null ? null : _goToHubScreen,
+                onPressed: _authState != null ? _goToHubScreen : null,
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   minimumSize: Size(double.infinity, 40),
@@ -474,28 +278,159 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 }
 
+class _AuthWidget extends StatefulWidget {
+  final Uri hubUri;
+  final Function(AuthState?)? onAuthStateChanged;
+
+  const _AuthWidget({super.key, required this.hubUri, this.onAuthStateChanged});
+
+  @override
+  State<_AuthWidget> createState() => _AuthWidgetState();
+}
+
+class _AuthWidgetState extends State<_AuthWidget> {
+  Future<AuthState?> _authStateFuture = Future.value(null);
+  Future<List<AuthProvider>> _authProvidersFuture = Future.value([]);
+
+  @override
+  void initState() {
+    super.initState();
+    _authProvidersFuture = context.manager.listAuthProviders(widget.hubUri);
+    _authStateFuture = context.manager.tryLoadSavedAuth(widget.hubUri).then((authState) {
+      if (authState != null) {
+        widget.onAuthStateChanged?.call(authState);
+      }
+      return authState;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: LoadingBuilder(
+          future: (_authProvidersFuture, _authStateFuture).wait,
+          builder: (context, values) {
+            final authProviders = values.$1;
+            final authState = values.$2;
+
+            if (authState == null) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Auth with', style: TextTheme.of(context).headlineSmall),
+                  const SizedBox(height: 8),
+                  ...authProviders.map(_buildAuthProviderItem),
+                ],
+              );
+            }
+
+            return _buildUserProfileWidget(authState);
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<User> _getCurrentUser() async {
+    return (await context
+        .getHub(widget.hubUri.toString())
+        .hubClient
+        .currentUser(CurrentUserRequest())).user;
+  }
+
+  Future<void> _signOut() async {
+    final manager = context.manager;
+    setState(() {
+      _authStateFuture = Future.value(null);
+    });
+  }
+
+  Future<void> _signIn(AuthProvider provider) async {
+    final manager = context.manager;
+    setState(() {
+      _authStateFuture = Future(() async {
+        final auth = await manager.authOnProvider(widget.hubUri, provider);
+        await manager.connect(widget.hubUri, auth);
+        widget.onAuthStateChanged?.call(auth);
+        return auth;
+      });
+    });
+  }
+
+  Widget _buildUserProfileWidget(AuthState authState) {
+    return FutureBuilder(
+      future: _getCurrentUser(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        final user = snapshot.data!;
+
+        return Row(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: Theme.of(context).primaryColor.withAlpha(0x33),
+              child: Icon(Icons.person, size: 24, color: Theme.of(context).primaryColor),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(user.username, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(
+                    'Authenticated via ${authState.providerName}',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            OutlinedButton.icon(
+              icon: const Icon(Icons.logout, size: 16),
+              label: const Text('Sign Out'),
+              onPressed: _signOut,
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                foregroundColor: Colors.red,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildAuthProviderItem(AuthProvider provider) {
+    return OutlinedButton(
+      onPressed: () => _signIn(provider),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(width: 8, child: Icon(Icons.security)),
+          Text(provider.name),
+          const SizedBox(width: 8),
+        ],
+      ),
+    );
+  }
+}
+
 class VoiceRelayInfo {
   final String id;
   final String name;
   final String address;
 
   VoiceRelayInfo({required this.id, required this.name, required this.address});
-}
-
-class AuthProviderInfo {
-  final String id;
-  final String name;
-  final String protocolType;
-  final IconData icon;
-  final VoidCallback onSelected;
-
-  AuthProviderInfo({
-    required this.id,
-    required this.name,
-    required this.protocolType,
-    required this.icon,
-    required this.onSelected,
-  });
 }
 
 class HubInfo {

@@ -19,9 +19,32 @@ const JavaFeatures$json = {
   '2': [
     {'1': 'legacy_closed_enum', '3': 1, '4': 1, '5': 8, '8': {}, '10': 'legacyClosedEnum'},
     {'1': 'utf8_validation', '3': 2, '4': 1, '5': 14, '6': '.pb.JavaFeatures.Utf8Validation', '8': {}, '10': 'utf8Validation'},
+    {'1': 'large_enum', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'largeEnum'},
     {'1': 'use_old_outer_classname_default', '3': 4, '4': 1, '5': 8, '8': {}, '10': 'useOldOuterClassnameDefault'},
+    {'1': 'nest_in_file_class', '3': 5, '4': 1, '5': 14, '6': '.pb.JavaFeatures.NestInFileClassFeature.NestInFileClass', '8': {}, '10': 'nestInFileClass'},
   ],
+  '3': [JavaFeatures_NestInFileClassFeature$json],
   '4': [JavaFeatures_Utf8Validation$json],
+};
+
+@$core.Deprecated('Use javaFeaturesDescriptor instead')
+const JavaFeatures_NestInFileClassFeature$json = {
+  '1': 'NestInFileClassFeature',
+  '4': [JavaFeatures_NestInFileClassFeature_NestInFileClass$json],
+  '9': [
+    {'1': 1, '2': 536870912},
+  ],
+};
+
+@$core.Deprecated('Use javaFeaturesDescriptor instead')
+const JavaFeatures_NestInFileClassFeature_NestInFileClass$json = {
+  '1': 'NestInFileClass',
+  '2': [
+    {'1': 'NEST_IN_FILE_CLASS_UNKNOWN', '2': 0},
+    {'1': 'NO', '2': 1},
+    {'1': 'YES', '2': 2},
+    {'1': 'LEGACY', '2': 3, '3': {}},
+  ],
 };
 
 @$core.Deprecated('Use javaFeaturesDescriptor instead')
@@ -46,9 +69,15 @@ final $typed_data.Uint8List javaFeaturesDescriptor = $convert.base64Decode(
     'RoZSBKYXZhLXNwZWNpZmljIHV0ZjggdmFsaWRhdGlvbiBmZWF0dXJlIGlzIGRlcHJlY2F0ZWQg'
     'YW5kIGlzIHNjaGVkdWxlZCB0byBiZSByZW1vdmVkIGluIGVkaXRpb24gMjAyNS4gIFV0Zjggdm'
     'FsaWRhdGlvbiBiZWhhdmlvciBzaG91bGQgdXNlIHRoZSBnbG9iYWwgY3Jvc3MtbGFuZ3VhZ2Ug'
-    'dXRmOF92YWxpZGF0aW9uIGZlYXR1cmUuUg51dGY4VmFsaWRhdGlvbhJuCh91c2Vfb2xkX291dG'
-    'VyX2NsYXNzbmFtZV9kZWZhdWx0GAQgASgIQiiIAQGYAQGiAQkSBHRydWUYhAeiAQoSBWZhbHNl'
-    'GOkHsgEGCOkHIOkHUht1c2VPbGRPdXRlckNsYXNzbmFtZURlZmF1bHQiRgoOVXRmOFZhbGlkYX'
-    'Rpb24SGwoXVVRGOF9WQUxJREFUSU9OX1VOS05PV04QABILCgdERUZBVUxUEAESCgoGVkVSSUZZ'
-    'EAI=');
+    'dXRmOF92YWxpZGF0aW9uIGZlYXR1cmUuUg51dGY4VmFsaWRhdGlvbhI7CgpsYXJnZV9lbnVtGA'
+    'MgASgIQhyIAQGYAQaYAQGiAQoSBWZhbHNlGIQHsgEDCOkHUglsYXJnZUVudW0SbgofdXNlX29s'
+    'ZF9vdXRlcl9jbGFzc25hbWVfZGVmYXVsdBgEIAEoCEIoiAEBmAEBogEJEgR0cnVlGIQHogEKEg'
+    'VmYWxzZRjpB7IBBgjpByDpB1IbdXNlT2xkT3V0ZXJDbGFzc25hbWVEZWZhdWx0EpABChJuZXN0'
+    'X2luX2ZpbGVfY2xhc3MYBSABKA4yNy5wYi5KYXZhRmVhdHVyZXMuTmVzdEluRmlsZUNsYXNzRm'
+    'VhdHVyZS5OZXN0SW5GaWxlQ2xhc3NCKogBApgBA5gBBpgBCKIBCxIGTEVHQUNZGIQHogEHEgJO'
+    'TxjpB7IBAwjpB1IPbmVzdEluRmlsZUNsYXNzGnwKFk5lc3RJbkZpbGVDbGFzc0ZlYXR1cmUiWA'
+    'oPTmVzdEluRmlsZUNsYXNzEh4KGk5FU1RfSU5fRklMRV9DTEFTU19VTktOT1dOEAASBgoCTk8Q'
+    'ARIHCgNZRVMQAhIUCgZMRUdBQ1kQAxoIIgYI6Qcg6QdKCAgBEICAgIACIkYKDlV0ZjhWYWxpZG'
+    'F0aW9uEhsKF1VURjhfVkFMSURBVElPTl9VTktOT1dOEAASCwoHREVGQVVMVBABEgoKBlZFUklG'
+    'WRAC');
 

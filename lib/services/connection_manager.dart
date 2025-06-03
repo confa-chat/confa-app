@@ -32,17 +32,29 @@ class HubsManager {
     return channel;
   }
 
-  Future<List<AuthProvider>> listAuthProviders(Uri uri) async {
-    final channel = await _getChannel(uri);
+  Future<List<AuthProvider>> listAuthProviders(Uri hub) async {
+    final channel = await _getChannel(hub);
     final client = HubServiceClient(channel);
     final response = await client.listAuthProviders(ListAuthProvidersRequest());
     return response.authProviders;
   }
 
-  Future<AuthState> authOnProvider(Uri uri, AuthProvider provider) async {
-    final state = AuthState();
-    await state.authenticate(provider);
-    return state;
+  Future<AuthState?> tryLoadSavedAuth(Uri hub) async {
+    final providers = await listAuthProviders(hub);
+    final authState = await AuthState.tryLoadSavedAuth(hub, providers);
+    if (authState == null) {
+      return null;
+    }
+    await connect(hub, authState);
+    return authState;
+  }
+
+  Future<AuthState> authOnProvider(Uri hub, AuthProvider provider) async {
+    final authState = await AuthState.authenticate(hub, provider);
+
+    await connect(hub, authState);
+
+    return authState;
   }
 
   Future<HubConnection> connect(Uri uri, AuthState auth) async {
@@ -145,9 +157,9 @@ extension HubConnectionExtension on BuildContext {
   HubsManager get manager => read<HubsManager>();
   HubConnection getHub(String hubID) {
     final HubsManager hubsManager = read<HubsManager>();
-    final uri = Uri.parse(hubID);
+    final Uri hubUri = Uri.parse(hubID);
 
-    return hubsManager._serviceConnections[uri] ??
+    return hubsManager._serviceConnections[hubUri] ??
         (throw Exception('No connection found for hubID: $hubID'));
   }
 

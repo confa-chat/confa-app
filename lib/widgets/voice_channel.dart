@@ -49,10 +49,6 @@ class _InactiveVoiceChannelListTile extends StatelessWidget {
         return ListTile(
           leading: const Icon(Icons.mic),
           title: Text(channel.name),
-          subtitle:
-              channel.hasVoiceRelayId()
-                  ? Text('Relay: ${channel.voiceRelayId}', style: TextStyle(fontSize: 10))
-                  : null,
           selected: false,
           onTap:
               () => context.read<VoiceBloc>().add(
@@ -60,7 +56,7 @@ class _InactiveVoiceChannelListTile extends StatelessWidget {
                   conn: context.read<HubConnection>(),
                   serverId: channel.serverId,
                   channelId: channel.channelId,
-                  voiceRelayId: channel.voiceRelayId,
+                  voiceRelayId: channel.voiceRelayId[0],
                 ),
               ),
         );
@@ -84,10 +80,6 @@ class _ActiveVoiceChannelListTile extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.mic),
           title: Text(channel.name),
-          subtitle:
-              channel.hasVoiceRelayId()
-                  ? Text('Relay: ${channel.voiceRelayId}', style: TextStyle(fontSize: 10))
-                  : null,
           trailing: IconButton(
             icon: const Icon(Icons.call_end),
             onPressed: () => context.read<VoiceBloc>().add(LeaveVoiceChannel()),

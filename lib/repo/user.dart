@@ -25,7 +25,7 @@ class UsersRepo {
   }
 
   Future<void> loadServerUsers(String serverId) async {
-    final resp = await serverClient.listServerUsers(ListServerUsersRequest(serverId: serverId));
+    final resp = await serverClient.listUsers(ListUsersRequest(serverId: serverId));
 
     for (final user in resp.users) {
       _cache[user.id] = user;

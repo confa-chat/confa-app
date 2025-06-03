@@ -13,56 +13,55 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use listServerChannelsRequestDescriptor instead')
-const ListServerChannelsRequest$json = {
-  '1': 'ListServerChannelsRequest',
+@$core.Deprecated('Use listChannelsRequestDescriptor instead')
+const ListChannelsRequest$json = {
+  '1': 'ListChannelsRequest',
   '2': [
     {'1': 'server_id', '3': 1, '4': 1, '5': 9, '10': 'serverId'},
   ],
 };
 
-/// Descriptor for `ListServerChannelsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listServerChannelsRequestDescriptor = $convert.base64Decode(
-    'ChlMaXN0U2VydmVyQ2hhbm5lbHNSZXF1ZXN0EhsKCXNlcnZlcl9pZBgBIAEoCVIIc2VydmVySW'
-    'Q=');
+/// Descriptor for `ListChannelsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listChannelsRequestDescriptor = $convert.base64Decode(
+    'ChNMaXN0Q2hhbm5lbHNSZXF1ZXN0EhsKCXNlcnZlcl9pZBgBIAEoCVIIc2VydmVySWQ=');
 
-@$core.Deprecated('Use listServerChannelsResponseDescriptor instead')
-const ListServerChannelsResponse$json = {
-  '1': 'ListServerChannelsResponse',
+@$core.Deprecated('Use listChannelsResponseDescriptor instead')
+const ListChannelsResponse$json = {
+  '1': 'ListChannelsResponse',
   '2': [
     {'1': 'channels', '3': 1, '4': 3, '5': 11, '6': '.konfa.channel.v1.Channel', '10': 'channels'},
   ],
 };
 
-/// Descriptor for `ListServerChannelsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listServerChannelsResponseDescriptor = $convert.base64Decode(
-    'ChpMaXN0U2VydmVyQ2hhbm5lbHNSZXNwb25zZRI1CghjaGFubmVscxgBIAMoCzIZLmtvbmZhLm'
-    'NoYW5uZWwudjEuQ2hhbm5lbFIIY2hhbm5lbHM=');
+/// Descriptor for `ListChannelsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listChannelsResponseDescriptor = $convert.base64Decode(
+    'ChRMaXN0Q2hhbm5lbHNSZXNwb25zZRI1CghjaGFubmVscxgBIAMoCzIZLmtvbmZhLmNoYW5uZW'
+    'wudjEuQ2hhbm5lbFIIY2hhbm5lbHM=');
 
-@$core.Deprecated('Use listServerUsersRequestDescriptor instead')
-const ListServerUsersRequest$json = {
-  '1': 'ListServerUsersRequest',
+@$core.Deprecated('Use listUsersRequestDescriptor instead')
+const ListUsersRequest$json = {
+  '1': 'ListUsersRequest',
   '2': [
     {'1': 'server_id', '3': 1, '4': 1, '5': 9, '10': 'serverId'},
   ],
 };
 
-/// Descriptor for `ListServerUsersRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listServerUsersRequestDescriptor = $convert.base64Decode(
-    'ChZMaXN0U2VydmVyVXNlcnNSZXF1ZXN0EhsKCXNlcnZlcl9pZBgBIAEoCVIIc2VydmVySWQ=');
+/// Descriptor for `ListUsersRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listUsersRequestDescriptor = $convert.base64Decode(
+    'ChBMaXN0VXNlcnNSZXF1ZXN0EhsKCXNlcnZlcl9pZBgBIAEoCVIIc2VydmVySWQ=');
 
-@$core.Deprecated('Use listServerUsersResponseDescriptor instead')
-const ListServerUsersResponse$json = {
-  '1': 'ListServerUsersResponse',
+@$core.Deprecated('Use listUsersResponseDescriptor instead')
+const ListUsersResponse$json = {
+  '1': 'ListUsersResponse',
   '2': [
     {'1': 'users', '3': 1, '4': 3, '5': 11, '6': '.konfa.user.v1.User', '10': 'users'},
   ],
 };
 
-/// Descriptor for `ListServerUsersResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listServerUsersResponseDescriptor = $convert.base64Decode(
-    'ChdMaXN0U2VydmVyVXNlcnNSZXNwb25zZRIpCgV1c2VycxgBIAMoCzITLmtvbmZhLnVzZXIudj'
-    'EuVXNlclIFdXNlcnM=');
+/// Descriptor for `ListUsersResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listUsersResponseDescriptor = $convert.base64Decode(
+    'ChFMaXN0VXNlcnNSZXNwb25zZRIpCgV1c2VycxgBIAMoCzITLmtvbmZhLnVzZXIudjEuVXNlcl'
+    'IFdXNlcnM=');
 
 @$core.Deprecated('Use createChannelRequestDescriptor instead')
 const CreateChannelRequest$json = {
