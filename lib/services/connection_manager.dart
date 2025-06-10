@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:grpc/grpc.dart' as grpc;
+import 'package:grpc/grpc_connection_interface.dart';
 import 'package:konfa/auth/auth.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
@@ -63,7 +64,7 @@ class HubsManager {
     }
 
     final channel = await _getChannel(uri);
-    final service = await HubConnection.connect(channel, auth);
+    final service = await HubConnection.connect(uri, channel, auth);
     _serviceConnections[uri] = service;
     return service;
   }
@@ -71,6 +72,8 @@ class HubsManager {
 
 /// Manages all services and provides them to the widget tree
 class HubConnection {
+  final Uri baseUri;
+
   final AuthState _authState;
   final HubServiceClient _hubClient;
   final ServerServiceClient _serverClient;
@@ -80,6 +83,7 @@ class HubConnection {
   final Map<String, VoiceRelayServiceClient> _voiceRelayClients = {};
 
   HubConnection._(
+    this.baseUri,
     this._authState,
     this._hubClient,
     this._serverClient,
@@ -92,7 +96,11 @@ class HubConnection {
     metadata['authorization'] = 'Bearer ${token.accessToken}';
   }
 
-  static Future<HubConnection> connect(grpc.ClientChannel channel, AuthState authState) async {
+  static Future<HubConnection> connect(
+    Uri baseUrl,
+    grpc.ClientChannel channel,
+    AuthState authState,
+  ) async {
     final callOptions = grpc.CallOptions(
       metadata: {'authorization': 'Bearer ${(await authState.getToken()).accessToken}'},
       providers: [
@@ -109,7 +117,7 @@ class HubConnection {
 
     final userRepo = await UsersRepo.create(hubClient, serverClient);
 
-    return HubConnection._(authState, hubClient, serverClient, chatClient, userRepo);
+    return HubConnection._(baseUrl, authState, hubClient, serverClient, chatClient, userRepo);
   }
 
   Future<VoiceRelayServiceClient> voiceRelayClient(String relayID) async {

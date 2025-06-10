@@ -1,12 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:konfa/gen/proto/google/protobuf/timestamp.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
 import 'package:konfa/services/connection_manager.dart';
+import 'package:l/l.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:file_picker/file_picker.dart';
 
 class TextChatWidget extends StatefulWidget {
   final String serverId;
@@ -133,14 +137,16 @@ class _TextChatWidgetState extends State<TextChatWidget> {
           // ),
         ),
         MessageInput(
-          send: (text) async {
+          send: (text, attachmentIds) async {
             context.hub.chatClient.sendMessage(
               SendMessageRequest(
                 channel: TextChannelRef(channelId: widget.channelId, serverId: widget.serverId),
                 content: text,
+                attachmentIds: attachmentIds,
               ),
             );
           },
+          hubConnection: context.hub,
         ),
       ],
     );
@@ -163,16 +169,98 @@ class _MessageListTileState extends State<MessageListTile> {
     return ListTile(
       title: Text(widget.user.username),
       titleTextStyle: Theme.of(context).textTheme.labelSmall,
-      subtitle: Text(widget.message.content),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(widget.message.content),
+          if (widget.message.attachments.isNotEmpty)
+            _messageAttachments(widget.message.attachments),
+        ],
+      ),
       subtitleTextStyle: Theme.of(context).textTheme.bodyLarge,
+    );
+  }
+
+  void _saveFile(Attachment attachment) {
+    launchUrl(context.hub.baseUri.replace(path: attachment.url));
+
+    // TODO make downloads without a browser in future
+    // FilePicker.platform
+    //     .saveFile(fileName: attachment.name, dialogTitle: 'Save ${attachment.name}')
+    //     .then((filePath) {
+    //       if (filePath != null) {
+    //         // Download the file from the URL and save it to the selected path
+    //         HttpClient()
+    //             .getUrl(Uri.parse(fileUrl))
+    //             .then((request) {
+    //               return request.close();
+    //             })
+    //             .then((response) {
+    //               return response.pipe(File(filePath).openWrite());
+    //             });
+    //       }
+    //     });
+  }
+
+  Widget _messageAttachments(List<Attachment> atts) {
+    final attachmentsList = atts.splitByType();
+
+    return Column(
+      children: [
+        if (attachmentsList.images.isNotEmpty)
+          Wrap(
+            children:
+                attachmentsList.images.map((attachment) {
+                  final imageUrl = context.hub.baseUri.replace(path: attachment.url).toString();
+
+                  return Image.network(imageUrl, height: 400);
+                }).toList(),
+          ),
+        if (attachmentsList.other.isNotEmpty)
+          Wrap(
+            spacing: 8,
+            children:
+                attachmentsList.other.map((attachment) {
+                  return ActionChip(
+                    label: Text(attachment.name),
+                    avatar: const Icon(Icons.attach_file),
+                    onPressed: () => _saveFile(attachment),
+                  );
+                }).toList(),
+          ),
+      ],
     );
   }
 }
 
-class MessageInput extends StatefulWidget {
-  final Future<void> Function(String text) send;
+class AttachmentsList {
+  List<Attachment> images = <Attachment>[];
+  List<Attachment> other = <Attachment>[];
+}
 
-  const MessageInput({super.key, required this.send});
+extension SplitImages on Iterable<Attachment> {
+  AttachmentsList splitByType() {
+    final attachmentsList = AttachmentsList();
+    for (final element in this) {
+      if (element.name.endsWith(".jpg") ||
+          element.name.endsWith(".jpeg") ||
+          element.name.endsWith(".png") ||
+          element.name.endsWith(".webp") ||
+          element.name.endsWith(".gif")) {
+        attachmentsList.images.add(element);
+      } else {
+        attachmentsList.other.add(element);
+      }
+    }
+    return attachmentsList;
+  }
+}
+
+class MessageInput extends StatefulWidget {
+  final Future<void> Function(String text, List<String> attachmentIds) send;
+  final HubConnection hubConnection;
+
+  const MessageInput({super.key, required this.send, required this.hubConnection});
 
   @override
   State<MessageInput> createState() => _MessageInputState();
@@ -180,35 +268,154 @@ class MessageInput extends StatefulWidget {
 
 class _MessageInputState extends State<MessageInput> {
   final _controller = TextEditingController();
+  final List<PlatformFile> _selectedFiles = [];
+  final List<String> _uploadedAttachmentIds = [];
+  bool _isUploading = false;
+
+  Future<void> _pickFiles() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.any,
+        dialogTitle: 'Select file attachments',
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        setState(() {
+          _selectedFiles.addAll(result.files);
+        });
+      }
+    } catch (e) {
+      // Show error to user
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error picking files: $e')));
+      }
+    }
+  }
+
+  Stream<UploadAttachmentRequest> _fileUploadStream(PlatformFile file) async* {
+    yield UploadAttachmentRequest(info: AttachmentUploadInfo(name: file.name));
+
+    final filePath = file.path!;
+
+    await for (final chunk in File(filePath).openRead()) {
+      yield UploadAttachmentRequest(data: chunk);
+    }
+  }
+
+  Future<void> _uploadAttachments() async {
+    if (_selectedFiles.isEmpty) return;
+
+    setState(() {
+      _isUploading = true;
+    });
+
+    try {
+      for (final file in _selectedFiles) {
+        if (file.path == null) continue;
+        final response = await context.hub.chatClient.uploadAttachment(_fileUploadStream(file));
+        _uploadedAttachmentIds.add(response.attachmentId);
+      }
+    } catch (e) {
+      if (mounted) {
+        l.e('Error uploading files: $e');
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error uploading files: $e')));
+      }
+    } finally {
+      setState(() {
+        _isUploading = false;
+      });
+    }
+  }
+
+  void _removeAttachment(int index) {
+    setState(() {
+      _selectedFiles.removeAt(index);
+    });
+  }
 
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
 
-    if (text.isEmpty) {
+    if (text.isEmpty && _selectedFiles.isEmpty) {
       return;
     }
 
+    // Upload attachments first if any
+    if (_selectedFiles.isNotEmpty) {
+      await _uploadAttachments();
+    }
+
     _controller.clear();
-    await widget.send(text);
+    await widget.send(text, _uploadedAttachmentIds);
+
+    // Clear selected files and uploaded attachment IDs after sending
+    setState(() {
+      _selectedFiles.clear();
+      _uploadedAttachmentIds.clear();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      width: double.infinity,
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Message'),
-              controller: _controller,
-              onSubmitted: (_) => _sendMessage(),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Divider(),
+        if (_selectedFiles.isNotEmpty)
+          Container(
+            height: 60,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _selectedFiles.length,
+              itemBuilder: (context, index) {
+                final file = _selectedFiles[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Chip(
+                    label: Text(file.name),
+                    avatar: const Icon(Icons.attach_file),
+                    onDeleted: () => _removeAttachment(index),
+                  ),
+                );
+              },
             ),
           ),
-          IconButton(icon: const Icon(Icons.send), onPressed: _sendMessage),
-        ],
-      ),
+        SizedBox(
+          height: 80,
+          width: double.infinity,
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.attach_file),
+                onPressed: _isUploading ? null : _pickFiles,
+                tooltip: 'Attach files',
+              ),
+              Expanded(
+                child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Message',
+                  ),
+                  controller: _controller,
+                  onSubmitted: (_) => _sendMessage(),
+                  enabled: !_isUploading,
+                ),
+              ),
+              IconButton(
+                icon: _isUploading ? const CircularProgressIndicator() : const Icon(Icons.send),
+                onPressed: _isUploading ? null : _sendMessage,
+                tooltip: 'Send message',
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

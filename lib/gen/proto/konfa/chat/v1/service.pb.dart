@@ -83,6 +83,7 @@ class SendMessageRequest extends $pb.GeneratedMessage {
   factory SendMessageRequest({
     TextChannelRef? channel,
     $core.String? content,
+    $core.Iterable<$core.String>? attachmentIds,
   }) {
     final $result = create();
     if (channel != null) {
@@ -90,6 +91,9 @@ class SendMessageRequest extends $pb.GeneratedMessage {
     }
     if (content != null) {
       $result.content = content;
+    }
+    if (attachmentIds != null) {
+      $result.attachmentIds.addAll(attachmentIds);
     }
     return $result;
   }
@@ -100,6 +104,7 @@ class SendMessageRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SendMessageRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.chat.v1'), createEmptyInstance: create)
     ..aOM<TextChannelRef>(1, _omitFieldNames ? '' : 'channel', subBuilder: TextChannelRef.create)
     ..aOS(2, _omitFieldNames ? '' : 'content')
+    ..pPS(3, _omitFieldNames ? '' : 'attachmentIds')
     ..hasRequiredFields = false
   ;
 
@@ -143,6 +148,9 @@ class SendMessageRequest extends $pb.GeneratedMessage {
   $core.bool hasContent() => $_has(1);
   @$pb.TagNumber(2)
   void clearContent() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.String> get attachmentIds => $_getList(2);
 }
 
 class SendMessageResponse extends $pb.GeneratedMessage {
@@ -201,6 +209,7 @@ class Message extends $pb.GeneratedMessage {
     $core.String? senderId,
     $core.String? content,
     $3.Timestamp? timestamp,
+    $core.Iterable<Attachment>? attachments,
   }) {
     final $result = create();
     if (messageId != null) {
@@ -215,6 +224,9 @@ class Message extends $pb.GeneratedMessage {
     if (timestamp != null) {
       $result.timestamp = timestamp;
     }
+    if (attachments != null) {
+      $result.attachments.addAll(attachments);
+    }
     return $result;
   }
   Message._() : super();
@@ -226,6 +238,7 @@ class Message extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'senderId')
     ..aOS(5, _omitFieldNames ? '' : 'content')
     ..aOM<$3.Timestamp>(6, _omitFieldNames ? '' : 'timestamp', subBuilder: $3.Timestamp.create)
+    ..pc<Attachment>(7, _omitFieldNames ? '' : 'attachments', $pb.PbFieldType.PM, subBuilder: Attachment.create)
     ..hasRequiredFields = false
   ;
 
@@ -287,6 +300,87 @@ class Message extends $pb.GeneratedMessage {
   void clearTimestamp() => clearField(6);
   @$pb.TagNumber(6)
   $3.Timestamp ensureTimestamp() => $_ensure(3);
+
+  @$pb.TagNumber(7)
+  $core.List<Attachment> get attachments => $_getList(4);
+}
+
+class Attachment extends $pb.GeneratedMessage {
+  factory Attachment({
+    $core.String? attachmentId,
+    $core.String? name,
+    $core.String? url,
+  }) {
+    final $result = create();
+    if (attachmentId != null) {
+      $result.attachmentId = attachmentId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (url != null) {
+      $result.url = url;
+    }
+    return $result;
+  }
+  Attachment._() : super();
+  factory Attachment.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Attachment.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Attachment', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.chat.v1'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'attachmentId')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aOS(3, _omitFieldNames ? '' : 'url')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Attachment clone() => Attachment()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Attachment copyWith(void Function(Attachment) updates) => super.copyWith((message) => updates(message as Attachment)) as Attachment;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Attachment create() => Attachment._();
+  Attachment createEmptyInstance() => create();
+  static $pb.PbList<Attachment> createRepeated() => $pb.PbList<Attachment>();
+  @$core.pragma('dart2js:noInline')
+  static Attachment getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Attachment>(create);
+  static Attachment? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get attachmentId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set attachmentId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAttachmentId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAttachmentId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get url => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set url($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUrl() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUrl() => clearField(3);
 }
 
 class GetMessageHistoryRequest extends $pb.GeneratedMessage {
@@ -768,11 +862,11 @@ class AttachmentUploadInfo extends $pb.GeneratedMessage {
 
 class UploadAttachmentResponse extends $pb.GeneratedMessage {
   factory UploadAttachmentResponse({
-    $core.String? attachmenId,
+    $core.String? attachmentId,
   }) {
     final $result = create();
-    if (attachmenId != null) {
-      $result.attachmenId = attachmenId;
+    if (attachmentId != null) {
+      $result.attachmentId = attachmentId;
     }
     return $result;
   }
@@ -781,7 +875,7 @@ class UploadAttachmentResponse extends $pb.GeneratedMessage {
   factory UploadAttachmentResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UploadAttachmentResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.chat.v1'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'attachmenId')
+    ..aOS(1, _omitFieldNames ? '' : 'attachmentId')
     ..hasRequiredFields = false
   ;
 
@@ -807,13 +901,13 @@ class UploadAttachmentResponse extends $pb.GeneratedMessage {
   static UploadAttachmentResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get attachmenId => $_getSZ(0);
+  $core.String get attachmentId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set attachmenId($core.String v) { $_setString(0, v); }
+  set attachmentId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasAttachmenId() => $_has(0);
+  $core.bool hasAttachmentId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAttachmenId() => clearField(1);
+  void clearAttachmentId() => clearField(1);
 }
 
 

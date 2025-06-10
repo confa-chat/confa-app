@@ -33,13 +33,15 @@ const SendMessageRequest$json = {
   '2': [
     {'1': 'channel', '3': 1, '4': 1, '5': 11, '6': '.konfa.chat.v1.TextChannelRef', '10': 'channel'},
     {'1': 'content', '3': 2, '4': 1, '5': 9, '10': 'content'},
+    {'1': 'attachment_ids', '3': 3, '4': 3, '5': 9, '10': 'attachmentIds'},
   ],
 };
 
 /// Descriptor for `SendMessageRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List sendMessageRequestDescriptor = $convert.base64Decode(
     'ChJTZW5kTWVzc2FnZVJlcXVlc3QSNwoHY2hhbm5lbBgBIAEoCzIdLmtvbmZhLmNoYXQudjEuVG'
-    'V4dENoYW5uZWxSZWZSB2NoYW5uZWwSGAoHY29udGVudBgCIAEoCVIHY29udGVudA==');
+    'V4dENoYW5uZWxSZWZSB2NoYW5uZWwSGAoHY29udGVudBgCIAEoCVIHY29udGVudBIlCg5hdHRh'
+    'Y2htZW50X2lkcxgDIAMoCVINYXR0YWNobWVudElkcw==');
 
 @$core.Deprecated('Use sendMessageResponseDescriptor instead')
 const SendMessageResponse$json = {
@@ -61,6 +63,7 @@ const Message$json = {
     {'1': 'sender_id', '3': 4, '4': 1, '5': 9, '10': 'senderId'},
     {'1': 'content', '3': 5, '4': 1, '5': 9, '10': 'content'},
     {'1': 'timestamp', '3': 6, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'timestamp'},
+    {'1': 'attachments', '3': 7, '4': 3, '5': 11, '6': '.konfa.chat.v1.Attachment', '10': 'attachments'},
   ],
 };
 
@@ -68,7 +71,23 @@ const Message$json = {
 final $typed_data.Uint8List messageDescriptor = $convert.base64Decode(
     'CgdNZXNzYWdlEh0KCm1lc3NhZ2VfaWQYASABKAlSCW1lc3NhZ2VJZBIbCglzZW5kZXJfaWQYBC'
     'ABKAlSCHNlbmRlcklkEhgKB2NvbnRlbnQYBSABKAlSB2NvbnRlbnQSOAoJdGltZXN0YW1wGAYg'
-    'ASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJdGltZXN0YW1w');
+    'ASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJdGltZXN0YW1wEjsKC2F0dGFjaG1lbn'
+    'RzGAcgAygLMhkua29uZmEuY2hhdC52MS5BdHRhY2htZW50UgthdHRhY2htZW50cw==');
+
+@$core.Deprecated('Use attachmentDescriptor instead')
+const Attachment$json = {
+  '1': 'Attachment',
+  '2': [
+    {'1': 'attachment_id', '3': 1, '4': 1, '5': 9, '10': 'attachmentId'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'url', '3': 3, '4': 1, '5': 9, '10': 'url'},
+  ],
+};
+
+/// Descriptor for `Attachment`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List attachmentDescriptor = $convert.base64Decode(
+    'CgpBdHRhY2htZW50EiMKDWF0dGFjaG1lbnRfaWQYASABKAlSDGF0dGFjaG1lbnRJZBISCgRuYW'
+    '1lGAIgASgJUgRuYW1lEhAKA3VybBgDIAEoCVIDdXJs');
 
 @$core.Deprecated('Use getMessageHistoryRequestDescriptor instead')
 const GetMessageHistoryRequest$json = {
@@ -186,12 +205,12 @@ final $typed_data.Uint8List attachmentUploadInfoDescriptor = $convert.base64Deco
 const UploadAttachmentResponse$json = {
   '1': 'UploadAttachmentResponse',
   '2': [
-    {'1': 'attachmen_id', '3': 1, '4': 1, '5': 9, '10': 'attachmenId'},
+    {'1': 'attachment_id', '3': 1, '4': 1, '5': 9, '10': 'attachmentId'},
   ],
 };
 
 /// Descriptor for `UploadAttachmentResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List uploadAttachmentResponseDescriptor = $convert.base64Decode(
-    'ChhVcGxvYWRBdHRhY2htZW50UmVzcG9uc2USIQoMYXR0YWNobWVuX2lkGAEgASgJUgthdHRhY2'
-    'htZW5JZA==');
+    'ChhVcGxvYWRBdHRhY2htZW50UmVzcG9uc2USIwoNYXR0YWNobWVudF9pZBgBIAEoCVIMYXR0YW'
+    'NobWVudElk');
 
