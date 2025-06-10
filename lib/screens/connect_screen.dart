@@ -295,7 +295,7 @@ class _AuthWidgetState extends State<_AuthWidget> {
   @override
   void initState() {
     super.initState();
-    _authProvidersFuture = context.manager.listAuthProviders(widget.hubUri);
+    _authProvidersFuture = context.manager.listAuthProvidersOnHub(widget.hubUri);
     _authStateFuture = context.manager.tryLoadSavedAuth(widget.hubUri).then((authState) {
       if (authState != null) {
         widget.onAuthStateChanged?.call(authState);
@@ -334,7 +334,7 @@ class _AuthWidgetState extends State<_AuthWidget> {
   }
 
   Future<User> _getCurrentUser() async {
-    final hub = await context.getHub(widget.hubUri.toString());
+    final hub = await context.manager.getHubConnection(widget.hubUri.toString());
     return (await hub.hubClient.currentUser(CurrentUserRequest())).user;
   }
 

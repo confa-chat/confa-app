@@ -18,7 +18,7 @@ class ServerSelectionScreenRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return LoadingBuilder(
-      future: context.getHub(hubID),
+      future: context.manager.getHubConnection(hubID),
       builder: (context, hub) {
         return Provider.value(value: hub, child: ServerSelectionScreen(hubID: hubID));
       },

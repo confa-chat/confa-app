@@ -16,7 +16,7 @@ const grpcCreds = grpc.ChannelCredentials.insecure();
 
 class HubsManager {
   final Map<Uri, grpc.ClientChannel> _channels = {};
-  final Map<Uri, HubConnection> _serviceConnections = {};
+  final Map<Uri, HubConnection> _hubConnections = {};
 
   HubsManager();
 
@@ -35,7 +35,7 @@ class HubsManager {
     return channel;
   }
 
-  Future<List<AuthProvider>> listAuthProviders(Uri hub) async {
+  Future<List<AuthProvider>> listAuthProvidersOnHub(Uri hub) async {
     final channel = await _getChannel(hub);
     final client = HubServiceClient(channel);
     final response = await client.listAuthProviders(ListAuthProvidersRequest());
@@ -43,7 +43,7 @@ class HubsManager {
   }
 
   Future<AuthState?> tryLoadSavedAuth(Uri hub) async {
-    final providers = await listAuthProviders(hub);
+    final providers = await listAuthProvidersOnHub(hub);
     final authState = await AuthState.tryLoadSavedAuth(hub, providers);
     if (authState == null) {
       return null;
@@ -61,11 +61,11 @@ class HubsManager {
   }
 
   Future<HubConnection?> tryRestoreHubConnection(Uri uri) async {
-    if (_serviceConnections.containsKey(uri)) {
-      return _serviceConnections[uri]!;
+    if (_hubConnections.containsKey(uri)) {
+      return _hubConnections[uri]!;
     }
 
-    final authState = await AuthState.tryLoadSavedAuth(uri, await listAuthProviders(uri));
+    final authState = await AuthState.tryLoadSavedAuth(uri, await listAuthProvidersOnHub(uri));
     if (authState == null) {
       return null;
     }
@@ -74,14 +74,29 @@ class HubsManager {
   }
 
   Future<HubConnection> connect(Uri uri, AuthState auth) async {
-    if (_serviceConnections.containsKey(uri)) {
-      return _serviceConnections[uri]!;
+    if (_hubConnections.containsKey(uri)) {
+      return _hubConnections[uri]!;
     }
 
     final channel = await _getChannel(uri);
     final service = await HubConnection.connect(uri, channel, auth);
-    _serviceConnections[uri] = service;
+    _hubConnections[uri] = service;
     return service;
+  }
+
+  Future<HubConnection> getHubConnection(String hubID) async {
+    final Uri hubUri = Uri.parse(hubID);
+
+    if (_hubConnections.containsKey(hubUri)) {
+      return _hubConnections[hubUri]!;
+    }
+
+    final restoredConnection = await tryRestoreHubConnection(hubUri);
+    if (restoredConnection != null) {
+      return restoredConnection;
+    }
+
+    throw Exception('No connection found for hubID: $hubID');
   }
 }
 
@@ -179,20 +194,4 @@ class HubConnection {
 extension HubConnectionExtension on BuildContext {
   HubsManager get manager => read<HubsManager>();
   HubConnection get hub => read<HubConnection>();
-
-  Future<HubConnection> getHub(String hubID) async {
-    final HubsManager hubsManager = read<HubsManager>();
-    final Uri hubUri = Uri.parse(hubID);
-
-    if (hubsManager._serviceConnections.containsKey(hubUri)) {
-      return hubsManager._serviceConnections[hubUri]!;
-    }
-
-    final restoredConnection = await manager.tryRestoreHubConnection(hubUri);
-    if (restoredConnection != null) {
-      return restoredConnection;
-    }
-
-    throw Exception('No connection found for hubID: $hubID');
-  }
 }
