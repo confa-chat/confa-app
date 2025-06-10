@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
+import 'package:l/l.dart';
 import 'package:openid_client/openid_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -41,8 +42,7 @@ class AuthState {
   AuthState._(this.hub, this.providerName, this._credential);
 
   static Future<AuthState?> tryLoadSavedAuth(Uri hub, List<AuthProvider> providers) async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedAuthJson = prefs.getString(_hubAuthKey(hub));
+    final savedAuthJson = await SharedPreferencesAsync().getString(_hubAuthKey(hub));
 
     if (savedAuthJson == null) {
       return null;
@@ -61,14 +61,12 @@ class AuthState {
   }
 
   Future<void> _saveAuth() async {
-    final prefs = await SharedPreferences.getInstance();
     final saved = _SavedAuth(providerName: providerName, credential: _credential);
-    await prefs.setString(_hubAuthKey(hub), jsonEncode(saved.toJson()));
+    await SharedPreferencesAsync().setString(_hubAuthKey(hub), jsonEncode(saved.toJson()));
   }
 
   Future<void> _clearSavedAuth() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_hubAuthKey(hub));
+    await SharedPreferencesAsync().remove(_hubAuthKey(hub));
   }
 
   static Future<AuthState> authenticate(Uri hub, AuthProvider authProvider) async {
@@ -106,18 +104,14 @@ class AuthState {
     return await authenticateOIDC(client, scopes: scopes);
   }
 
-  void logout() async {
+  Future<void> logout() async {
     await _clearSavedAuth();
   }
 
   Future<TokenResponse> getToken() async {
-    if (_credential == null) {
-      throw Exception('User is not authenticated');
-    }
-
     try {
       // This will automatically use refresh token if the access token is expired
-      final tokenResponse = await _credential!.getTokenResponse();
+      final tokenResponse = await _credential.getTokenResponse();
 
       // If the token was refreshed, save the updated token
       await _saveAuth();
@@ -125,8 +119,8 @@ class AuthState {
       return tokenResponse;
     } catch (e) {
       // If refreshing fails, log the user out
-      print('Error refreshing token: $e');
-      logout();
+      l.e('Error getting token: $e');
+      await logout();
       throw Exception('Authentication expired. Please log in again.');
     }
   }

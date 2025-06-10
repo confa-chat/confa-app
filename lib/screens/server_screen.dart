@@ -3,6 +3,7 @@ import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pb.dart';
 import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
 import 'package:konfa/services/connection_manager.dart';
+import 'package:konfa/widgets/loading.dart';
 import 'package:konfa/widgets/text_channel.dart';
 import 'package:konfa/widgets/user_profile.dart';
 import 'package:konfa/widgets/voice_channel.dart';
@@ -21,7 +22,12 @@ class ServerScreenRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ServerScreen(hubID: hubID, serverID: serverID);
+    return LoadingBuilder(
+      future: context.getHub(hubID),
+      builder: (context, hub) {
+        return Provider.value(value: hub, child: ServerScreen(hubID: hubID, serverID: serverID));
+      },
+    );
   }
 }
 
@@ -44,96 +50,92 @@ class _ServerScreenState extends State<ServerScreen> {
   void initState() {
     super.initState();
 
-    final hub = context.getHub(widget.hubID);
-    channels = hub.serverClient.listChannels(ListChannelsRequest(serverId: widget.serverID)).then((
-      p0,
-    ) {
-      return p0.channels;
-    });
+    channels = context.hub.serverClient
+        .listChannels(ListChannelsRequest(serverId: widget.serverID))
+        .then((p0) {
+          return p0.channels;
+        });
 
-    currentUser = hub.usersRepo.currentUser();
+    currentUser = context.hub.usersRepo.currentUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<HubConnection>.value(
-      value: context.getHub(widget.hubID),
-      child: Scaffold(
-        appBar: AppBar(title: Text('Server ${widget.serverID}')),
-        body: FutureBuilder(
-          future: Future.wait([channels, currentUser]),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting || ConnectionState.active || ConnectionState.none:
-                return const Center(child: CircularProgressIndicator());
-              case ConnectionState.done:
-                break;
-            }
-            if (snapshot.hasError) {
-              return Center(child: Text(snapshot.error.toString()));
-            }
+    return Scaffold(
+      appBar: AppBar(title: Text('Server ${widget.serverID}')),
+      body: FutureBuilder(
+        future: Future.wait([channels, currentUser]),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting || ConnectionState.active || ConnectionState.none:
+              return const Center(child: CircularProgressIndicator());
+            case ConnectionState.done:
+              break;
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text(snapshot.error.toString()));
+          }
 
-            final data = snapshot.data!;
-            final channelsList = data[0] as List<Channel>;
-            final user = data[1] as User;
+          final data = snapshot.data!;
+          final channelsList = data[0] as List<Channel>;
+          final user = data[1] as User;
 
-            return Column(
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          minWidth: 100,
-                          maxWidth: 200,
-                          minHeight: double.infinity,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              child: _ChannelList(
-                                channels: channelsList,
-                                textChannelSelected:
-                                    (id) => setState(() {
-                                      _selectedTextChannelID = id;
-                                    }),
+          return Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: 100,
+                        maxWidth: 200,
+                        minHeight: double.infinity,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: _ChannelList(
+                              channels: channelsList,
+                              textChannelSelected:
+                                  (id) => setState(() {
+                                    _selectedTextChannelID = id;
+                                  }),
+                            ),
+                          ),
+                          // User profile at the bottom
+                          SizedBox(
+                            height: 80,
+                            child: Card(
+                              margin: const EdgeInsets.all(8),
+                              child: UserProfileWidget(
+                                user: user,
+                                status: UserStatus.online,
+                                onTap: () {
+                                  // TODO: Add user settings or profile actions
+                                },
                               ),
                             ),
-                            // User profile at the bottom
-                            SizedBox(
-                              height: 80,
-                              child: Card(
-                                margin: const EdgeInsets.all(8),
-                                child: UserProfileWidget(
-                                  user: user,
-                                  status: UserStatus.online,
-                                  onTap: () {
-                                    // TODO: Add user settings or profile actions
-                                  },
-                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(),
+                    Expanded(
+                      child:
+                          _selectedTextChannelID == null
+                              ? const Placeholder()
+                              : TextChatWidget(
+                                serverId: widget.serverID,
+                                channelId: _selectedTextChannelID!,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const VerticalDivider(),
-                      Expanded(
-                        child:
-                            _selectedTextChannelID == null
-                                ? const Placeholder()
-                                : TextChatWidget(
-                                  serverId: widget.serverID,
-                                  channelId: _selectedTextChannelID!,
-                                ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

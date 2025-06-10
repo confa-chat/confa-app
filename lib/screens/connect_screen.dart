@@ -334,10 +334,8 @@ class _AuthWidgetState extends State<_AuthWidget> {
   }
 
   Future<User> _getCurrentUser() async {
-    return (await context
-        .getHub(widget.hubUri.toString())
-        .hubClient
-        .currentUser(CurrentUserRequest())).user;
+    final hub = await context.getHub(widget.hubUri.toString());
+    return (await hub.hubClient.currentUser(CurrentUserRequest())).user;
   }
 
   Future<void> _signOut() async {

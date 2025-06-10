@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc_connection_interface.dart';
@@ -56,6 +58,19 @@ class HubsManager {
     await connect(hub, authState);
 
     return authState;
+  }
+
+  Future<HubConnection?> tryRestoreHubConnection(Uri uri) async {
+    if (_serviceConnections.containsKey(uri)) {
+      return _serviceConnections[uri]!;
+    }
+
+    final authState = await AuthState.tryLoadSavedAuth(uri, await listAuthProviders(uri));
+    if (authState == null) {
+      return null;
+    }
+
+    return await connect(uri, authState);
   }
 
   Future<HubConnection> connect(Uri uri, AuthState auth) async {
@@ -163,13 +178,21 @@ class HubConnection {
 /// Extension methods to easily access services from BuildContext
 extension HubConnectionExtension on BuildContext {
   HubsManager get manager => read<HubsManager>();
-  HubConnection getHub(String hubID) {
+  HubConnection get hub => read<HubConnection>();
+
+  Future<HubConnection> getHub(String hubID) async {
     final HubsManager hubsManager = read<HubsManager>();
     final Uri hubUri = Uri.parse(hubID);
 
-    return hubsManager._serviceConnections[hubUri] ??
-        (throw Exception('No connection found for hubID: $hubID'));
-  }
+    if (hubsManager._serviceConnections.containsKey(hubUri)) {
+      return hubsManager._serviceConnections[hubUri]!;
+    }
 
-  HubConnection get hub => read<HubConnection>();
+    final restoredConnection = await manager.tryRestoreHubConnection(hubUri);
+    if (restoredConnection != null) {
+      return restoredConnection;
+    }
+
+    throw Exception('No connection found for hubID: $hubID');
+  }
 }

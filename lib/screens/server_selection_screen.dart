@@ -4,6 +4,8 @@ import 'package:konfa/screens/server_screen.dart';
 import 'dart:io' show Platform;
 import 'package:konfa/services/connection_manager.dart';
 import 'package:go_router/go_router.dart';
+import 'package:konfa/widgets/loading.dart';
+import 'package:provider/provider.dart';
 
 part 'server_selection_screen.g.dart';
 
@@ -15,7 +17,12 @@ class ServerSelectionScreenRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ServerSelectionScreen(hubID: hubID);
+    return LoadingBuilder(
+      future: context.getHub(hubID),
+      builder: (context, hub) {
+        return Provider.value(value: hub, child: ServerSelectionScreen(hubID: hubID));
+      },
+    );
   }
 }
 
@@ -41,10 +48,7 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   }
 
   Future<List<ServerInfo>> _loadServers() async {
-    final response = await context
-        .getHub(widget.hubID)
-        .hubClient
-        .listServerIDs(ListServersRequest());
+    final response = await context.hub.hubClient.listServerIDs(ListServersRequest());
 
     final servers =
         response.serverIds.map((id) {
