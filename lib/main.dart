@@ -5,20 +5,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konfa/bloc/voice_bloc.dart';
 import 'package:konfa/router.dart';
 import 'package:konfa/services/connection_manager.dart';
+import 'package:konfa/services/shared_storage.dart';
 import 'package:konfa/theme.dart';
-import 'package:konfa/widgets/loading.dart';
 import 'package:l/l.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main([List<String>? args]) {
-  runWithLogger(const ConfaApp());
+void main([List<String>? args]) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SharedStorage.init();
+
+  final hubsManager = HubsManager();
+
+  var initialRoute = '/connect'; // Default route
+
+  final lastRoute = SharedStorage.instance.getLastRoute();
+  if (lastRoute != null && !lastRoute.contains(':hubID')) {
+    initialRoute = lastRoute;
+  }
+
+  runWithLogger(ConfaApp(hubsManager: hubsManager, initialRoute: initialRoute));
 }
 
 void runWithLogger(Widget app) {
   final logFile = File('log.txt').openWrite();
   l.capture<void>(
-    () => runZonedGuarded<void>(() => runApp(const ConfaApp()), l.e),
+    () => runZonedGuarded<void>(() => runApp(app), l.e),
     LogOptions(
       handlePrint: true,
       outputInRelease: true,
@@ -34,7 +46,10 @@ void runWithLogger(Widget app) {
 }
 
 class ConfaApp extends StatefulWidget {
-  const ConfaApp({super.key});
+  final String initialRoute;
+  final HubsManager hubsManager;
+
+  const ConfaApp({super.key, required this.hubsManager, required this.initialRoute});
 
   @override
   State<ConfaApp> createState() => _ConfaAppState();
@@ -45,7 +60,7 @@ class _ConfaAppState extends State<ConfaApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<HubsManager>(create: (_) => HubsManager()),
+        Provider<HubsManager>.value(value: widget.hubsManager),
         BlocProvider<VoiceBloc>(create: (context) => VoiceBloc()),
       ],
       child: KonfaColorBuilder(
@@ -55,7 +70,7 @@ class _ConfaAppState extends State<ConfaApp> {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeMode.system,
-            routerConfig: appRouter,
+            routerConfig: appRouter(widget.initialRoute),
           );
         },
       ),

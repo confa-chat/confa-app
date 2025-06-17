@@ -10,6 +10,7 @@ import 'package:konfa/gen/proto/konfa/hub/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/voice_relay/v1/service.pbgrpc.dart';
 import 'package:konfa/repo/user.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 const grpcCreds = grpc.ChannelCredentials.insecure();
@@ -98,6 +99,36 @@ class HubsManager {
 
     throw Exception('No connection found for hubID: $hubID');
   }
+
+  Future<VersionInfo> checkVersion(String hubID) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String currentVersion = packageInfo.version;
+
+    final hub = await getHubConnection(hubID);
+
+    try {
+      final response = await hub.hubClient.supportedClientVersions(
+        SupportedClientVersionsRequest(currentVersion: currentVersion),
+      );
+
+      return VersionInfo(
+        supported: response.supported,
+        minVersion: response.minVersion,
+        currentVersion: currentVersion,
+      );
+    } catch (e) {
+      // If we can't fetch version info, assume it's supported
+      return VersionInfo(supported: true, minVersion: "unknown", currentVersion: currentVersion);
+    }
+  }
+}
+
+class VersionInfo {
+  final bool supported;
+  final String minVersion;
+  final String currentVersion;
+
+  VersionInfo({required this.supported, required this.minVersion, required this.currentVersion});
 }
 
 /// Manages all services and provides them to the widget tree

@@ -16,6 +16,120 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import '../../user/v1/user.pb.dart' as $5;
 import 'auth_provider.pb.dart' as $4;
 
+class SupportedClientVersionsRequest extends $pb.GeneratedMessage {
+  factory SupportedClientVersionsRequest({
+    $core.String? currentVersion,
+  }) {
+    final $result = create();
+    if (currentVersion != null) {
+      $result.currentVersion = currentVersion;
+    }
+    return $result;
+  }
+  SupportedClientVersionsRequest._() : super();
+  factory SupportedClientVersionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SupportedClientVersionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SupportedClientVersionsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.hub.v1'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'currentVersion')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SupportedClientVersionsRequest clone() => SupportedClientVersionsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SupportedClientVersionsRequest copyWith(void Function(SupportedClientVersionsRequest) updates) => super.copyWith((message) => updates(message as SupportedClientVersionsRequest)) as SupportedClientVersionsRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SupportedClientVersionsRequest create() => SupportedClientVersionsRequest._();
+  SupportedClientVersionsRequest createEmptyInstance() => create();
+  static $pb.PbList<SupportedClientVersionsRequest> createRepeated() => $pb.PbList<SupportedClientVersionsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SupportedClientVersionsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SupportedClientVersionsRequest>(create);
+  static SupportedClientVersionsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get currentVersion => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set currentVersion($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCurrentVersion() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCurrentVersion() => clearField(1);
+}
+
+class SupportedClientVersionsResponse extends $pb.GeneratedMessage {
+  factory SupportedClientVersionsResponse({
+    $core.bool? supported,
+    $core.String? minVersion,
+  }) {
+    final $result = create();
+    if (supported != null) {
+      $result.supported = supported;
+    }
+    if (minVersion != null) {
+      $result.minVersion = minVersion;
+    }
+    return $result;
+  }
+  SupportedClientVersionsResponse._() : super();
+  factory SupportedClientVersionsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SupportedClientVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SupportedClientVersionsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'konfa.hub.v1'), createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'supported')
+    ..aOS(2, _omitFieldNames ? '' : 'minVersion')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SupportedClientVersionsResponse clone() => SupportedClientVersionsResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SupportedClientVersionsResponse copyWith(void Function(SupportedClientVersionsResponse) updates) => super.copyWith((message) => updates(message as SupportedClientVersionsResponse)) as SupportedClientVersionsResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SupportedClientVersionsResponse create() => SupportedClientVersionsResponse._();
+  SupportedClientVersionsResponse createEmptyInstance() => create();
+  static $pb.PbList<SupportedClientVersionsResponse> createRepeated() => $pb.PbList<SupportedClientVersionsResponse>();
+  @$core.pragma('dart2js:noInline')
+  static SupportedClientVersionsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SupportedClientVersionsResponse>(create);
+  static SupportedClientVersionsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get supported => $_getBF(0);
+  @$pb.TagNumber(1)
+  set supported($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSupported() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSupported() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get minVersion => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set minVersion($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMinVersion() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMinVersion() => clearField(2);
+}
+
 class ListServersRequest extends $pb.GeneratedMessage {
   factory ListServersRequest() => create();
   ListServersRequest._() : super();

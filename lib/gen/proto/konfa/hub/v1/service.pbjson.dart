@@ -13,6 +13,33 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use supportedClientVersionsRequestDescriptor instead')
+const SupportedClientVersionsRequest$json = {
+  '1': 'SupportedClientVersionsRequest',
+  '2': [
+    {'1': 'current_version', '3': 1, '4': 1, '5': 9, '10': 'currentVersion'},
+  ],
+};
+
+/// Descriptor for `SupportedClientVersionsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List supportedClientVersionsRequestDescriptor = $convert.base64Decode(
+    'Ch5TdXBwb3J0ZWRDbGllbnRWZXJzaW9uc1JlcXVlc3QSJwoPY3VycmVudF92ZXJzaW9uGAEgAS'
+    'gJUg5jdXJyZW50VmVyc2lvbg==');
+
+@$core.Deprecated('Use supportedClientVersionsResponseDescriptor instead')
+const SupportedClientVersionsResponse$json = {
+  '1': 'SupportedClientVersionsResponse',
+  '2': [
+    {'1': 'supported', '3': 1, '4': 1, '5': 8, '10': 'supported'},
+    {'1': 'min_version', '3': 2, '4': 1, '5': 9, '10': 'minVersion'},
+  ],
+};
+
+/// Descriptor for `SupportedClientVersionsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List supportedClientVersionsResponseDescriptor = $convert.base64Decode(
+    'Ch9TdXBwb3J0ZWRDbGllbnRWZXJzaW9uc1Jlc3BvbnNlEhwKCXN1cHBvcnRlZBgBIAEoCFIJc3'
+    'VwcG9ydGVkEh8KC21pbl92ZXJzaW9uGAIgASgJUgptaW5WZXJzaW9u');
+
 @$core.Deprecated('Use listServersRequestDescriptor instead')
 const ListServersRequest$json = {
   '1': 'ListServersRequest',

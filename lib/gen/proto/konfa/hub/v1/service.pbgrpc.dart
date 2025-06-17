@@ -21,6 +21,14 @@ export 'service.pb.dart';
 
 @$pb.GrpcServiceName('konfa.hub.v1.HubService')
 class HubServiceClient extends $grpc.Client {
+  static final _$supportedClientVersions = $grpc.ClientMethod<$1.SupportedClientVersionsRequest, $1.SupportedClientVersionsResponse>(
+      '/konfa.hub.v1.HubService/SupportedClientVersions',
+      ($1.SupportedClientVersionsRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.SupportedClientVersionsResponse.fromBuffer(value));
+  static final _$listAuthProviders = $grpc.ClientMethod<$1.ListAuthProvidersRequest, $1.ListAuthProvidersResponse>(
+      '/konfa.hub.v1.HubService/ListAuthProviders',
+      ($1.ListAuthProvidersRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.ListAuthProvidersResponse.fromBuffer(value));
   static final _$getUser = $grpc.ClientMethod<$1.GetUserRequest, $1.GetUserResponse>(
       '/konfa.hub.v1.HubService/GetUser',
       ($1.GetUserRequest value) => value.writeToBuffer(),
@@ -37,16 +45,20 @@ class HubServiceClient extends $grpc.Client {
       '/konfa.hub.v1.HubService/ListVoiceRelays',
       ($1.ListVoiceRelaysRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.ListVoiceRelaysResponse.fromBuffer(value));
-  static final _$listAuthProviders = $grpc.ClientMethod<$1.ListAuthProvidersRequest, $1.ListAuthProvidersResponse>(
-      '/konfa.hub.v1.HubService/ListAuthProviders',
-      ($1.ListAuthProvidersRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.ListAuthProvidersResponse.fromBuffer(value));
 
   HubServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options,
         interceptors: interceptors);
+
+  $grpc.ResponseFuture<$1.SupportedClientVersionsResponse> supportedClientVersions($1.SupportedClientVersionsRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$supportedClientVersions, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.ListAuthProvidersResponse> listAuthProviders($1.ListAuthProvidersRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$listAuthProviders, request, options: options);
+  }
 
   $grpc.ResponseFuture<$1.GetUserResponse> getUser($1.GetUserRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getUser, request, options: options);
@@ -63,10 +75,6 @@ class HubServiceClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.ListVoiceRelaysResponse> listVoiceRelays($1.ListVoiceRelaysRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listVoiceRelays, request, options: options);
   }
-
-  $grpc.ResponseFuture<$1.ListAuthProvidersResponse> listAuthProviders($1.ListAuthProvidersRequest request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$listAuthProviders, request, options: options);
-  }
 }
 
 @$pb.GrpcServiceName('konfa.hub.v1.HubService')
@@ -74,6 +82,20 @@ abstract class HubServiceBase extends $grpc.Service {
   $core.String get $name => 'konfa.hub.v1.HubService';
 
   HubServiceBase() {
+    $addMethod($grpc.ServiceMethod<$1.SupportedClientVersionsRequest, $1.SupportedClientVersionsResponse>(
+        'SupportedClientVersions',
+        supportedClientVersions_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.SupportedClientVersionsRequest.fromBuffer(value),
+        ($1.SupportedClientVersionsResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.ListAuthProvidersRequest, $1.ListAuthProvidersResponse>(
+        'ListAuthProviders',
+        listAuthProviders_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.ListAuthProvidersRequest.fromBuffer(value),
+        ($1.ListAuthProvidersResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.GetUserRequest, $1.GetUserResponse>(
         'GetUser',
         getUser_Pre,
@@ -102,13 +124,14 @@ abstract class HubServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.ListVoiceRelaysRequest.fromBuffer(value),
         ($1.ListVoiceRelaysResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.ListAuthProvidersRequest, $1.ListAuthProvidersResponse>(
-        'ListAuthProviders',
-        listAuthProviders_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $1.ListAuthProvidersRequest.fromBuffer(value),
-        ($1.ListAuthProvidersResponse value) => value.writeToBuffer()));
+  }
+
+  $async.Future<$1.SupportedClientVersionsResponse> supportedClientVersions_Pre($grpc.ServiceCall call, $async.Future<$1.SupportedClientVersionsRequest> request) async {
+    return supportedClientVersions(call, await request);
+  }
+
+  $async.Future<$1.ListAuthProvidersResponse> listAuthProviders_Pre($grpc.ServiceCall call, $async.Future<$1.ListAuthProvidersRequest> request) async {
+    return listAuthProviders(call, await request);
   }
 
   $async.Future<$1.GetUserResponse> getUser_Pre($grpc.ServiceCall call, $async.Future<$1.GetUserRequest> request) async {
@@ -127,13 +150,10 @@ abstract class HubServiceBase extends $grpc.Service {
     return listVoiceRelays(call, await request);
   }
 
-  $async.Future<$1.ListAuthProvidersResponse> listAuthProviders_Pre($grpc.ServiceCall call, $async.Future<$1.ListAuthProvidersRequest> request) async {
-    return listAuthProviders(call, await request);
-  }
-
+  $async.Future<$1.SupportedClientVersionsResponse> supportedClientVersions($grpc.ServiceCall call, $1.SupportedClientVersionsRequest request);
+  $async.Future<$1.ListAuthProvidersResponse> listAuthProviders($grpc.ServiceCall call, $1.ListAuthProvidersRequest request);
   $async.Future<$1.GetUserResponse> getUser($grpc.ServiceCall call, $1.GetUserRequest request);
   $async.Future<$1.CurrentUserResponse> currentUser($grpc.ServiceCall call, $1.CurrentUserRequest request);
   $async.Future<$1.ListServersResponse> listServerIDs($grpc.ServiceCall call, $1.ListServersRequest request);
   $async.Future<$1.ListVoiceRelaysResponse> listVoiceRelays($grpc.ServiceCall call, $1.ListVoiceRelaysRequest request);
-  $async.Future<$1.ListAuthProvidersResponse> listAuthProviders($grpc.ServiceCall call, $1.ListAuthProvidersRequest request);
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:grpc/grpc.dart' as grpc;
 import 'package:isolate_generator_annotation/isolate_generator_annotation.dart';
 import 'package:konfa/auth/auth.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
 import 'package:konfa/gen/proto/konfa/hub/v1/service.pb.dart';
+import 'package:konfa/gen/proto/konfa/hub/v1/service.pbgrpc.dart';
 import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
 import 'package:konfa/screens/server_selection_screen.dart';
 import 'package:konfa/services/connection_manager.dart';
@@ -32,6 +34,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   final _hubAddressController = TextEditingController();
 
   AuthState? _authState;
+  Future<VersionInfo>? _versionInfoFuture;
 
   // Selected federation and hub
   late final FederationInfo _selectedFederation;
@@ -39,7 +42,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
 
   // Lists to store voice relays and auth providers fetched from hub
   List<VoiceRelayInfo> voiceRelays = [];
-  List<AuthProviderInfo> authProviders = [];
+  List<AuthProvider> authProviders = [];
 
   // Sample federations
   final List<FederationInfo> knownFederations = [
@@ -59,6 +62,17 @@ class _ConnectScreenState extends State<ConnectScreen> {
     _selectedFederation = knownFederations.first;
     _selectedHub = knownHubs.first;
     _hubAddressController.text = _selectedHub.address;
+
+    // Check version compatibility with hub
+    _checkVersionCompatibility();
+  }
+
+  Future<void> _checkVersionCompatibility() async {
+    final manager = context.manager;
+
+    setState(() {
+      _versionInfoFuture = manager.checkVersion(_selectedHub.address);
+    });
   }
 
   @override
@@ -76,64 +90,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
   void _goToHubScreen() async {
     ServerSelectionScreenRoute(hubID: _selectedHub.address).go(context);
   }
-
-  // void _toggleCustomHubInput() {
-  //   setState(() {
-  //     _showCustomHubInput = !_showCustomHubInput;
-  //   });
-  // }
-
-  // Widget _buildCustomHubInput() {
-  //   return Form(
-  //     key: _formKey,
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         const SizedBox(height: 8),
-  //         TextFormField(
-  //           controller: _hubAddressController,
-  //           decoration: const InputDecoration(
-  //             labelText: 'Hub Address',
-  //             hintText: 'Enter hub address and port (e.g., https://server:38100)',
-  //             border: OutlineInputBorder(),
-  //           ),
-  //           validator: (value) {
-  //             if (value == null || value.isEmpty) {
-  //               return 'Please enter a hub address';
-  //             }
-  //             if (Uri.tryParse(value) == null) {
-  //               return 'Invalid address format (e.g., https://server:38100)';
-  //             }
-  //             return null;
-  //           },
-  //         ),
-  //         const SizedBox(height: 16),
-  //         Row(
-  //           children: [
-  //             Expanded(
-  //               child: ElevatedButton(
-  //                 onPressed: _goToHubScreen,
-  //                 style: ElevatedButton.styleFrom(
-  //                   padding: const EdgeInsets.symmetric(vertical: 12),
-  //                 ),
-  //                 child:
-  //                     _isLoading
-  //                         ? const SizedBox(
-  //                           height: 20,
-  //                           width: 20,
-  //                           child: CircularProgressIndicator(strokeWidth: 2),
-  //                         )
-  //                         : const Text('Connect'),
-  //               ),
-  //             ),
-  //             const SizedBox(width: 8),
-  //             OutlinedButton(onPressed: _toggleCustomHubInput, child: const Text('Cancel')),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _buildVoiceRelaySection() {
     if (voiceRelays.isEmpty) return const SizedBox.shrink();
@@ -253,6 +209,9 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 ),
               ),
               SizedBox(height: 16),
+              // Version info card
+              if (_versionInfoFuture != null) _buildVersionInfoCard(),
+              SizedBox(height: 16),
               // Show profile card if authenticated
               _AuthWidget(
                 hubUri: Uri.parse(_selectedHub.address),
@@ -274,6 +233,84 @@ class _ConnectScreenState extends State<ConnectScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildVersionInfoCard() {
+    return FutureBuilder<VersionInfo>(
+      future: _versionInfoFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Icon(Icons.update, color: Colors.grey),
+                  SizedBox(width: 12),
+                  Text('Checking version compatibility...'),
+                ],
+              ),
+            ),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Icon(Icons.error_outline, color: Colors.red),
+                  SizedBox(width: 12),
+                  Expanded(child: Text('Could not check version compatibility')),
+                ],
+              ),
+            ),
+          );
+        }
+
+        final versionInfo = snapshot.data!;
+        final isSupported = versionInfo.supported;
+
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Icon(
+                  isSupported ? Icons.check_circle : Icons.warning,
+                  color: isSupported ? Colors.green : Colors.orange,
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isSupported ? 'Client version compatible' : 'Client version not compatible',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: isSupported ? Colors.green : Colors.orange,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        'Current version: ${versionInfo.currentVersion}',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Text(
+                        'Minimum required: ${versionInfo.minVersion}',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:konfa/gen/proto/google/protobuf/timestamp.pb.dart';
 import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
@@ -10,7 +10,7 @@ import 'package:l/l.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart' as file_selector;
 
 class TextChatWidget extends StatefulWidget {
   final String serverId;
@@ -268,21 +268,23 @@ class MessageInput extends StatefulWidget {
 
 class _MessageInputState extends State<MessageInput> {
   final _controller = TextEditingController();
-  final List<PlatformFile> _selectedFiles = [];
+  final List<file_selector.XFile> _selectedFiles = [];
   final List<String> _uploadedAttachmentIds = [];
   bool _isUploading = false;
 
   Future<void> _pickFiles() async {
     try {
-      final result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.any,
-        dialogTitle: 'Select file attachments',
-      );
+      // final result = await FilePicker.platform.pickFiles(
+      //   allowMultiple: true,
+      //   type: FileType.any,
+      //   dialogTitle: 'Select file attachments',
+      // );
 
-      if (result != null && result.files.isNotEmpty) {
+      final results = await file_selector.openFiles();
+
+      if (results.isNotEmpty) {
         setState(() {
-          _selectedFiles.addAll(result.files);
+          _selectedFiles.addAll(results);
         });
       }
     } catch (e) {
@@ -295,12 +297,10 @@ class _MessageInputState extends State<MessageInput> {
     }
   }
 
-  Stream<UploadAttachmentRequest> _fileUploadStream(PlatformFile file) async* {
+  Stream<UploadAttachmentRequest> _fileUploadStream(file_selector.XFile file) async* {
     yield UploadAttachmentRequest(info: AttachmentUploadInfo(name: file.name));
 
-    final filePath = file.path!;
-
-    await for (final chunk in File(filePath).openRead()) {
+    await for (final chunk in ChunkedStreamReader(file.openRead()).readStream(16 * 1024)) {
       yield UploadAttachmentRequest(data: chunk);
     }
   }
@@ -314,7 +314,6 @@ class _MessageInputState extends State<MessageInput> {
 
     try {
       for (final file in _selectedFiles) {
-        if (file.path == null) continue;
         final response = await context.hub.chatClient.uploadAttachment(_fileUploadStream(file));
         _uploadedAttachmentIds.add(response.attachmentId);
       }
