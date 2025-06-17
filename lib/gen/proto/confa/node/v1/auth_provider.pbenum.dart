@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: confa/hub/v1/service.proto
+//  source: confa/node/v1/auth_provider.proto
 //
 // @dart = 2.12
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/node/v1/service.pbgrpc.dart';
 import 'package:confa/screens/server_screen.dart';
 import 'dart:io' show Platform;
 import 'package:confa/services/connection_manager.dart';
@@ -48,7 +48,7 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   }
 
   Future<List<ServerInfo>> _loadServers() async {
-    final response = await context.hub.hubClient.listServerIDs(ListServersRequest());
+    final response = await context.hub.nodeClient.listServerIDs(ListServersRequest());
 
     final servers =
         response.serverIds.map((id) {

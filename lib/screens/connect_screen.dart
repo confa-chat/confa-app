@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:isolate_generator_annotation/isolate_generator_annotation.dart';
 import 'package:confa/auth/auth.dart';
-import 'package:confa/gen/proto/confa/hub/v1/auth_provider.pb.dart';
-import 'package:confa/gen/proto/confa/hub/v1/service.pb.dart';
-import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
+import 'package:confa/gen/proto/confa/node/v1/service.pb.dart';
+import 'package:confa/gen/proto/confa/node/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
 import 'package:confa/screens/server_selection_screen.dart';
 import 'package:confa/services/connection_manager.dart';
@@ -372,7 +372,7 @@ class _AuthWidgetState extends State<_AuthWidget> {
 
   Future<User> _getCurrentUser() async {
     final hub = await context.manager.getHubConnection(widget.hubUri.toString());
-    return (await hub.hubClient.currentUser(CurrentUserRequest())).user;
+    return (await hub.nodeClient.currentUser(CurrentUserRequest())).user;
   }
 
   Future<void> _signOut() async {

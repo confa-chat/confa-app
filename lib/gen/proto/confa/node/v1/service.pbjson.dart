@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: confa/hub/v1/service.proto
+//  source: confa/node/v1/service.proto
 //
 // @dart = 2.12
 
@@ -89,14 +89,14 @@ final $typed_data.Uint8List voiceRelayDescriptor = $convert.base64Decode(
 const ListVoiceRelaysResponse$json = {
   '1': 'ListVoiceRelaysResponse',
   '2': [
-    {'1': 'voice_relays', '3': 1, '4': 3, '5': 11, '6': '.confa.hub.v1.VoiceRelay', '10': 'voiceRelays'},
+    {'1': 'voice_relays', '3': 1, '4': 3, '5': 11, '6': '.confa.node.v1.VoiceRelay', '10': 'voiceRelays'},
   ],
 };
 
 /// Descriptor for `ListVoiceRelaysResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listVoiceRelaysResponseDescriptor = $convert.base64Decode(
-    'ChdMaXN0Vm9pY2VSZWxheXNSZXNwb25zZRI7Cgx2b2ljZV9yZWxheXMYASADKAsyGC5jb25mYS'
-    '5odWIudjEuVm9pY2VSZWxheVILdm9pY2VSZWxheXM=');
+    'ChdMaXN0Vm9pY2VSZWxheXNSZXNwb25zZRI8Cgx2b2ljZV9yZWxheXMYASADKAsyGS5jb25mYS'
+    '5ub2RlLnYxLlZvaWNlUmVsYXlSC3ZvaWNlUmVsYXlz');
 
 @$core.Deprecated('Use listAuthProvidersRequestDescriptor instead')
 const ListAuthProvidersRequest$json = {
@@ -111,14 +111,14 @@ final $typed_data.Uint8List listAuthProvidersRequestDescriptor = $convert.base64
 const ListAuthProvidersResponse$json = {
   '1': 'ListAuthProvidersResponse',
   '2': [
-    {'1': 'auth_providers', '3': 1, '4': 3, '5': 11, '6': '.confa.hub.v1.AuthProvider', '10': 'authProviders'},
+    {'1': 'auth_providers', '3': 1, '4': 3, '5': 11, '6': '.confa.node.v1.AuthProvider', '10': 'authProviders'},
   ],
 };
 
 /// Descriptor for `ListAuthProvidersResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listAuthProvidersResponseDescriptor = $convert.base64Decode(
-    'ChlMaXN0QXV0aFByb3ZpZGVyc1Jlc3BvbnNlEkEKDmF1dGhfcHJvdmlkZXJzGAEgAygLMhouY2'
-    '9uZmEuaHViLnYxLkF1dGhQcm92aWRlclINYXV0aFByb3ZpZGVycw==');
+    'ChlMaXN0QXV0aFByb3ZpZGVyc1Jlc3BvbnNlEkIKDmF1dGhfcHJvdmlkZXJzGAEgAygLMhsuY2'
+    '9uZmEubm9kZS52MS5BdXRoUHJvdmlkZXJSDWF1dGhQcm92aWRlcnM=');
 
 @$core.Deprecated('Use getUserRequestDescriptor instead')
 const GetUserRequest$json = {

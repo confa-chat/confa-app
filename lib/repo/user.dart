@@ -1,9 +1,9 @@
-import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/node/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/server/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
 
 class UsersRepo {
-  HubServiceClient hubClient;
+  NodeServiceClient nodeClient;
   ServerServiceClient serverClient;
 
   String _currentUserId;
@@ -12,14 +12,14 @@ class UsersRepo {
 
   final _cache = <String, User>{};
 
-  UsersRepo._create(this.hubClient, this.serverClient, this._currentUserId);
+  UsersRepo._create(this.nodeClient, this.serverClient, this._currentUserId);
 
   static Future<UsersRepo> create(
-    HubServiceClient hubClient,
+    NodeServiceClient nodeClient,
     ServerServiceClient serverClient,
   ) async {
-    final currentUserResp = await hubClient.currentUser(CurrentUserRequest());
-    final repo = UsersRepo._create(hubClient, serverClient, currentUserResp.user.id);
+    final currentUserResp = await nodeClient.currentUser(CurrentUserRequest());
+    final repo = UsersRepo._create(nodeClient, serverClient, currentUserResp.user.id);
     await repo.currentUser();
     return repo;
   }
@@ -37,7 +37,7 @@ class UsersRepo {
       return _cache[id]!;
     }
 
-    final resp = await hubClient.getUser(GetUserRequest(id: id));
+    final resp = await nodeClient.getUser(GetUserRequest(id: id));
     _cache[id] = resp.user;
 
     return resp.user;
@@ -48,7 +48,7 @@ class UsersRepo {
       return _cache[_currentUserId]!;
     }
 
-    final resp = await hubClient.currentUser(CurrentUserRequest());
+    final resp = await nodeClient.currentUser(CurrentUserRequest());
     _currentUserId = resp.user.id;
     _cache[resp.user.id] = resp.user;
     return resp.user;

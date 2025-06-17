@@ -5,8 +5,8 @@ import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/grpc_connection_interface.dart';
 import 'package:confa/auth/auth.dart';
 import 'package:confa/gen/proto/confa/chat/v1/service.pbgrpc.dart';
-import 'package:confa/gen/proto/confa/hub/v1/auth_provider.pb.dart';
-import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
+import 'package:confa/gen/proto/confa/node/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/server/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
 import 'package:confa/repo/user.dart';
@@ -38,7 +38,7 @@ class HubsManager {
 
   Future<List<AuthProvider>> listAuthProvidersOnHub(Uri hub) async {
     final channel = await _getChannel(hub);
-    final client = HubServiceClient(channel);
+    final client = NodeServiceClient(channel);
     final response = await client.listAuthProviders(ListAuthProvidersRequest());
     return response.authProviders;
   }
@@ -107,7 +107,7 @@ class HubsManager {
     final hub = await getHubConnection(hubID);
 
     try {
-      final response = await hub.hubClient.supportedClientVersions(
+      final response = await hub.nodeClient.supportedClientVersions(
         SupportedClientVersionsRequest(currentVersion: currentVersion),
       );
 
@@ -136,7 +136,7 @@ class HubConnection {
   final Uri baseUri;
 
   final AuthState _authState;
-  final HubServiceClient _hubClient;
+  final NodeServiceClient _nodeClient;
   final ServerServiceClient _serverClient;
   final ChatServiceClient _chatClient;
   final UsersRepo _usersRepo;
@@ -146,7 +146,7 @@ class HubConnection {
   HubConnection._(
     this.baseUri,
     this._authState,
-    this._hubClient,
+    this._nodeClient,
     this._serverClient,
     this._chatClient,
     this._usersRepo,
@@ -172,13 +172,13 @@ class HubConnection {
       ],
     );
 
-    final hubClient = HubServiceClient(channel, options: callOptions);
+    final nodeClient = NodeServiceClient(channel, options: callOptions);
     final serverClient = ServerServiceClient(channel, options: callOptions);
     final chatClient = ChatServiceClient(channel, options: callOptions);
 
-    final userRepo = await UsersRepo.create(hubClient, serverClient);
+    final userRepo = await UsersRepo.create(nodeClient, serverClient);
 
-    return HubConnection._(baseUrl, authState, hubClient, serverClient, chatClient, userRepo);
+    return HubConnection._(baseUrl, authState, nodeClient, serverClient, chatClient, userRepo);
   }
 
   Future<VoiceRelayServiceClient> voiceRelayClient(String relayID) async {
@@ -186,7 +186,7 @@ class HubConnection {
       return _voiceRelayClients[relayID]!;
     }
 
-    final relaysResp = await _hubClient.listVoiceRelays(ListVoiceRelaysRequest());
+    final relaysResp = await _nodeClient.listVoiceRelays(ListVoiceRelaysRequest());
 
     final relay = relaysResp.voiceRelays.firstWhere(
       (r) => r.id == relayID,
@@ -215,7 +215,7 @@ class HubConnection {
     return client;
   }
 
-  HubServiceClient get hubClient => _hubClient;
+  NodeServiceClient get nodeClient => _nodeClient;
   ServerServiceClient get serverClient => _serverClient;
   ChatServiceClient get chatClient => _chatClient;
   UsersRepo get usersRepo => _usersRepo;

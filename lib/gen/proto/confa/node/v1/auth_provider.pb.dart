@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: confa/hub/v1/auth_provider.proto
+//  source: confa/node/v1/auth_provider.proto
 //
 // @dart = 2.12
 
@@ -44,7 +44,7 @@ class AuthProvider extends $pb.GeneratedMessage {
     101 : AuthProvider_Protocol.openidConnect,
     0 : AuthProvider_Protocol.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AuthProvider', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.hub.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AuthProvider', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.node.v1'), createEmptyInstance: create)
     ..oo(0, [101])
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'name')
@@ -128,7 +128,7 @@ class OpenIDConnect extends $pb.GeneratedMessage {
   factory OpenIDConnect.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory OpenIDConnect.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OpenIDConnect', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.hub.v1'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OpenIDConnect', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.node.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'issuer')
     ..aOS(2, _omitFieldNames ? '' : 'clientId')
     ..aOS(3, _omitFieldNames ? '' : 'clientSecret')

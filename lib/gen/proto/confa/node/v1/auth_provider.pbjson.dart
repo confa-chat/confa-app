@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: confa/hub/v1/auth_provider.proto
+//  source: confa/node/v1/auth_provider.proto
 //
 // @dart = 2.12
 
@@ -19,7 +19,7 @@ const AuthProvider$json = {
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'openid_connect', '3': 101, '4': 1, '5': 11, '6': '.confa.hub.v1.OpenIDConnect', '9': 0, '10': 'openidConnect'},
+    {'1': 'openid_connect', '3': 101, '4': 1, '5': 11, '6': '.confa.node.v1.OpenIDConnect', '9': 0, '10': 'openidConnect'},
   ],
   '8': [
     {'1': 'protocol'},
@@ -28,9 +28,9 @@ const AuthProvider$json = {
 
 /// Descriptor for `AuthProvider`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List authProviderDescriptor = $convert.base64Decode(
-    'CgxBdXRoUHJvdmlkZXISDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSRAoOb3'
-    'BlbmlkX2Nvbm5lY3QYZSABKAsyGy5jb25mYS5odWIudjEuT3BlbklEQ29ubmVjdEgAUg1vcGVu'
-    'aWRDb25uZWN0QgoKCHByb3RvY29s');
+    'CgxBdXRoUHJvdmlkZXISDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSRQoOb3'
+    'BlbmlkX2Nvbm5lY3QYZSABKAsyHC5jb25mYS5ub2RlLnYxLk9wZW5JRENvbm5lY3RIAFINb3Bl'
+    'bmlkQ29ubmVjdEIKCghwcm90b2NvbA==');
 
 @$core.Deprecated('Use openIDConnectDescriptor instead')
 const OpenIDConnect$json = {

@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: confa/hub/v1/service.proto
+//  source: confa/node/v1/service.proto
 //
 // @dart = 2.12
 
@@ -19,34 +19,34 @@ import 'service.pb.dart' as $1;
 
 export 'service.pb.dart';
 
-@$pb.GrpcServiceName('confa.hub.v1.HubService')
-class HubServiceClient extends $grpc.Client {
+@$pb.GrpcServiceName('confa.node.v1.NodeService')
+class NodeServiceClient extends $grpc.Client {
   static final _$supportedClientVersions = $grpc.ClientMethod<$1.SupportedClientVersionsRequest, $1.SupportedClientVersionsResponse>(
-      '/confa.hub.v1.HubService/SupportedClientVersions',
+      '/confa.node.v1.NodeService/SupportedClientVersions',
       ($1.SupportedClientVersionsRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.SupportedClientVersionsResponse.fromBuffer(value));
   static final _$listAuthProviders = $grpc.ClientMethod<$1.ListAuthProvidersRequest, $1.ListAuthProvidersResponse>(
-      '/confa.hub.v1.HubService/ListAuthProviders',
+      '/confa.node.v1.NodeService/ListAuthProviders',
       ($1.ListAuthProvidersRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.ListAuthProvidersResponse.fromBuffer(value));
   static final _$getUser = $grpc.ClientMethod<$1.GetUserRequest, $1.GetUserResponse>(
-      '/confa.hub.v1.HubService/GetUser',
+      '/confa.node.v1.NodeService/GetUser',
       ($1.GetUserRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.GetUserResponse.fromBuffer(value));
   static final _$currentUser = $grpc.ClientMethod<$1.CurrentUserRequest, $1.CurrentUserResponse>(
-      '/confa.hub.v1.HubService/CurrentUser',
+      '/confa.node.v1.NodeService/CurrentUser',
       ($1.CurrentUserRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.CurrentUserResponse.fromBuffer(value));
   static final _$listServerIDs = $grpc.ClientMethod<$1.ListServersRequest, $1.ListServersResponse>(
-      '/confa.hub.v1.HubService/ListServerIDs',
+      '/confa.node.v1.NodeService/ListServerIDs',
       ($1.ListServersRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.ListServersResponse.fromBuffer(value));
   static final _$listVoiceRelays = $grpc.ClientMethod<$1.ListVoiceRelaysRequest, $1.ListVoiceRelaysResponse>(
-      '/confa.hub.v1.HubService/ListVoiceRelays',
+      '/confa.node.v1.NodeService/ListVoiceRelays',
       ($1.ListVoiceRelaysRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.ListVoiceRelaysResponse.fromBuffer(value));
 
-  HubServiceClient($grpc.ClientChannel channel,
+  NodeServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options,
@@ -77,11 +77,11 @@ class HubServiceClient extends $grpc.Client {
   }
 }
 
-@$pb.GrpcServiceName('confa.hub.v1.HubService')
-abstract class HubServiceBase extends $grpc.Service {
-  $core.String get $name => 'confa.hub.v1.HubService';
+@$pb.GrpcServiceName('confa.node.v1.NodeService')
+abstract class NodeServiceBase extends $grpc.Service {
+  $core.String get $name => 'confa.node.v1.NodeService';
 
-  HubServiceBase() {
+  NodeServiceBase() {
     $addMethod($grpc.ServiceMethod<$1.SupportedClientVersionsRequest, $1.SupportedClientVersionsResponse>(
         'SupportedClientVersions',
         supportedClientVersions_Pre,
