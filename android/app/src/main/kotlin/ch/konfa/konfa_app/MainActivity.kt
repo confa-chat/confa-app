@@ -1,4 +1,4 @@
-package ch.konfa.konfa_app
+package ch.confa.confa_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:konfa/bloc/voice_bloc.dart';
-import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
-import 'package:konfa/services/connection_manager.dart';
+import 'package:confa/bloc/voice_bloc.dart';
+import 'package:confa/gen/proto/confa/channel/v1/channels.pb.dart';
+import 'package:confa/services/connection_manager.dart';
 
 class VoiceChannelWidget extends StatelessWidget {
   final VoiceChannel channel;

@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
+import 'package:confa/gen/proto/confa/hub/v1/auth_provider.pb.dart';
 import 'package:l/l.dart';
 import 'package:openid_client/openid_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';

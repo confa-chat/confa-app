@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:konfa/screens/connect_screen.dart';
-import 'package:konfa/screens/server_screen.dart';
-import 'package:konfa/screens/server_selection_screen.dart';
-import 'package:konfa/services/connection_manager.dart';
-import 'package:konfa/services/shared_storage.dart';
+import 'package:confa/screens/connect_screen.dart';
+import 'package:confa/screens/server_screen.dart';
+import 'package:confa/screens/server_selection_screen.dart';
+import 'package:confa/services/connection_manager.dart';
+import 'package:confa/services/shared_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Combines all route definitions from across the app

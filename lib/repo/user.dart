@@ -1,6 +1,6 @@
-import 'package:konfa/gen/proto/konfa/hub/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/server/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
+import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/server/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
 
 class UsersRepo {
   HubServiceClient hubClient;

@@ -9,10 +9,10 @@ plugins:
 inputs:
   - module: buf.build/protocolbuffers/wellknowntypes
 
-  # - git_repo: https://github.com/konfa-chat/hub
+  # - git_repo: https://github.com/confa-chat/hub
   # subdir: proto
-  - directory: ../konfa-hub/proto
+  - directory: ../confa-node/proto
 
-  # - git_repo: https://github.com/konfa-chat/voice-relay
+  # - git_repo: https://github.com/confa-chat/voice-relay
   # subdir: proto
-  - directory: ../konfa-voice-relay/proto
+  - directory: ../confa-voice-relay/proto

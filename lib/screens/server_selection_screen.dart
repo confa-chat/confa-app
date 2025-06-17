@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:konfa/gen/proto/konfa/hub/v1/service.pbgrpc.dart';
-import 'package:konfa/screens/server_screen.dart';
+import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/screens/server_screen.dart';
 import 'dart:io' show Platform;
-import 'package:konfa/services/connection_manager.dart';
+import 'package:confa/services/connection_manager.dart';
 import 'package:go_router/go_router.dart';
-import 'package:konfa/widgets/loading.dart';
+import 'package:confa/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
 part 'server_selection_screen.g.dart';

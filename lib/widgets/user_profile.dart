@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
+import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
 
 enum UserStatus { online, idle, doNotDisturb, offline }
 

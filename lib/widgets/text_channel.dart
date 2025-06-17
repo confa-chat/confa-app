@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:konfa/gen/proto/google/protobuf/timestamp.pb.dart';
-import 'package:konfa/gen/proto/konfa/chat/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
-import 'package:konfa/services/connection_manager.dart';
+import 'package:confa/gen/proto/google/protobuf/timestamp.pb.dart';
+import 'package:confa/gen/proto/confa/chat/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
+import 'package:confa/services/connection_manager.dart';
 import 'package:l/l.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';

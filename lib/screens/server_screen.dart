@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:konfa/gen/proto/konfa/channel/v1/channels.pb.dart';
-import 'package:konfa/gen/proto/konfa/server/v1/service.pb.dart';
-import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
-import 'package:konfa/services/connection_manager.dart';
-import 'package:konfa/widgets/loading.dart';
-import 'package:konfa/widgets/text_channel.dart';
-import 'package:konfa/widgets/user_profile.dart';
-import 'package:konfa/widgets/voice_channel.dart';
+import 'package:confa/gen/proto/confa/channel/v1/channels.pb.dart';
+import 'package:confa/gen/proto/confa/server/v1/service.pb.dart';
+import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
+import 'package:confa/services/connection_manager.dart';
+import 'package:confa/widgets/loading.dart';
+import 'package:confa/widgets/text_channel.dart';
+import 'package:confa/widgets/user_profile.dart';
+import 'package:confa/widgets/voice_channel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

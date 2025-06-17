@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 const _brandBlue = Color(0xFF1E88E5);
 
-class KonfaColorBuilder extends StatelessWidget {
+class ConfaColorBuilder extends StatelessWidget {
   final Widget Function(ThemeData, ThemeData) builder;
 
-  const KonfaColorBuilder({super.key, required this.builder});
+  const ConfaColorBuilder({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:grpc/grpc.dart' as grpc;
-import 'package:konfa/voice/recorder.dart';
-import 'package:konfa/voice/listener.dart';
-import 'package:konfa/gen/proto/konfa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:confa/voice/recorder.dart';
+import 'package:confa/voice/listener.dart';
+import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
 
 // Voice relay registry to keep track of available voice relays
 class VoiceRelayRegistry {

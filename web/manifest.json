@@ -1,6 +1,6 @@
 {
-    "name": "konfa",
-    "short_name": "konfa",
+    "name": "confa",
+    "short_name": "confa",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

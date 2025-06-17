@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:konfa/gen/proto/konfa/voice_relay/v1/service.pbgrpc.dart';
-import 'package:konfa/services/connection_manager.dart';
-import 'package:konfa/voice/listener.dart';
-import 'package:konfa/voice/recorder.dart';
+import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:confa/services/connection_manager.dart';
+import 'package:confa/voice/listener.dart';
+import 'package:confa/voice/recorder.dart';
 import 'package:meta/meta.dart';
 
 part 'voice_event.dart';

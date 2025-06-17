@@ -2,15 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:isolate_generator_annotation/isolate_generator_annotation.dart';
-import 'package:konfa/auth/auth.dart';
-import 'package:konfa/gen/proto/konfa/hub/v1/auth_provider.pb.dart';
-import 'package:konfa/gen/proto/konfa/hub/v1/service.pb.dart';
-import 'package:konfa/gen/proto/konfa/hub/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/user/v1/user.pb.dart';
-import 'package:konfa/screens/server_selection_screen.dart';
-import 'package:konfa/services/connection_manager.dart';
+import 'package:confa/auth/auth.dart';
+import 'package:confa/gen/proto/confa/hub/v1/auth_provider.pb.dart';
+import 'package:confa/gen/proto/confa/hub/v1/service.pb.dart';
+import 'package:confa/gen/proto/confa/hub/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
+import 'package:confa/screens/server_selection_screen.dart';
+import 'package:confa/services/connection_manager.dart';
 import 'package:go_router/go_router.dart';
-import 'package:konfa/widgets/loading.dart';
+import 'package:confa/widgets/loading.dart';
 
 part 'connect_screen.g.dart';
 
@@ -46,13 +46,13 @@ class _ConnectScreenState extends State<ConnectScreen> {
 
   // Sample federations
   final List<FederationInfo> knownFederations = [
-    FederationInfo(name: "Konfa Federation", description: "Main Konfa Federation"),
+    FederationInfo(name: "Confa Federation", description: "Main Confa Federation"),
   ];
 
   // Known hubs
   final List<HubInfo> knownHubs = [
     if (kDebugMode) HubInfo(name: "Local", address: "http://localhost:38100"),
-    HubInfo(name: "Konfach Hub", address: "http://49.13.3.4:38100"),
+    HubInfo(name: "Confach Hub", address: "http://49.13.3.4:38100"),
   ];
 
   @override

@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:grpc/grpc.dart';
-import 'package:konfa/gen/proto/konfa/voice_relay/v1/service.pbgrpc.dart';
-import 'package:konfa/gen/proto/konfa/voice_relay/v1/voice.pb.dart';
-import 'package:konfa/voice/service.dart';
-import 'package:konfa/voice/opus/opus.dart';
+import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/voice_relay/v1/voice.pb.dart';
+import 'package:confa/voice/service.dart';
+import 'package:confa/voice/opus/opus.dart';
 import 'package:streaming_sound/streaming_sound.dart';
 
 class VoiceChatListener {

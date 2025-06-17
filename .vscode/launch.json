@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "konfa-app",
+            "name": "confa-app",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "konfa-app (profile mode)",
+            "name": "confa-app (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "konfa-app (release mode)",
+            "name": "confa-app (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

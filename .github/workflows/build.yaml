@@ -99,33 +99,33 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: linux
-          path: ./artifacts/linux/konfa
+          path: ./artifacts/linux/confa
 
       - name: Download Windows Artifact
         uses: actions/download-artifact@v4
         with:
           name: windows
-          path: ./artifacts/windows/konfa
+          path: ./artifacts/windows/confa
 
       - name: Download macOS Artifact
         uses: actions/download-artifact@v4
         with:
           name: macos
-          path: ./artifacts/macos/konfa
+          path: ./artifacts/macos/confa
 
       - run: mkdir ./release
 
       - name: Android APK
-        run: cp ./artifacts/apk/app-release.apk ./release/konfa-${{ github.ref_name }}.apk
+        run: cp ./artifacts/apk/app-release.apk ./release/confa-${{ github.ref_name }}.apk
 
       - name: MacOS App
-        run: cd ./artifacts/macos && zip -r -y ../../release/konfa-${{ github.ref_name }}-macos.zip konfa
+        run: cd ./artifacts/macos && zip -r -y ../../release/confa-${{ github.ref_name }}-macos.zip confa
 
       - name: Zip Linux Bundle
-        run: cd ./artifacts/linux && zip -r ../../release/konfa-${{ github.ref_name }}-linux.zip konfa
+        run: cd ./artifacts/linux && zip -r ../../release/confa-${{ github.ref_name }}-linux.zip confa
 
       - name: Zip Windows Bundle
-        run: cd ./artifacts/windows && zip -r ../../release/konfa-${{ github.ref_name }}-windows.zip konfa
+        run: cd ./artifacts/windows && zip -r ../../release/confa-${{ github.ref_name }}-windows.zip confa
 
       - name: Create Release Draft
         uses: softprops/action-gh-release@v2

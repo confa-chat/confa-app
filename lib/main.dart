@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:konfa/bloc/voice_bloc.dart';
-import 'package:konfa/router.dart';
-import 'package:konfa/services/connection_manager.dart';
-import 'package:konfa/services/shared_storage.dart';
-import 'package:konfa/theme.dart';
+import 'package:confa/bloc/voice_bloc.dart';
+import 'package:confa/router.dart';
+import 'package:confa/services/connection_manager.dart';
+import 'package:confa/services/shared_storage.dart';
+import 'package:confa/theme.dart';
 import 'package:l/l.dart';
 import 'package:provider/provider.dart';
 
@@ -63,10 +63,10 @@ class _ConfaAppState extends State<ConfaApp> {
         Provider<HubsManager>.value(value: widget.hubsManager),
         BlocProvider<VoiceBloc>(create: (context) => VoiceBloc()),
       ],
-      child: KonfaColorBuilder(
+      child: ConfaColorBuilder(
         builder: (lightTheme, darkTheme) {
           return MaterialApp.router(
-            title: 'Konfa',
+            title: 'Confa',
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeMode.system,
