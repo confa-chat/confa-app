@@ -19,7 +19,7 @@ jobs:
           java-version: "17"
       - name: Decode keystore and create jks
         run: |
-          mkdir -p ~/.keys
+          mkdir -p ./.keys
           touch ./.keys/upload-keystore.jks
           echo "${{ secrets.KEYSTORE_JKS_BASE64 }}" | base64 --decode > ./.keys/upload-keystore.jks
       - name: Set up Flutter
