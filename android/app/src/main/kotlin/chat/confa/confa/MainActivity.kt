@@ -1,4 +1,4 @@
-package ch.confa.confa_app
+package chat.confa.confa
 
 import io.flutter.embedding.android.FlutterActivity
 
