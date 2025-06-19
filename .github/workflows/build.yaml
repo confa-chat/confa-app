@@ -20,7 +20,7 @@ jobs:
       - name: Decode keystore and create jks
         run: |
           mkdir -p ~/.keys
-          touch ~/.keys/upload-keystore.jks
+          touch ./.keys/upload-keystore.jks
           echo "${{ secrets.KEYSTORE_JKS_BASE64 }}" | base64 --decode > ./.keys/upload-keystore.jks
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
