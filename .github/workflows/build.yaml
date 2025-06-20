@@ -176,7 +176,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           packageName: chat.confa.confa_app
           releaseFiles: ./artifacts/appbundle/app-release.aab
-          track: qa
+          track: internal
           releaseName: ${{ github.ref_name }}
           # whatsNewDirectory: distribution/whatsnew
           # mappingFile: app/build/outputs/mapping/release/mapping.txt
