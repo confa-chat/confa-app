@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
 import 'package:confa/services/connection_manager.dart';
 import 'package:confa/voice/listener.dart';
 import 'package:confa/voice/recorder.dart';
 import 'package:meta/meta.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'voice_event.dart';
 part 'voice_state.dart';
@@ -26,6 +28,10 @@ class VoiceBloc extends Bloc<VoiceEvent, VoiceState> {
   Future<void> _onJoinVoiceChannel(JoinVoiceChannel event, Emitter<VoiceState> emit) async {
     try {
       emit(VoiceLoading());
+
+      if (Platform.isAndroid || Platform.isIOS) {
+        await Permission.microphone.request();
+      }
 
       await _voiceStreamSubscription?.cancel();
 
@@ -76,10 +82,10 @@ class VoiceBloc extends Bloc<VoiceEvent, VoiceState> {
               }
             },
             onError: (error) {
-              emit(VoiceError(error.toString()));
+              add(VoiceServerError(error.toString()));
             },
             onDone: () {
-              emit(VoiceDisconnected());
+              add(VoiceServerDisconnect());
             },
           );
     } catch (e) {

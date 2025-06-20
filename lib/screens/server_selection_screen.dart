@@ -11,7 +11,7 @@ part 'server_selection_screen.g.dart';
 
 @TypedGoRoute<ServerSelectionScreenRoute>(path: '/hub/:hubID/servers')
 @immutable
-class ServerSelectionScreenRoute extends GoRouteData {
+class ServerSelectionScreenRoute extends GoRouteData with _$ServerSelectionScreenRoute {
   final String hubID;
   const ServerSelectionScreenRoute({required this.hubID});
 
@@ -20,7 +20,10 @@ class ServerSelectionScreenRoute extends GoRouteData {
     return LoadingBuilder(
       future: context.manager.getHubConnection(hubID),
       builder: (context, hub) {
-        return Provider.value(value: hub, child: ServerSelectionScreen(hubID: hubID));
+        return Provider.value(
+          value: hub,
+          child: ServerSelectionScreen(hubID: hubID),
+        );
       },
     );
   }
@@ -50,10 +53,9 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   Future<List<ServerInfo>> _loadServers() async {
     final response = await context.hub.nodeClient.listServerIDs(ListServersRequest());
 
-    final servers =
-        response.serverIds.map((id) {
-          return ServerInfo(id: id, name: _generateServerName(id), description: "Server ID: $id");
-        }).toList();
+    final servers = response.serverIds.map((id) {
+      return ServerInfo(id: id, name: _generateServerName(id), description: "Server ID: $id");
+    }).toList();
 
     return servers;
   }

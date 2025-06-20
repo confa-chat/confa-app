@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'connect_screen.dart';
+part of 'update_screen.dart';
 
 // **************************************************************************
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$connectScreenRoute];
+List<RouteBase> get $appRoutes => [$updateScreenRoute];
 
-RouteBase get $connectScreenRoute => GoRouteData.$route(
-  path: '/connect',
+RouteBase get $updateScreenRoute => GoRouteData.$route(
+  path: '/update',
 
-  factory: _$ConnectScreenRoute._fromState,
+  factory: _$UpdateScreenRoute._fromState,
 );
 
-mixin _$ConnectScreenRoute on GoRouteData {
-  static ConnectScreenRoute _fromState(GoRouterState state) =>
-      ConnectScreenRoute();
+mixin _$UpdateScreenRoute on GoRouteData {
+  static UpdateScreenRoute _fromState(GoRouterState state) =>
+      UpdateScreenRoute();
 
   @override
-  String get location => GoRouteData.$location('/connect');
+  String get location => GoRouteData.$location('/update');
 
   @override
   void go(BuildContext context) => context.go(location);

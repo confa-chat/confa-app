@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'connect_screen.dart';
+part of 'splash_screen.dart';
 
 // **************************************************************************
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$connectScreenRoute];
+List<RouteBase> get $appRoutes => [$splashScreenRoute];
 
-RouteBase get $connectScreenRoute => GoRouteData.$route(
-  path: '/connect',
+RouteBase get $splashScreenRoute => GoRouteData.$route(
+  path: '/splash',
 
-  factory: _$ConnectScreenRoute._fromState,
+  factory: _$SplashScreenRoute._fromState,
 );
 
-mixin _$ConnectScreenRoute on GoRouteData {
-  static ConnectScreenRoute _fromState(GoRouterState state) =>
-      ConnectScreenRoute();
+mixin _$SplashScreenRoute on GoRouteData {
+  static SplashScreenRoute _fromState(GoRouterState state) =>
+      SplashScreenRoute();
 
   @override
-  String get location => GoRouteData.$location('/connect');
+  String get location => GoRouteData.$location('/splash');
 
   @override
   void go(BuildContext context) => context.go(location);

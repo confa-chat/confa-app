@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -16,7 +18,7 @@ part 'connect_screen.g.dart';
 
 @TypedGoRoute<ConnectScreenRoute>(path: '/connect')
 @immutable
-class ConnectScreenRoute extends GoRouteData {
+class ConnectScreenRoute extends GoRouteData with _$ConnectScreenRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ConnectScreen();
@@ -37,31 +39,26 @@ class _ConnectScreenState extends State<ConnectScreen> {
   Future<VersionInfo>? _versionInfoFuture;
 
   // Selected federation and hub
-  late final FederationInfo _selectedFederation;
-  late HubInfo _selectedHub;
+  // late final FederationInfo _selectedFederation;
+  late NodeInfo _selectedNode;
 
   // Lists to store voice relays and auth providers fetched from hub
   List<VoiceRelayInfo> voiceRelays = [];
   List<AuthProvider> authProviders = [];
 
-  // Sample federations
-  final List<FederationInfo> knownFederations = [
-    FederationInfo(name: "Confa Federation", description: "Main Confa Federation"),
-  ];
-
-  // Known hubs
-  final List<HubInfo> knownHubs = [
-    if (kDebugMode) HubInfo(name: "Local", address: "http://localhost:38100"),
-    HubInfo(name: "Confach Hub", address: "http://49.13.3.4:38100"),
+  // Known Nodes
+  final List<NodeInfo> knownNodes = [
+    if (kDebugMode && Platform.isLinux) NodeInfo(name: "Local", address: "http://localhost:38100"),
+    NodeInfo(name: "Confach Hub", address: "http://49.13.3.4:38100"),
   ];
 
   @override
   void initState() {
     super.initState();
     // Set default federation and hub automatically
-    _selectedFederation = knownFederations.first;
-    _selectedHub = knownHubs.first;
-    _hubAddressController.text = _selectedHub.address;
+    // _selectedFederation = knownFederations.first;
+    _selectedNode = knownNodes.first;
+    _hubAddressController.text = _selectedNode.address;
 
     // Check version compatibility with hub
     _checkVersionCompatibility();
@@ -71,7 +68,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
     final manager = context.manager;
 
     setState(() {
-      _versionInfoFuture = manager.checkVersion(_selectedHub.address);
+      _versionInfoFuture = manager.checkVersion(Uri.parse(_selectedNode.address));
     });
   }
 
@@ -88,7 +85,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 
   void _goToHubScreen() async {
-    ServerSelectionScreenRoute(hubID: _selectedHub.address).go(context);
+    ServerSelectionScreenRoute(hubID: _selectedNode.address).go(context);
   }
 
   Widget _buildVoiceRelaySection() {
@@ -134,7 +131,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Connect to Hub',
+                'Connection',
                 // style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 style: TextTheme.of(context).headlineLarge,
                 textAlign: TextAlign.center,
@@ -150,29 +147,29 @@ class _ConnectScreenState extends State<ConnectScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.public),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Federation',
-                                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                                      ),
-                                      Text(
-                                        _selectedFederation.name,
-                                        style: TextTheme.of(context).titleLarge,
-                                        // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 12),
+                            // Row(
+                            //   children: [
+                            //     Icon(Icons.public),
+                            //     const SizedBox(width: 8),
+                            //     Expanded(
+                            //       child: Column(
+                            //         crossAxisAlignment: CrossAxisAlignment.start,
+                            //         children: [
+                            //           Text(
+                            //             'Federation',
+                            //             style: TextStyle(color: Colors.grey, fontSize: 12),
+                            //           ),
+                            //           Text(
+                            //             _selectedFederation.name,
+                            //             style: TextTheme.of(context).titleLarge,
+                            //             // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // SizedBox(height: 12),
                             Row(
                               children: [
                                 Icon(Icons.hub),
@@ -182,14 +179,14 @@ class _ConnectScreenState extends State<ConnectScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Hub',
+                                        'Node',
                                         style: TextStyle(color: Colors.grey, fontSize: 12),
                                       ),
                                       Text(
-                                        _selectedHub.name,
+                                        _selectedNode.name,
                                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
-                                      Text(_selectedHub.address, style: TextStyle(fontSize: 10)),
+                                      Text(_selectedNode.address, style: TextStyle(fontSize: 10)),
                                     ],
                                   ),
                                 ),
@@ -214,11 +211,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
               SizedBox(height: 16),
               // Show profile card if authenticated
               _AuthWidget(
-                hubUri: Uri.parse(_selectedHub.address),
-                onAuthStateChanged:
-                    (authState) => setState(() {
-                      _authState = authState;
-                    }),
+                hubUri: Uri.parse(_selectedNode.address),
+                onAuthStateChanged: (authState) => setState(() {
+                  _authState = authState;
+                }),
               ),
               SizedBox(height: 12),
               ElevatedButton(
@@ -468,16 +464,16 @@ class VoiceRelayInfo {
   VoiceRelayInfo({required this.id, required this.name, required this.address});
 }
 
-class HubInfo {
+class NodeInfo {
   final String name;
   final String address;
 
-  HubInfo({required this.name, required this.address});
+  NodeInfo({required this.name, required this.address});
 }
 
-class FederationInfo {
-  final String name;
-  final String description;
+// class FederationInfo {
+//   final String name;
+//   final String description;
 
-  FederationInfo({required this.name, required this.description});
-}
+//   FederationInfo({required this.name, required this.description});
+// }

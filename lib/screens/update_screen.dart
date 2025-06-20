@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+part 'update_screen.g.dart';
+
 @TypedGoRoute<UpdateScreenRoute>(path: '/update')
 @immutable
-class UpdateScreenRoute extends GoRouteData {
+class UpdateScreenRoute extends GoRouteData with _$UpdateScreenRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const UpdateScreen();

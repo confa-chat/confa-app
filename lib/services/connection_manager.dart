@@ -36,13 +36,6 @@ class HubsManager {
     return channel;
   }
 
-  Future<List<AuthProvider>> listAuthProvidersOnHub(Uri hub) async {
-    final channel = await _getChannel(hub);
-    final client = NodeServiceClient(channel);
-    final response = await client.listAuthProviders(ListAuthProvidersRequest());
-    return response.authProviders;
-  }
-
   Future<AuthState?> tryLoadSavedAuth(Uri hub) async {
     final providers = await listAuthProvidersOnHub(hub);
     final authState = await AuthState.tryLoadSavedAuth(hub, providers);
@@ -100,14 +93,22 @@ class HubsManager {
     throw Exception('No connection found for hubID: $hubID');
   }
 
-  Future<VersionInfo> checkVersion(String hubID) async {
+  Future<List<AuthProvider>> listAuthProvidersOnHub(Uri hub) async {
+    final channel = await _getChannel(hub);
+    final client = NodeServiceClient(channel);
+    final response = await client.listAuthProviders(ListAuthProvidersRequest());
+    return response.authProviders;
+  }
+
+  Future<VersionInfo> checkVersion(Uri hubID) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String currentVersion = packageInfo.version;
 
-    final hub = await getHubConnection(hubID);
+    final hub = await _getChannel(hubID);
+    final client = NodeServiceClient(hub);
 
     try {
-      final response = await hub.nodeClient.supportedClientVersions(
+      final response = await client.supportedClientVersions(
         SupportedClientVersionsRequest(currentVersion: currentVersion),
       );
 

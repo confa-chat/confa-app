@@ -10,7 +10,25 @@ import 'package:confa/theme.dart';
 import 'package:l/l.dart';
 import 'package:provider/provider.dart';
 
-void main([List<String>? args]) async {
+void main([List<String>? args]) {
+  // final logFile = File('log.txt').openWrite();
+  l.capture<void>(
+    () => runZonedGuarded<void>(run, l.e),
+    LogOptions(
+      handlePrint: true,
+      outputInRelease: true,
+      printColors: true,
+      output: LogOutput.platform,
+      // overrideOutput: (event) {
+      //   final msg = event.toString();
+      //   logFile.writeln(msg);
+      //   return msg;
+      // },
+    ),
+  );
+}
+
+void run() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SharedStorage.init();
@@ -24,26 +42,10 @@ void main([List<String>? args]) async {
     initialRoute = lastRoute;
   }
 
-  runWithLogger(ConfaApp(hubsManager: hubsManager, initialRoute: initialRoute));
+  runApp(ConfaApp(hubsManager: hubsManager, initialRoute: initialRoute));
 }
 
-void runWithLogger(Widget app) {
-  final logFile = File('log.txt').openWrite();
-  l.capture<void>(
-    () => runZonedGuarded<void>(() => runApp(app), l.e),
-    LogOptions(
-      handlePrint: true,
-      outputInRelease: true,
-      printColors: true,
-      output: LogOutput.platform,
-      overrideOutput: (event) {
-        final msg = event.toString();
-        logFile.writeln(msg);
-        return msg;
-      },
-    ),
-  );
-}
+void runWithLogger(Widget app) {}
 
 class ConfaApp extends StatefulWidget {
   final String initialRoute;

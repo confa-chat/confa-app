@@ -32,3 +32,13 @@ class VoiceChannelUpdateReceived extends VoiceEvent {
     required this.voiceRelayId,
   });
 }
+
+class VoiceServerError extends VoiceEvent {
+  final String message;
+
+  VoiceServerError(this.message);
+}
+
+class VoiceServerDisconnect extends VoiceEvent {
+  VoiceServerDisconnect();
+}
