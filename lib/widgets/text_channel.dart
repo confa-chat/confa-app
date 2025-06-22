@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:async/async.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:confa/gen/proto/google/protobuf/timestamp.pb.dart';
 import 'package:confa/gen/proto/confa/chat/v1/service.pbgrpc.dart';
@@ -115,16 +116,13 @@ class _TextChatWidgetState extends State<TextChatWidget> {
             isLoading: _isLoading,
             reverse: true,
             hasReachedMax: _hasReachedMax,
-            loadingBuilder:
-                (context) =>
-                    _hasReachedMax
-                        ? const SizedBox()
-                        : const Center(child: CircularProgressIndicator()),
-            itemBuilder:
-                (context, index) => MessageListTile(
-                  user: _users[_messages[index].senderId]!,
-                  message: _messages[index],
-                ),
+            loadingBuilder: (context) => _hasReachedMax
+                ? const SizedBox()
+                : const Center(child: CircularProgressIndicator()),
+            itemBuilder: (context, index) => MessageListTile(
+              user: _users[_messages[index].senderId]!,
+              message: _messages[index],
+            ),
           ),
           // child: ListView.builder(
           //   reverse: true,
@@ -209,24 +207,29 @@ class _MessageListTileState extends State<MessageListTile> {
       children: [
         if (attachmentsList.images.isNotEmpty)
           Wrap(
-            children:
-                attachmentsList.images.map((attachment) {
-                  final imageUrl = context.hub.baseUri.replace(path: attachment.url).toString();
+            children: attachmentsList.images.map((attachment) {
+              final imageUrl = context.hub.baseUri.replace(path: attachment.url).toString();
 
-                  return Image.network(imageUrl, height: 400);
-                }).toList(),
+              return ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 300),
+                child: Image.network(
+                  imageUrl,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Placeholder(child: Icon(Icons.error)),
+                ),
+              );
+            }).toList(),
           ),
         if (attachmentsList.other.isNotEmpty)
           Wrap(
             spacing: 8,
-            children:
-                attachmentsList.other.map((attachment) {
-                  return ActionChip(
-                    label: Text(attachment.name),
-                    avatar: const Icon(Icons.attach_file),
-                    onPressed: () => _saveFile(attachment),
-                  );
-                }).toList(),
+            children: attachmentsList.other.map((attachment) {
+              return ActionChip(
+                label: Text(attachment.name),
+                avatar: const Icon(Icons.attach_file),
+                onPressed: () => _saveFile(attachment),
+              );
+            }).toList(),
           ),
       ],
     );
@@ -266,6 +269,17 @@ class MessageInput extends StatefulWidget {
   State<MessageInput> createState() => _MessageInputState();
 }
 
+extension BufferedReader on Stream<Uint8List> {
+  Stream<Uint8List> chunked(int chunkSize) async* {
+    final reader = ChunkedStreamReader(this);
+    while (true) {
+      final chunk = await reader.readBytes(chunkSize);
+      if (chunk.isEmpty) break;
+      yield chunk;
+    }
+  }
+}
+
 class _MessageInputState extends State<MessageInput> {
   final _controller = TextEditingController();
   final List<file_selector.XFile> _selectedFiles = [];
@@ -299,8 +313,7 @@ class _MessageInputState extends State<MessageInput> {
 
   Stream<UploadAttachmentRequest> _fileUploadStream(file_selector.XFile file) async* {
     yield UploadAttachmentRequest(info: AttachmentUploadInfo(name: file.name));
-
-    await for (final chunk in ChunkedStreamReader(file.openRead()).readStream(16 * 1024)) {
+    await for (final chunk in file.openRead().chunked(1024 * 1024)) {
       yield UploadAttachmentRequest(data: chunk);
     }
   }
