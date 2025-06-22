@@ -49,7 +49,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // Known Nodes
   final List<NodeInfo> knownNodes = [
     if (kDebugMode && Platform.isLinux) NodeInfo(name: "Local", address: "http://localhost:38100"),
-    NodeInfo(name: "Confach Hub", address: "http://49.13.3.4:38100"),
+    NodeInfo(name: "Konfach", address: "https://confa-node.konfach.ru"),
   ];
 
   @override

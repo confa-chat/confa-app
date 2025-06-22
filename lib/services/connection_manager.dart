@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:grpc/grpc.dart' as grpc;
-import 'package:grpc/grpc_connection_interface.dart';
 import 'package:confa/auth/auth.dart';
 import 'package:confa/gen/proto/confa/chat/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
@@ -13,28 +13,23 @@ import 'package:confa/repo/user.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-const grpcCreds = grpc.ChannelCredentials.insecure();
+Future<grpc.ClientChannel> _grpcConnect(Uri uri) async {
+  var creds = grpc.ChannelCredentials.secure();
+  if (kDebugMode) {
+    creds = grpc.ChannelCredentials.insecure();
+  }
+
+  return grpc.ClientChannel(
+    uri.host,
+    port: uri.port,
+    options: grpc.ChannelOptions(credentials: creds),
+  );
+}
 
 class HubsManager {
-  final Map<Uri, grpc.ClientChannel> _channels = {};
   final Map<Uri, HubConnection> _hubConnections = {};
 
   HubsManager();
-
-  Future<grpc.ClientChannel> _getChannel(Uri uri) async {
-    if (_channels.containsKey(uri)) {
-      return _channels[uri]!;
-    }
-
-    grpc.ClientChannel channel = grpc.ClientChannel(
-      uri.host,
-      port: uri.port,
-      options: const grpc.ChannelOptions(credentials: grpcCreds),
-    );
-
-    _channels[uri] = channel;
-    return channel;
-  }
 
   Future<AuthState?> tryLoadSavedAuth(Uri hub) async {
     final providers = await listAuthProvidersOnHub(hub);
@@ -72,7 +67,7 @@ class HubsManager {
       return _hubConnections[uri]!;
     }
 
-    final channel = await _getChannel(uri);
+    final channel = await _grpcConnect(uri);
     final service = await HubConnection.connect(uri, channel, auth);
     _hubConnections[uri] = service;
     return service;
@@ -94,7 +89,7 @@ class HubsManager {
   }
 
   Future<List<AuthProvider>> listAuthProvidersOnHub(Uri hub) async {
-    final channel = await _getChannel(hub);
+    final channel = await _grpcConnect(hub);
     final client = NodeServiceClient(channel);
     final response = await client.listAuthProviders(ListAuthProvidersRequest());
     return response.authProviders;
@@ -104,7 +99,7 @@ class HubsManager {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String currentVersion = packageInfo.version;
 
-    final hub = await _getChannel(hubID);
+    final hub = await _grpcConnect(hubID);
     final client = NodeServiceClient(hub);
 
     try {
@@ -135,6 +130,7 @@ class VersionInfo {
 /// Manages all services and provides them to the widget tree
 class HubConnection {
   final Uri baseUri;
+  final grpc.ClientChannel channel;
 
   final AuthState _authState;
   final NodeServiceClient _nodeClient;
@@ -142,10 +138,11 @@ class HubConnection {
   final ChatServiceClient _chatClient;
   final UsersRepo _usersRepo;
 
-  final Map<String, VoiceRelayServiceClient> _voiceRelayClients = {};
+  final Map<String, (grpc.ClientChannel, VoiceRelayServiceClient)> _voiceRelayClients = {};
 
   HubConnection._(
     this.baseUri,
+    this.channel,
     this._authState,
     this._nodeClient,
     this._serverClient,
@@ -163,6 +160,8 @@ class HubConnection {
     grpc.ClientChannel channel,
     AuthState authState,
   ) async {
+    final channel = await _grpcConnect(baseUrl);
+
     final callOptions = grpc.CallOptions(
       metadata: {'authorization': 'Bearer ${(await authState.getToken()).accessToken}'},
       providers: [
@@ -179,12 +178,28 @@ class HubConnection {
 
     final userRepo = await UsersRepo.create(nodeClient, serverClient);
 
-    return HubConnection._(baseUrl, authState, nodeClient, serverClient, chatClient, userRepo);
+    return HubConnection._(
+      baseUrl,
+      channel,
+      authState,
+      nodeClient,
+      serverClient,
+      chatClient,
+      userRepo,
+    );
+  }
+
+  Future<void> close() async {
+    await channel.shutdown();
+    for (final client in _voiceRelayClients.values) {
+      await client.$1.shutdown();
+    }
+    _voiceRelayClients.clear();
   }
 
   Future<VoiceRelayServiceClient> voiceRelayClient(String relayID) async {
     if (_voiceRelayClients.containsKey(relayID)) {
-      return _voiceRelayClients[relayID]!;
+      return _voiceRelayClients[relayID]!.$2;
     }
 
     final relaysResp = await _nodeClient.listVoiceRelays(ListVoiceRelaysRequest());
@@ -200,18 +215,20 @@ class HubConnection {
 
     final relayUri = Uri.parse(relay.address);
 
-    final relayChannel = grpc.ClientChannel(
-      relayUri.host,
-      port: relayUri.port,
-      options: grpc.ChannelOptions(credentials: grpcCreds),
-    );
+    // final relayChannel =  grpc.ClientChannel(
+    //   relayUri.host,
+    //   port: relayUri.port,
+    //   options: grpc.ChannelOptions(credentials: grpcCreds),
+    // );
+
+    final relayChannel = await _grpcConnect(relayUri);
 
     final client = VoiceRelayServiceClient(
       relayChannel,
       options: grpc.CallOptions(providers: [_authProvider]),
     );
 
-    _voiceRelayClients[relayID] = client;
+    _voiceRelayClients[relayID] = (relayChannel, client);
 
     return client;
   }
