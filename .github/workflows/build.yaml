@@ -91,8 +91,7 @@ jobs:
           channel: stable
           flutter-version-file: pubspec.yaml
       - run: |
-          flutter build windows --release \
-            --build-name ${{ needs.get-version.outputs.version }} --build-number ${{ needs.get-version.outputs.build_number }}
+          flutter build windows --release --build-name ${{ needs.get-version.outputs.version }} --build-number ${{ needs.get-version.outputs.build_number }}
       - uses: actions/upload-artifact@v4
         with:
           name: windows
