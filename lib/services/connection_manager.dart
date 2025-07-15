@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 Future<grpc.ClientChannel> _grpcConnect(Uri uri) async {
   var creds = grpc.ChannelCredentials.secure();
-  if (kDebugMode) {
+  if (kDebugMode && (uri.scheme == 'http' || uri.scheme == 'dns')) {
     creds = grpc.ChannelCredentials.insecure();
   }
 
@@ -39,6 +39,11 @@ class HubsManager {
     }
     await connect(hub, authState);
     return authState;
+  }
+
+  Future<void> clearSavedAuth(Uri hub) async {
+    final providers = await listAuthProvidersOnHub(hub);
+    final authState = await AuthState.tryLoadSavedAuth(hub, providers);
   }
 
   Future<AuthState> authOnProvider(Uri hub, AuthProvider provider) async {
@@ -73,19 +78,17 @@ class HubsManager {
     return service;
   }
 
-  Future<HubConnection> getHubConnection(String hubID) async {
-    final Uri hubUri = Uri.parse(hubID);
-
-    if (_hubConnections.containsKey(hubUri)) {
-      return _hubConnections[hubUri]!;
+  Future<HubConnection> getHubConnection(Uri hubUrl) async {
+    if (_hubConnections.containsKey(hubUrl)) {
+      return _hubConnections[hubUrl]!;
     }
 
-    final restoredConnection = await tryRestoreHubConnection(hubUri);
+    final restoredConnection = await tryRestoreHubConnection(hubUrl);
     if (restoredConnection != null) {
       return restoredConnection;
     }
 
-    throw Exception('No connection found for hubID: $hubID');
+    throw Exception('No connection found for hubID: $hubUrl');
   }
 
   Future<List<AuthProvider>> listAuthProvidersOnHub(Uri hub) async {

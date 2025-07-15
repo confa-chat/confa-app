@@ -1,10 +1,8 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:grpc/grpc.dart' as grpc;
+import 'package:flutter/material.dart' hide ConnectionState;
+import 'package:flutter/widgets.dart' as widgets;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isolate_generator_annotation/isolate_generator_annotation.dart';
-import 'package:confa/auth/auth.dart';
+import 'package:confa/bloc/connection_cubit.dart';
 import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
 import 'package:confa/gen/proto/confa/node/v1/service.pb.dart';
 import 'package:confa/gen/proto/confa/node/v1/service.pbgrpc.dart';
@@ -12,7 +10,6 @@ import 'package:confa/gen/proto/confa/user/v1/user.pb.dart';
 import 'package:confa/screens/server_selection_screen.dart';
 import 'package:confa/services/connection_manager.dart';
 import 'package:go_router/go_router.dart';
-import 'package:confa/widgets/loading.dart';
 
 part 'connect_screen.g.dart';
 
@@ -33,90 +30,15 @@ class ConnectScreen extends StatefulWidget {
 }
 
 class _ConnectScreenState extends State<ConnectScreen> {
-  final _hubAddressController = TextEditingController();
-
-  AuthState? _authState;
-  Future<VersionInfo>? _versionInfoFuture;
-
-  // Selected federation and hub
-  // late final FederationInfo _selectedFederation;
-  late NodeInfo _selectedNode;
-
-  // Lists to store voice relays and auth providers fetched from hub
-  List<VoiceRelayInfo> voiceRelays = [];
-  List<AuthProvider> authProviders = [];
-
-  // Known Nodes
-  final List<NodeInfo> knownNodes = [
-    if (kDebugMode && Platform.isLinux) NodeInfo(name: "Local", address: "http://localhost:38100"),
-    NodeInfo(name: "Konfach", address: "https://confa-node.konfach.ru"),
-  ];
-
   @override
   void initState() {
     super.initState();
-    // Set default federation and hub automatically
-    // _selectedFederation = knownFederations.first;
-    _selectedNode = knownNodes.first;
-    _hubAddressController.text = _selectedNode.address;
-
-    // Check version compatibility with hub
-    _checkVersionCompatibility();
+    // Initialize the connection sequence
+    context.read<ConnectionCubit>().connectToNode();
   }
 
-  Future<void> _checkVersionCompatibility() async {
-    final manager = context.manager;
-
-    setState(() {
-      _versionInfoFuture = manager.checkVersion(Uri.parse(_selectedNode.address));
-    });
-  }
-
-  @override
-  void dispose() {
-    _hubAddressController.dispose();
-    super.dispose();
-  }
-
-  void _showError(String message) {
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-    }
-  }
-
-  void _goToHubScreen() async {
-    ServerSelectionScreenRoute(hubID: _selectedNode.address).go(context);
-  }
-
-  Widget _buildVoiceRelaySection() {
-    if (voiceRelays.isEmpty) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Voice Relays', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
-        ...voiceRelays.map(
-          (relay) => Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Row(
-              children: [
-                const Icon(Icons.mic, size: 14),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Text(
-                    relay.name,
-                    style: const TextStyle(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Divider(),
-      ],
-    );
+  void _goToHubScreen(Uri hubAddress) {
+    ServerSelectionScreenRoute(hubUrl: hubAddress).go(context);
   }
 
   @override
@@ -125,276 +47,185 @@ class _ConnectScreenState extends State<ConnectScreen> {
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 400),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Connection',
-                // style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                style: TextTheme.of(context).headlineLarge,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 16),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Row(
-                            //   children: [
-                            //     Icon(Icons.public),
-                            //     const SizedBox(width: 8),
-                            //     Expanded(
-                            //       child: Column(
-                            //         crossAxisAlignment: CrossAxisAlignment.start,
-                            //         children: [
-                            //           Text(
-                            //             'Federation',
-                            //             style: TextStyle(color: Colors.grey, fontSize: 12),
-                            //           ),
-                            //           Text(
-                            //             _selectedFederation.name,
-                            //             style: TextTheme.of(context).titleLarge,
-                            //             // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            // SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Icon(Icons.hub),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Node',
-                                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                                      ),
-                                      Text(
-                                        _selectedNode.name,
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                      ),
-                                      Text(_selectedNode.address, style: TextStyle(fontSize: 10)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      TextButton.icon(
-                        onPressed: null,
-                        // TODO onPressed: _toggleCustomHubInput,
-                        icon: const Icon(Icons.edit),
-                        label: Text('Edit'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-              // Version info card
-              if (_versionInfoFuture != null) _buildVersionInfoCard(),
-              SizedBox(height: 16),
-              // Show profile card if authenticated
-              _AuthWidget(
-                hubUri: Uri.parse(_selectedNode.address),
-                onAuthStateChanged: (authState) => setState(() {
-                  _authState = authState;
-                }),
-              ),
-              SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: _authState != null ? _goToHubScreen : null,
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  minimumSize: Size(double.infinity, 40),
-                ),
-                child: Text('Connect', style: TextStyle(fontSize: 14)),
-              ),
-            ],
+          child: BlocConsumer<ConnectionCubit, ConnectionState>(
+            listener: (context, state) {
+              if (state is ConnectionError) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+              }
+            },
+            builder: (context, state) {
+              if (state is ConnectionInfoLoaded) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Connection',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 16),
+
+                    // Node selection card
+                    _buildNodeSelectionCard(state),
+                    SizedBox(height: 16),
+
+                    // Version info card
+                    _buildVersionInfoCard(state),
+                    SizedBox(height: 16),
+
+                    // Auth card
+                    _buildAuthCard(state),
+                    SizedBox(height: 12),
+
+                    // Connect button
+                    _buildConnectButton(state),
+                  ],
+                );
+              }
+
+              return Center(child: CircularProgressIndicator());
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget _buildVersionInfoCard() {
-    return FutureBuilder<VersionInfo>(
-      future: _versionInfoFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Icon(Icons.update, color: Colors.grey),
-                  SizedBox(width: 12),
-                  Text('Checking version compatibility...'),
-                ],
-              ),
-            ),
-          );
-        }
-
-        if (snapshot.hasError) {
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Icon(Icons.error_outline, color: Colors.red),
-                  SizedBox(width: 12),
-                  Expanded(child: Text('Could not check version compatibility')),
-                ],
-              ),
-            ),
-          );
-        }
-
-        final versionInfo = snapshot.data!;
-        final isSupported = versionInfo.supported;
-
-        return Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Icon(
-                  isSupported ? Icons.check_circle : Icons.warning,
-                  color: isSupported ? Colors.green : Colors.orange,
-                ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isSupported ? 'Client version compatible' : 'Client version not compatible',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isSupported ? Colors.green : Colors.orange,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Current version: ${versionInfo.currentVersion}',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      Text(
-                        'Minimum required: ${versionInfo.minVersion}',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _AuthWidget extends StatefulWidget {
-  final Uri hubUri;
-  final Function(AuthState?)? onAuthStateChanged;
-
-  const _AuthWidget({super.key, required this.hubUri, this.onAuthStateChanged});
-
-  @override
-  State<_AuthWidget> createState() => _AuthWidgetState();
-}
-
-class _AuthWidgetState extends State<_AuthWidget> {
-  Future<AuthState?> _authStateFuture = Future.value(null);
-  Future<List<AuthProvider>> _authProvidersFuture = Future.value([]);
-
-  @override
-  void initState() {
-    super.initState();
-    _authProvidersFuture = context.manager.listAuthProvidersOnHub(widget.hubUri);
-    _authStateFuture = context.manager.tryLoadSavedAuth(widget.hubUri).then((authState) {
-      if (authState != null) {
-        widget.onAuthStateChanged?.call(authState);
-      }
-      return authState;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildNodeSelectionCard(ConnectionInfoLoaded state) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: LoadingBuilder(
-          future: (_authProvidersFuture, _authStateFuture).wait,
-          builder: (context, values) {
-            final authProviders = values.$1;
-            final authState = values.$2;
-
-            if (authState == null) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Row(
                 children: [
-                  Text('Auth with', style: TextTheme.of(context).headlineSmall),
-                  const SizedBox(height: 8),
-                  ...authProviders.map(_buildAuthProviderItem),
+                  Icon(Icons.hub),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Node', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                        Text(
+                          state.selectedNode.name,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                        Text(state.selectedNode.address.toString(), style: TextStyle(fontSize: 10)),
+                      ],
+                    ),
+                  ),
                 ],
-              );
-            }
-
-            return _buildUserProfileWidget(authState);
-          },
+              ),
+            ),
+            TextButton.icon(
+              onPressed: null, // TODO: Implement node editing
+              icon: const Icon(Icons.edit),
+              label: Text('Edit'),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Future<User> _getCurrentUser() async {
-    final hub = await context.manager.getHubConnection(widget.hubUri.toString());
-    return (await hub.nodeClient.currentUser(CurrentUserRequest())).user;
+  Widget _buildVersionInfoCard(ConnectionInfoLoaded state) {
+    final isSupported = state.versionInfo.supported;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Icon(
+              isSupported ? Icons.check_circle : Icons.warning,
+              color: isSupported ? Colors.green : Colors.orange,
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    isSupported ? 'Client version compatible' : 'Client version not compatible',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isSupported ? Colors.green : Colors.orange,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Current version: ${state.versionInfo.currentVersion}',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    'Minimum required: ${state.versionInfo.minVersion}',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  Future<void> _signOut() async {
-    final manager = context.manager;
-    setState(() {
-      _authStateFuture = Future.value(null);
-    });
+  Widget _buildAuthCard(ConnectionInfoLoaded state) {
+    if (state is ConnectionInfoAuthenticationInProgress) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [CircularProgressIndicator(), SizedBox(width: 12), Text('Authenticating...')],
+          ),
+        ),
+      );
+    }
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: state is ConnectionInfoAuthenticated
+            ? _buildUserProfileWidget(state)
+            : _buildAuthProvidersWidget(state.authProviders),
+      ),
+    );
   }
 
-  Future<void> _signIn(AuthProvider provider) async {
-    final manager = context.manager;
-    setState(() {
-      _authStateFuture = Future(() async {
-        final auth = await manager.authOnProvider(widget.hubUri, provider);
-        await manager.connect(widget.hubUri, auth);
-        widget.onAuthStateChanged?.call(auth);
-        return auth;
-      });
-    });
+  Widget _buildAuthProvidersWidget(List<AuthProvider> authProviders) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text('Auth with', style: Theme.of(context).textTheme.headlineSmall),
+        const SizedBox(height: 8),
+        ...authProviders.map(
+          (provider) => OutlinedButton(
+            onPressed: () {
+              context.read<ConnectionCubit>().authenticateWithProvider(provider);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(width: 8, child: Icon(Icons.security)),
+                Text(provider.name),
+                const SizedBox(width: 8),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
-  Widget _buildUserProfileWidget(AuthState authState) {
-    return FutureBuilder(
-      future: _getCurrentUser(),
+  Widget _buildUserProfileWidget(ConnectionInfoAuthenticated state) {
+    return FutureBuilder<User>(
+      future: _getCurrentUser(state.selectedNode.address),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == widgets.ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -418,7 +249,7 @@ class _AuthWidgetState extends State<_AuthWidget> {
                 children: [
                   Text(user.username, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   Text(
-                    'Authenticated via ${authState.providerName}',
+                    'Authenticated via ${state.authState.providerName}',
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ],
@@ -428,7 +259,9 @@ class _AuthWidgetState extends State<_AuthWidget> {
             OutlinedButton.icon(
               icon: const Icon(Icons.logout, size: 16),
               label: const Text('Sign Out'),
-              onPressed: _signOut,
+              onPressed: () {
+                context.read<ConnectionCubit>().signOut();
+              },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 foregroundColor: Colors.red,
@@ -440,40 +273,21 @@ class _AuthWidgetState extends State<_AuthWidget> {
     );
   }
 
-  Widget _buildAuthProviderItem(AuthProvider provider) {
-    return OutlinedButton(
-      onPressed: () => _signIn(provider),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SizedBox(width: 8, child: Icon(Icons.security)),
-          Text(provider.name),
-          const SizedBox(width: 8),
-        ],
+  Widget _buildConnectButton(ConnectionState state) {
+    return ElevatedButton(
+      onPressed: state is ConnectionInfoAuthenticated && state.canConnect()
+          ? () => _goToHubScreen(state.selectedNode.address)
+          : null,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        minimumSize: Size(double.infinity, 40),
       ),
+      child: Text('Connect', style: TextStyle(fontSize: 14)),
     );
   }
+
+  Future<User> _getCurrentUser(Uri hubAddress) async {
+    final hub = await context.manager.getHubConnection(hubAddress);
+    return (await hub.nodeClient.currentUser(CurrentUserRequest())).user;
+  }
 }
-
-class VoiceRelayInfo {
-  final String id;
-  final String name;
-  final String address;
-
-  VoiceRelayInfo({required this.id, required this.name, required this.address});
-}
-
-class NodeInfo {
-  final String name;
-  final String address;
-
-  NodeInfo({required this.name, required this.address});
-}
-
-// class FederationInfo {
-//   final String name;
-//   final String description;
-
-//   FederationInfo({required this.name, required this.description});
-// }

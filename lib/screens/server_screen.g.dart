@@ -9,14 +9,14 @@ part of 'server_screen.dart';
 List<RouteBase> get $appRoutes => [$serverScreenRoute];
 
 RouteBase get $serverScreenRoute => GoRouteData.$route(
-  path: '/hub/:hubID/server/:serverID',
+  path: '/hub/:hubUrl/server/:serverID',
 
   factory: _$ServerScreenRoute._fromState,
 );
 
 mixin _$ServerScreenRoute on GoRouteData {
   static ServerScreenRoute _fromState(GoRouterState state) => ServerScreenRoute(
-    hubID: state.pathParameters['hubID']!,
+    hubUrl: Uri.parse(state.pathParameters['hubUrl']!)!,
     serverID: state.pathParameters['serverID']!,
   );
 
@@ -24,7 +24,7 @@ mixin _$ServerScreenRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-    '/hub/${Uri.encodeComponent(_self.hubID)}/server/${Uri.encodeComponent(_self.serverID)}',
+    '/hub/${Uri.encodeComponent(_self.hubUrl.toString())}/server/${Uri.encodeComponent(_self.serverID)}',
   );
 
   @override

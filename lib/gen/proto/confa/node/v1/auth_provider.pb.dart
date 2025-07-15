@@ -1,17 +1,20 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: confa/node/v1/auth_provider.proto
-//
-// @dart = 2.12
+// Generated from confa/node/v1/auth_provider.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 enum AuthProvider_Protocol {
   openidConnect, 
@@ -24,21 +27,17 @@ class AuthProvider extends $pb.GeneratedMessage {
     $core.String? name,
     OpenIDConnect? openidConnect,
   }) {
-    final $result = create();
-    if (id != null) {
-      $result.id = id;
-    }
-    if (name != null) {
-      $result.name = name;
-    }
-    if (openidConnect != null) {
-      $result.openidConnect = openidConnect;
-    }
-    return $result;
+    final result = create();
+    if (id != null) result.id = id;
+    if (name != null) result.name = name;
+    if (openidConnect != null) result.openidConnect = openidConnect;
+    return result;
   }
-  AuthProvider._() : super();
-  factory AuthProvider.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AuthProvider.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  AuthProvider._();
+
+  factory AuthProvider.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory AuthProvider.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, AuthProvider_Protocol> _AuthProvider_ProtocolByTag = {
     101 : AuthProvider_Protocol.openidConnect,
@@ -52,21 +51,17 @@ class AuthProvider extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthProvider clone() => AuthProvider()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthProvider copyWith(void Function(AuthProvider) updates) => super.copyWith((message) => updates(message as AuthProvider)) as AuthProvider;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthProvider create() => AuthProvider._();
+  @$core.override
   AuthProvider createEmptyInstance() => create();
   static $pb.PbList<AuthProvider> createRepeated() => $pb.PbList<AuthProvider>();
   @$core.pragma('dart2js:noInline')
@@ -74,34 +69,34 @@ class AuthProvider extends $pb.GeneratedMessage {
   static AuthProvider? _defaultInstance;
 
   AuthProvider_Protocol whichProtocol() => _AuthProvider_ProtocolByTag[$_whichOneof(0)]!;
-  void clearProtocol() => clearField($_whichOneof(0));
+  void clearProtocol() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String v) { $_setString(0, v); }
+  set id($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearId() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get name => $_getSZ(1);
   @$pb.TagNumber(2)
-  set name($core.String v) { $_setString(1, v); }
+  set name($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearName() => clearField(2);
+  void clearName() => $_clearField(2);
 
   @$pb.TagNumber(101)
   OpenIDConnect get openidConnect => $_getN(2);
   @$pb.TagNumber(101)
-  set openidConnect(OpenIDConnect v) { setField(101, v); }
+  set openidConnect(OpenIDConnect value) => $_setField(101, value);
   @$pb.TagNumber(101)
   $core.bool hasOpenidConnect() => $_has(2);
   @$pb.TagNumber(101)
-  void clearOpenidConnect() => clearField(101);
+  void clearOpenidConnect() => $_clearField(101);
   @$pb.TagNumber(101)
   OpenIDConnect ensureOpenidConnect() => $_ensure(2);
 }
@@ -112,21 +107,17 @@ class OpenIDConnect extends $pb.GeneratedMessage {
     $core.String? clientId,
     $core.String? clientSecret,
   }) {
-    final $result = create();
-    if (issuer != null) {
-      $result.issuer = issuer;
-    }
-    if (clientId != null) {
-      $result.clientId = clientId;
-    }
-    if (clientSecret != null) {
-      $result.clientSecret = clientSecret;
-    }
-    return $result;
+    final result = create();
+    if (issuer != null) result.issuer = issuer;
+    if (clientId != null) result.clientId = clientId;
+    if (clientSecret != null) result.clientSecret = clientSecret;
+    return result;
   }
-  OpenIDConnect._() : super();
-  factory OpenIDConnect.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OpenIDConnect.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  OpenIDConnect._();
+
+  factory OpenIDConnect.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory OpenIDConnect.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OpenIDConnect', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.node.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'issuer')
@@ -135,21 +126,17 @@ class OpenIDConnect extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OpenIDConnect clone() => OpenIDConnect()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OpenIDConnect copyWith(void Function(OpenIDConnect) updates) => super.copyWith((message) => updates(message as OpenIDConnect)) as OpenIDConnect;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static OpenIDConnect create() => OpenIDConnect._();
+  @$core.override
   OpenIDConnect createEmptyInstance() => create();
   static $pb.PbList<OpenIDConnect> createRepeated() => $pb.PbList<OpenIDConnect>();
   @$core.pragma('dart2js:noInline')
@@ -159,31 +146,31 @@ class OpenIDConnect extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get issuer => $_getSZ(0);
   @$pb.TagNumber(1)
-  set issuer($core.String v) { $_setString(0, v); }
+  set issuer($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasIssuer() => $_has(0);
   @$pb.TagNumber(1)
-  void clearIssuer() => clearField(1);
+  void clearIssuer() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get clientId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set clientId($core.String v) { $_setString(1, v); }
+  set clientId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasClientId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearClientId() => clearField(2);
+  void clearClientId() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get clientSecret => $_getSZ(2);
   @$pb.TagNumber(3)
-  set clientSecret($core.String v) { $_setString(2, v); }
+  set clientSecret($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasClientSecret() => $_has(2);
   @$pb.TagNumber(3)
-  void clearClientSecret() => clearField(3);
+  void clearClientSecret() => $_clearField(3);
 }
 
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

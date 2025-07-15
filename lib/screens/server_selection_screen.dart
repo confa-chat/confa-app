@@ -9,20 +9,20 @@ import 'package:provider/provider.dart';
 
 part 'server_selection_screen.g.dart';
 
-@TypedGoRoute<ServerSelectionScreenRoute>(path: '/hub/:hubID/servers')
+@TypedGoRoute<ServerSelectionScreenRoute>(path: '/hub/:hubUrl/servers')
 @immutable
 class ServerSelectionScreenRoute extends GoRouteData with _$ServerSelectionScreenRoute {
-  final String hubID;
-  const ServerSelectionScreenRoute({required this.hubID});
+  final Uri hubUrl;
+  const ServerSelectionScreenRoute({required this.hubUrl});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return LoadingBuilder(
-      future: context.manager.getHubConnection(hubID),
+      future: context.manager.getHubConnection(hubUrl),
       builder: (context, hub) {
         return Provider.value(
           value: hub,
-          child: ServerSelectionScreen(hubID: hubID),
+          child: ServerSelectionScreen(hubUrl: hubUrl),
         );
       },
     );
@@ -30,8 +30,8 @@ class ServerSelectionScreenRoute extends GoRouteData with _$ServerSelectionScree
 }
 
 class ServerSelectionScreen extends StatefulWidget {
-  final String hubID;
-  const ServerSelectionScreen({super.key, this.hubID = ''});
+  final Uri hubUrl;
+  const ServerSelectionScreen({super.key, required this.hubUrl});
 
   @override
   State<ServerSelectionScreen> createState() => _ServerSelectionScreenState();
@@ -76,7 +76,7 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   }
 
   void _selectServer(ServerInfo server) {
-    ServerScreenRoute(hubID: widget.hubID, serverID: server.id).go(context);
+    ServerScreenRoute(hubUrl: widget.hubUrl, serverID: server.id).go(context);
   }
 
   @override

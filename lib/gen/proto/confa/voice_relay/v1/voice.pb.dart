@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: confa/voice_relay/v1/voice.proto
-//
-// @dart = 2.12
+// Generated from confa/voice_relay/v1/voice.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -15,33 +16,33 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'voice.pbenum.dart';
 
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
+
 export 'voice.pbenum.dart';
 
 class SendMeta extends $pb.GeneratedMessage {
   factory SendMeta() => create();
-  SendMeta._() : super();
-  factory SendMeta.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SendMeta.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  SendMeta._();
+
+  factory SendMeta.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory SendMeta.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SendMeta', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.voice_relay.v1'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SendMeta clone() => SendMeta()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SendMeta copyWith(void Function(SendMeta) updates) => super.copyWith((message) => updates(message as SendMeta)) as SendMeta;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SendMeta create() => SendMeta._();
+  @$core.override
   SendMeta createEmptyInstance() => create();
   static $pb.PbList<SendMeta> createRepeated() => $pb.PbList<SendMeta>();
   @$core.pragma('dart2js:noInline')
@@ -56,24 +57,18 @@ class VoiceInfo extends $pb.GeneratedMessage {
     $core.String? userId,
     AudioCodec? codec,
   }) {
-    final $result = create();
-    if (serverId != null) {
-      $result.serverId = serverId;
-    }
-    if (channelId != null) {
-      $result.channelId = channelId;
-    }
-    if (userId != null) {
-      $result.userId = userId;
-    }
-    if (codec != null) {
-      $result.codec = codec;
-    }
-    return $result;
+    final result = create();
+    if (serverId != null) result.serverId = serverId;
+    if (channelId != null) result.channelId = channelId;
+    if (userId != null) result.userId = userId;
+    if (codec != null) result.codec = codec;
+    return result;
   }
-  VoiceInfo._() : super();
-  factory VoiceInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory VoiceInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  VoiceInfo._();
+
+  factory VoiceInfo.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory VoiceInfo.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.voice_relay.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
@@ -83,21 +78,17 @@ class VoiceInfo extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   VoiceInfo clone() => VoiceInfo()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   VoiceInfo copyWith(void Function(VoiceInfo) updates) => super.copyWith((message) => updates(message as VoiceInfo)) as VoiceInfo;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static VoiceInfo create() => VoiceInfo._();
+  @$core.override
   VoiceInfo createEmptyInstance() => create();
   static $pb.PbList<VoiceInfo> createRepeated() => $pb.PbList<VoiceInfo>();
   @$core.pragma('dart2js:noInline')
@@ -107,65 +98,63 @@ class VoiceInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get serverId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set serverId($core.String v) { $_setString(0, v); }
+  set serverId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasServerId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearServerId() => clearField(1);
+  void clearServerId() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get channelId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set channelId($core.String v) { $_setString(1, v); }
+  set channelId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasChannelId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearChannelId() => clearField(2);
+  void clearChannelId() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get userId => $_getSZ(2);
   @$pb.TagNumber(3)
-  set userId($core.String v) { $_setString(2, v); }
+  set userId($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasUserId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUserId() => clearField(3);
+  void clearUserId() => $_clearField(3);
 
   @$pb.TagNumber(4)
   AudioCodec get codec => $_getN(3);
   @$pb.TagNumber(4)
-  set codec(AudioCodec v) { setField(4, v); }
+  set codec(AudioCodec value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasCodec() => $_has(3);
   @$pb.TagNumber(4)
-  void clearCodec() => clearField(4);
+  void clearCodec() => $_clearField(4);
 }
 
 class ReceiveMeta extends $pb.GeneratedMessage {
   factory ReceiveMeta() => create();
-  ReceiveMeta._() : super();
-  factory ReceiveMeta.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReceiveMeta.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  ReceiveMeta._();
+
+  factory ReceiveMeta.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory ReceiveMeta.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveMeta', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.voice_relay.v1'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ReceiveMeta clone() => ReceiveMeta()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ReceiveMeta copyWith(void Function(ReceiveMeta) updates) => super.copyWith((message) => updates(message as ReceiveMeta)) as ReceiveMeta;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ReceiveMeta create() => ReceiveMeta._();
+  @$core.override
   ReceiveMeta createEmptyInstance() => create();
   static $pb.PbList<ReceiveMeta> createRepeated() => $pb.PbList<ReceiveMeta>();
   @$core.pragma('dart2js:noInline')
@@ -177,36 +166,32 @@ class VoiceData extends $pb.GeneratedMessage {
   factory VoiceData({
     $core.List<$core.int>? data,
   }) {
-    final $result = create();
-    if (data != null) {
-      $result.data = data;
-    }
-    return $result;
+    final result = create();
+    if (data != null) result.data = data;
+    return result;
   }
-  VoiceData._() : super();
-  factory VoiceData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory VoiceData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  VoiceData._();
+
+  factory VoiceData.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory VoiceData.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceData', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.voice_relay.v1'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   VoiceData clone() => VoiceData()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   VoiceData copyWith(void Function(VoiceData) updates) => super.copyWith((message) => updates(message as VoiceData)) as VoiceData;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static VoiceData create() => VoiceData._();
+  @$core.override
   VoiceData createEmptyInstance() => create();
   static $pb.PbList<VoiceData> createRepeated() => $pb.PbList<VoiceData>();
   @$core.pragma('dart2js:noInline')
@@ -216,13 +201,13 @@ class VoiceData extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.List<$core.int> get data => $_getN(0);
   @$pb.TagNumber(1)
-  set data($core.List<$core.int> v) { $_setBytes(0, v); }
+  set data($core.List<$core.int> value) => $_setBytes(0, value);
   @$pb.TagNumber(1)
   $core.bool hasData() => $_has(0);
   @$pb.TagNumber(1)
-  void clearData() => clearField(1);
+  void clearData() => $_clearField(1);
 }
 
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

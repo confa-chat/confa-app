@@ -9,20 +9,23 @@ part of 'server_selection_screen.dart';
 List<RouteBase> get $appRoutes => [$serverSelectionScreenRoute];
 
 RouteBase get $serverSelectionScreenRoute => GoRouteData.$route(
-  path: '/hub/:hubID/servers',
+  path: '/hub/:hubUrl/servers',
 
   factory: _$ServerSelectionScreenRoute._fromState,
 );
 
 mixin _$ServerSelectionScreenRoute on GoRouteData {
   static ServerSelectionScreenRoute _fromState(GoRouterState state) =>
-      ServerSelectionScreenRoute(hubID: state.pathParameters['hubID']!);
+      ServerSelectionScreenRoute(
+        hubUrl: Uri.parse(state.pathParameters['hubUrl']!)!,
+      );
 
   ServerSelectionScreenRoute get _self => this as ServerSelectionScreenRoute;
 
   @override
-  String get location =>
-      GoRouteData.$location('/hub/${Uri.encodeComponent(_self.hubID)}/servers');
+  String get location => GoRouteData.$location(
+    '/hub/${Uri.encodeComponent(_self.hubUrl.toString())}/servers',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

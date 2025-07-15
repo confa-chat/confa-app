@@ -1,19 +1,23 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/go_features.proto
-//
-// @dart = 2.12
+// Generated from google/protobuf/go_features.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class GoFeatures_APILevel extends $pb.ProtobufEnum {
+  /// API_LEVEL_UNSPECIFIED results in selecting the OPEN API,
+  /// but needs to be a separate value to distinguish between
+  /// an explicitly set api level or a missing api level.
   static const GoFeatures_APILevel API_LEVEL_UNSPECIFIED = GoFeatures_APILevel._(0, _omitEnumNames ? '' : 'API_LEVEL_UNSPECIFIED');
   static const GoFeatures_APILevel API_OPEN = GoFeatures_APILevel._(1, _omitEnumNames ? '' : 'API_OPEN');
   static const GoFeatures_APILevel API_HYBRID = GoFeatures_APILevel._(2, _omitEnumNames ? '' : 'API_HYBRID');
@@ -26,10 +30,10 @@ class GoFeatures_APILevel extends $pb.ProtobufEnum {
     API_OPAQUE,
   ];
 
-  static final $core.Map<$core.int, GoFeatures_APILevel> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static GoFeatures_APILevel? valueOf($core.int value) => _byValue[value];
+  static final $core.List<GoFeatures_APILevel?> _byValue = $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static GoFeatures_APILevel? valueOf($core.int value) =>  value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const GoFeatures_APILevel._($core.int v, $core.String n) : super(v, n);
+  const GoFeatures_APILevel._(super.value, super.name);
 }
 
 class GoFeatures_StripEnumPrefix extends $pb.ProtobufEnum {
@@ -45,11 +49,11 @@ class GoFeatures_StripEnumPrefix extends $pb.ProtobufEnum {
     STRIP_ENUM_PREFIX_STRIP,
   ];
 
-  static final $core.Map<$core.int, GoFeatures_StripEnumPrefix> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static GoFeatures_StripEnumPrefix? valueOf($core.int value) => _byValue[value];
+  static final $core.List<GoFeatures_StripEnumPrefix?> _byValue = $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static GoFeatures_StripEnumPrefix? valueOf($core.int value) =>  value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const GoFeatures_StripEnumPrefix._($core.int v, $core.String n) : super(v, n);
+  const GoFeatures_StripEnumPrefix._(super.value, super.name);
 }
 
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

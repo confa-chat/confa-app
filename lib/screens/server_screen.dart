@@ -12,22 +12,22 @@ import 'package:provider/provider.dart';
 
 part 'server_screen.g.dart';
 
-@TypedGoRoute<ServerScreenRoute>(path: '/hub/:hubID/server/:serverID')
+@TypedGoRoute<ServerScreenRoute>(path: '/hub/:hubUrl/server/:serverID')
 @immutable
 class ServerScreenRoute extends GoRouteData with _$ServerScreenRoute {
-  final String hubID;
+  final Uri hubUrl;
   final String serverID;
 
-  const ServerScreenRoute({required this.hubID, required this.serverID});
+  const ServerScreenRoute({required this.hubUrl, required this.serverID});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return LoadingBuilder(
-      future: context.manager.getHubConnection(hubID),
+      future: context.manager.getHubConnection(hubUrl),
       builder: (context, hub) {
         return Provider.value(
           value: hub,
-          child: ServerScreen(hubID: hubID, serverID: serverID),
+          child: ServerScreen(hubUrl: hubUrl, serverID: serverID),
         );
       },
     );
@@ -35,10 +35,10 @@ class ServerScreenRoute extends GoRouteData with _$ServerScreenRoute {
 }
 
 class ServerScreen extends StatefulWidget {
-  final String hubID;
+  final Uri hubUrl;
   final String serverID;
 
-  const ServerScreen({super.key, required this.hubID, required this.serverID});
+  const ServerScreen({super.key, required this.hubUrl, required this.serverID});
 
   @override
   State<ServerScreen> createState() => _ServerScreenState();
@@ -122,7 +122,6 @@ class _ServerScreenScaffold extends StatelessWidget {
   final Widget centralPanel;
 
   const _ServerScreenScaffold({
-    super.key,
     required this.appBar,
     required this.leftDrawer,
     required this.centralPanel,

@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/descriptor.proto
-//
-// @dart = 2.12
+// Generated from google/protobuf/descriptor.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -172,9 +173,26 @@ const ExtensionRangeOptions$json = {
   '1': 'ExtensionRangeOptions',
   '2': [
     {'1': 'uninterpreted_option', '3': 999, '4': 3, '5': 11, '6': '.google.protobuf.UninterpretedOption', '10': 'uninterpretedOption'},
-    {'1': 'declaration', '3': 2, '4': 3, '5': 11, '6': '.google.protobuf.ExtensionRangeOptions.Declaration', '8': {}, '10': 'declaration'},
+    {
+      '1': 'declaration',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.google.protobuf.ExtensionRangeOptions.Declaration',
+      '8': {'17': 2},
+      '10': 'declaration',
+    },
     {'1': 'features', '3': 50, '4': 1, '5': 11, '6': '.google.protobuf.FeatureSet', '10': 'features'},
-    {'1': 'verification', '3': 3, '4': 1, '5': 14, '6': '.google.protobuf.ExtensionRangeOptions.VerificationState', '7': 'UNVERIFIED', '8': {}, '10': 'verification'},
+    {
+      '1': 'verification',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.ExtensionRangeOptions.VerificationState',
+      '7': 'UNVERIFIED',
+      '8': {'17': 2},
+      '10': 'verification',
+    },
   ],
   '3': [ExtensionRangeOptions_Declaration$json],
   '4': [ExtensionRangeOptions_VerificationState$json],
@@ -824,14 +842,142 @@ final $typed_data.Uint8List uninterpretedOptionDescriptor = $convert.base64Decod
 const FeatureSet$json = {
   '1': 'FeatureSet',
   '2': [
-    {'1': 'field_presence', '3': 1, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.FieldPresence', '8': {}, '10': 'fieldPresence'},
-    {'1': 'enum_type', '3': 2, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.EnumType', '8': {}, '10': 'enumType'},
-    {'1': 'repeated_field_encoding', '3': 3, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.RepeatedFieldEncoding', '8': {}, '10': 'repeatedFieldEncoding'},
-    {'1': 'utf8_validation', '3': 4, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.Utf8Validation', '8': {}, '10': 'utf8Validation'},
-    {'1': 'message_encoding', '3': 5, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.MessageEncoding', '8': {}, '10': 'messageEncoding'},
-    {'1': 'json_format', '3': 6, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.JsonFormat', '8': {}, '10': 'jsonFormat'},
-    {'1': 'enforce_naming_style', '3': 7, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.EnforceNamingStyle', '8': {}, '10': 'enforceNamingStyle'},
-    {'1': 'default_symbol_visibility', '3': 8, '4': 1, '5': 14, '6': '.google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibility', '8': {}, '10': 'defaultSymbolVisibility'},
+    {
+      '1': 'field_presence',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.FieldPresence',
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'EXPLICIT', '3': 900},
+          {'2': 'IMPLICIT', '3': 999},
+          {'2': 'EXPLICIT', '3': 1000},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'fieldPresence',
+    },
+    {
+      '1': 'enum_type',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.EnumType',
+      '8': {
+        '17': 1,
+        '19': [6, 1],
+        '20': [
+          {'2': 'CLOSED', '3': 900},
+          {'2': 'OPEN', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'enumType',
+    },
+    {
+      '1': 'repeated_field_encoding',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.RepeatedFieldEncoding',
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'EXPANDED', '3': 900},
+          {'2': 'PACKED', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'repeatedFieldEncoding',
+    },
+    {
+      '1': 'utf8_validation',
+      '3': 4,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.Utf8Validation',
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'NONE', '3': 900},
+          {'2': 'VERIFY', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'utf8Validation',
+    },
+    {
+      '1': 'message_encoding',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.MessageEncoding',
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'LENGTH_PREFIXED', '3': 900},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'messageEncoding',
+    },
+    {
+      '1': 'json_format',
+      '3': 6,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.JsonFormat',
+      '8': {
+        '17': 1,
+        '19': [3, 6, 1],
+        '20': [
+          {'2': 'LEGACY_BEST_EFFORT', '3': 900},
+          {'2': 'ALLOW', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'jsonFormat',
+    },
+    {
+      '1': 'enforce_naming_style',
+      '3': 7,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.EnforceNamingStyle',
+      '8': {
+        '17': 2,
+        '19': [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        '20': [
+          {'2': 'STYLE_LEGACY', '3': 900},
+          {'2': 'STYLE2024', '3': 1001},
+        ],
+        '22': {'1': 1001},
+      },
+      '10': 'enforceNamingStyle',
+    },
+    {
+      '1': 'default_symbol_visibility',
+      '3': 8,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibility',
+      '8': {
+        '17': 2,
+        '19': [1],
+        '20': [
+          {'2': 'EXPORT_ALL', '3': 900},
+          {'2': 'EXPORT_TOP_LEVEL', '3': 1001},
+        ],
+        '22': {'1': 1001},
+      },
+      '10': 'defaultSymbolVisibility',
+    },
   ],
   '3': [FeatureSet_VisibilityFeature$json],
   '4': [FeatureSet_FieldPresence$json, FeatureSet_EnumType$json, FeatureSet_RepeatedFieldEncoding$json, FeatureSet_Utf8Validation$json, FeatureSet_MessageEncoding$json, FeatureSet_JsonFormat$json, FeatureSet_EnforceNamingStyle$json],

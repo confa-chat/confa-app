@@ -1,17 +1,20 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: confa/channel/v1/channels.proto
-//
-// @dart = 2.12
+// Generated from confa/channel/v1/channels.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 enum Channel_Channel {
   textChannel, 
@@ -24,18 +27,16 @@ class Channel extends $pb.GeneratedMessage {
     TextChannel? textChannel,
     VoiceChannel? voiceChannel,
   }) {
-    final $result = create();
-    if (textChannel != null) {
-      $result.textChannel = textChannel;
-    }
-    if (voiceChannel != null) {
-      $result.voiceChannel = voiceChannel;
-    }
-    return $result;
+    final result = create();
+    if (textChannel != null) result.textChannel = textChannel;
+    if (voiceChannel != null) result.voiceChannel = voiceChannel;
+    return result;
   }
-  Channel._() : super();
-  factory Channel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Channel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  Channel._();
+
+  factory Channel.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory Channel.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Channel_Channel> _Channel_ChannelByTag = {
     1 : Channel_Channel.textChannel,
@@ -49,21 +50,17 @@ class Channel extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Channel clone() => Channel()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Channel copyWith(void Function(Channel) updates) => super.copyWith((message) => updates(message as Channel)) as Channel;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Channel create() => Channel._();
+  @$core.override
   Channel createEmptyInstance() => create();
   static $pb.PbList<Channel> createRepeated() => $pb.PbList<Channel>();
   @$core.pragma('dart2js:noInline')
@@ -71,27 +68,27 @@ class Channel extends $pb.GeneratedMessage {
   static Channel? _defaultInstance;
 
   Channel_Channel whichChannel() => _Channel_ChannelByTag[$_whichOneof(0)]!;
-  void clearChannel() => clearField($_whichOneof(0));
+  void clearChannel() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   TextChannel get textChannel => $_getN(0);
   @$pb.TagNumber(1)
-  set textChannel(TextChannel v) { setField(1, v); }
+  set textChannel(TextChannel value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasTextChannel() => $_has(0);
   @$pb.TagNumber(1)
-  void clearTextChannel() => clearField(1);
+  void clearTextChannel() => $_clearField(1);
   @$pb.TagNumber(1)
   TextChannel ensureTextChannel() => $_ensure(0);
 
   @$pb.TagNumber(2)
   VoiceChannel get voiceChannel => $_getN(1);
   @$pb.TagNumber(2)
-  set voiceChannel(VoiceChannel v) { setField(2, v); }
+  set voiceChannel(VoiceChannel value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasVoiceChannel() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVoiceChannel() => clearField(2);
+  void clearVoiceChannel() => $_clearField(2);
   @$pb.TagNumber(2)
   VoiceChannel ensureVoiceChannel() => $_ensure(1);
 }
@@ -102,21 +99,17 @@ class TextChannel extends $pb.GeneratedMessage {
     $core.String? channelId,
     $core.String? name,
   }) {
-    final $result = create();
-    if (serverId != null) {
-      $result.serverId = serverId;
-    }
-    if (channelId != null) {
-      $result.channelId = channelId;
-    }
-    if (name != null) {
-      $result.name = name;
-    }
-    return $result;
+    final result = create();
+    if (serverId != null) result.serverId = serverId;
+    if (channelId != null) result.channelId = channelId;
+    if (name != null) result.name = name;
+    return result;
   }
-  TextChannel._() : super();
-  factory TextChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory TextChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  TextChannel._();
+
+  factory TextChannel.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory TextChannel.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TextChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.channel.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
@@ -125,21 +118,17 @@ class TextChannel extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TextChannel clone() => TextChannel()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TextChannel copyWith(void Function(TextChannel) updates) => super.copyWith((message) => updates(message as TextChannel)) as TextChannel;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static TextChannel create() => TextChannel._();
+  @$core.override
   TextChannel createEmptyInstance() => create();
   static $pb.PbList<TextChannel> createRepeated() => $pb.PbList<TextChannel>();
   @$core.pragma('dart2js:noInline')
@@ -149,29 +138,29 @@ class TextChannel extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get serverId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set serverId($core.String v) { $_setString(0, v); }
+  set serverId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasServerId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearServerId() => clearField(1);
+  void clearServerId() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get channelId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set channelId($core.String v) { $_setString(1, v); }
+  set channelId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasChannelId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearChannelId() => clearField(2);
+  void clearChannelId() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get name => $_getSZ(2);
   @$pb.TagNumber(3)
-  set name($core.String v) { $_setString(2, v); }
+  set name($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasName() => $_has(2);
   @$pb.TagNumber(3)
-  void clearName() => clearField(3);
+  void clearName() => $_clearField(3);
 }
 
 class VoiceChannel extends $pb.GeneratedMessage {
@@ -181,24 +170,18 @@ class VoiceChannel extends $pb.GeneratedMessage {
     $core.String? name,
     $core.Iterable<$core.String>? voiceRelayId,
   }) {
-    final $result = create();
-    if (serverId != null) {
-      $result.serverId = serverId;
-    }
-    if (channelId != null) {
-      $result.channelId = channelId;
-    }
-    if (name != null) {
-      $result.name = name;
-    }
-    if (voiceRelayId != null) {
-      $result.voiceRelayId.addAll(voiceRelayId);
-    }
-    return $result;
+    final result = create();
+    if (serverId != null) result.serverId = serverId;
+    if (channelId != null) result.channelId = channelId;
+    if (name != null) result.name = name;
+    if (voiceRelayId != null) result.voiceRelayId.addAll(voiceRelayId);
+    return result;
   }
-  VoiceChannel._() : super();
-  factory VoiceChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory VoiceChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  VoiceChannel._();
+
+  factory VoiceChannel.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory VoiceChannel.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'VoiceChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'confa.channel.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'serverId')
@@ -208,21 +191,17 @@ class VoiceChannel extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   VoiceChannel clone() => VoiceChannel()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   VoiceChannel copyWith(void Function(VoiceChannel) updates) => super.copyWith((message) => updates(message as VoiceChannel)) as VoiceChannel;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static VoiceChannel create() => VoiceChannel._();
+  @$core.override
   VoiceChannel createEmptyInstance() => create();
   static $pb.PbList<VoiceChannel> createRepeated() => $pb.PbList<VoiceChannel>();
   @$core.pragma('dart2js:noInline')
@@ -232,34 +211,34 @@ class VoiceChannel extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get serverId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set serverId($core.String v) { $_setString(0, v); }
+  set serverId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasServerId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearServerId() => clearField(1);
+  void clearServerId() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get channelId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set channelId($core.String v) { $_setString(1, v); }
+  set channelId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasChannelId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearChannelId() => clearField(2);
+  void clearChannelId() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get name => $_getSZ(2);
   @$pb.TagNumber(3)
-  set name($core.String v) { $_setString(2, v); }
+  set name($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasName() => $_has(2);
   @$pb.TagNumber(3)
-  void clearName() => clearField(3);
+  void clearName() => $_clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<$core.String> get voiceRelayId => $_getList(3);
+  $pb.PbList<$core.String> get voiceRelayId => $_getList(3);
 }
 
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

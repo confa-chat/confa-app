@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/java_features.proto
-//
-// @dart = 2.12
+// Generated from google/protobuf/java_features.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -17,11 +18,86 @@ import 'dart:typed_data' as $typed_data;
 const JavaFeatures$json = {
   '1': 'JavaFeatures',
   '2': [
-    {'1': 'legacy_closed_enum', '3': 1, '4': 1, '5': 8, '8': {}, '10': 'legacyClosedEnum'},
-    {'1': 'utf8_validation', '3': 2, '4': 1, '5': 14, '6': '.pb.JavaFeatures.Utf8Validation', '8': {}, '10': 'utf8Validation'},
-    {'1': 'large_enum', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'largeEnum'},
-    {'1': 'use_old_outer_classname_default', '3': 4, '4': 1, '5': 8, '8': {}, '10': 'useOldOuterClassnameDefault'},
-    {'1': 'nest_in_file_class', '3': 5, '4': 1, '5': 14, '6': '.pb.JavaFeatures.NestInFileClassFeature.NestInFileClass', '8': {}, '10': 'nestInFileClass'},
+    {
+      '1': 'legacy_closed_enum',
+      '3': 1,
+      '4': 1,
+      '5': 8,
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'true', '3': 900},
+          {'2': 'false', '3': 999},
+        ],
+        '22': {'1': 1000, '2': 1000, '3': 'The legacy closed enum behavior in Java is deprecated and is scheduled to be removed in edition 2025.  See http://protobuf.dev/programming-guides/enum/#java for more information.'},
+      },
+      '10': 'legacyClosedEnum',
+    },
+    {
+      '1': 'utf8_validation',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.pb.JavaFeatures.Utf8Validation',
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'DEFAULT', '3': 900},
+        ],
+        '22': {'1': 1000, '2': 1001, '3': 'The Java-specific utf8 validation feature is deprecated and is scheduled to be removed in edition 2025.  Utf8 validation behavior should use the global cross-language utf8_validation feature.'},
+      },
+      '10': 'utf8Validation',
+    },
+    {
+      '1': 'large_enum',
+      '3': 3,
+      '4': 1,
+      '5': 8,
+      '8': {
+        '17': 1,
+        '19': [6, 1],
+        '20': [
+          {'2': 'false', '3': 900},
+        ],
+        '22': {'1': 1001},
+      },
+      '10': 'largeEnum',
+    },
+    {
+      '1': 'use_old_outer_classname_default',
+      '3': 4,
+      '4': 1,
+      '5': 8,
+      '8': {
+        '17': 1,
+        '19': [1],
+        '20': [
+          {'2': 'true', '3': 900},
+          {'2': 'false', '3': 1001},
+        ],
+        '22': {'1': 1001, '4': 1001},
+      },
+      '10': 'useOldOuterClassnameDefault',
+    },
+    {
+      '1': 'nest_in_file_class',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.pb.JavaFeatures.NestInFileClassFeature.NestInFileClass',
+      '8': {
+        '17': 2,
+        '19': [3, 6, 8],
+        '20': [
+          {'2': 'LEGACY', '3': 900},
+          {'2': 'NO', '3': 1001},
+        ],
+        '22': {'1': 1001},
+      },
+      '10': 'nestInFileClass',
+    },
   ],
   '3': [JavaFeatures_NestInFileClassFeature$json],
   '4': [JavaFeatures_Utf8Validation$json],
@@ -43,7 +119,13 @@ const JavaFeatures_NestInFileClassFeature_NestInFileClass$json = {
     {'1': 'NEST_IN_FILE_CLASS_UNKNOWN', '2': 0},
     {'1': 'NO', '2': 1},
     {'1': 'YES', '2': 2},
-    {'1': 'LEGACY', '2': 3, '3': {}},
+    {
+      '1': 'LEGACY',
+      '2': 3,
+      '3': {
+        '4': {'1': 1001, '4': 1001},
+      },
+    },
   ],
 };
 

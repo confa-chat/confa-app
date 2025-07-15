@@ -1,19 +1,22 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/go_features.proto
-//
-// @dart = 2.12
+// Generated from google/protobuf/go_features.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'go_features.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'go_features.pbenum.dart';
 
@@ -23,21 +26,17 @@ class GoFeatures extends $pb.GeneratedMessage {
     GoFeatures_APILevel? apiLevel,
     GoFeatures_StripEnumPrefix? stripEnumPrefix,
   }) {
-    final $result = create();
-    if (legacyUnmarshalJsonEnum != null) {
-      $result.legacyUnmarshalJsonEnum = legacyUnmarshalJsonEnum;
-    }
-    if (apiLevel != null) {
-      $result.apiLevel = apiLevel;
-    }
-    if (stripEnumPrefix != null) {
-      $result.stripEnumPrefix = stripEnumPrefix;
-    }
-    return $result;
+    final result = create();
+    if (legacyUnmarshalJsonEnum != null) result.legacyUnmarshalJsonEnum = legacyUnmarshalJsonEnum;
+    if (apiLevel != null) result.apiLevel = apiLevel;
+    if (stripEnumPrefix != null) result.stripEnumPrefix = stripEnumPrefix;
+    return result;
   }
-  GoFeatures._() : super();
-  factory GoFeatures.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GoFeatures.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  GoFeatures._();
+
+  factory GoFeatures.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory GoFeatures.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GoFeatures', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'legacyUnmarshalJsonEnum')
@@ -46,21 +45,17 @@ class GoFeatures extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GoFeatures clone() => GoFeatures()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GoFeatures copyWith(void Function(GoFeatures) updates) => super.copyWith((message) => updates(message as GoFeatures)) as GoFeatures;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static GoFeatures create() => GoFeatures._();
+  @$core.override
   GoFeatures createEmptyInstance() => create();
   static $pb.PbList<GoFeatures> createRepeated() => $pb.PbList<GoFeatures>();
   @$core.pragma('dart2js:noInline')
@@ -72,30 +67,30 @@ class GoFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool get legacyUnmarshalJsonEnum => $_getBF(0);
   @$pb.TagNumber(1)
-  set legacyUnmarshalJsonEnum($core.bool v) { $_setBool(0, v); }
+  set legacyUnmarshalJsonEnum($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
   $core.bool hasLegacyUnmarshalJsonEnum() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLegacyUnmarshalJsonEnum() => clearField(1);
+  void clearLegacyUnmarshalJsonEnum() => $_clearField(1);
 
   /// One of OPEN, HYBRID or OPAQUE.
   @$pb.TagNumber(2)
   GoFeatures_APILevel get apiLevel => $_getN(1);
   @$pb.TagNumber(2)
-  set apiLevel(GoFeatures_APILevel v) { setField(2, v); }
+  set apiLevel(GoFeatures_APILevel value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasApiLevel() => $_has(1);
   @$pb.TagNumber(2)
-  void clearApiLevel() => clearField(2);
+  void clearApiLevel() => $_clearField(2);
 
   @$pb.TagNumber(3)
   GoFeatures_StripEnumPrefix get stripEnumPrefix => $_getN(2);
   @$pb.TagNumber(3)
-  set stripEnumPrefix(GoFeatures_StripEnumPrefix v) { setField(3, v); }
+  set stripEnumPrefix(GoFeatures_StripEnumPrefix value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasStripEnumPrefix() => $_has(2);
   @$pb.TagNumber(3)
-  void clearStripEnumPrefix() => clearField(3);
+  void clearStripEnumPrefix() => $_clearField(3);
 }
 
 class Go_features {
@@ -106,5 +101,5 @@ class Go_features {
 }
 
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

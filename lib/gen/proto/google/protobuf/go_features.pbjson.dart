@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/go_features.proto
-//
-// @dart = 2.12
+// Generated from google/protobuf/go_features.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -17,9 +18,55 @@ import 'dart:typed_data' as $typed_data;
 const GoFeatures$json = {
   '1': 'GoFeatures',
   '2': [
-    {'1': 'legacy_unmarshal_json_enum', '3': 1, '4': 1, '5': 8, '8': {}, '10': 'legacyUnmarshalJsonEnum'},
-    {'1': 'api_level', '3': 2, '4': 1, '5': 14, '6': '.pb.GoFeatures.APILevel', '8': {}, '10': 'apiLevel'},
-    {'1': 'strip_enum_prefix', '3': 3, '4': 1, '5': 14, '6': '.pb.GoFeatures.StripEnumPrefix', '8': {}, '10': 'stripEnumPrefix'},
+    {
+      '1': 'legacy_unmarshal_json_enum',
+      '3': 1,
+      '4': 1,
+      '5': 8,
+      '8': {
+        '17': 1,
+        '19': [6, 1],
+        '20': [
+          {'2': 'true', '3': 900},
+          {'2': 'false', '3': 999},
+        ],
+        '22': {'1': 1000, '2': 1000, '3': 'The legacy UnmarshalJSON API is deprecated and will be removed in a future edition.'},
+      },
+      '10': 'legacyUnmarshalJsonEnum',
+    },
+    {
+      '1': 'api_level',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.pb.GoFeatures.APILevel',
+      '8': {
+        '17': 1,
+        '19': [3, 1],
+        '20': [
+          {'2': 'API_LEVEL_UNSPECIFIED', '3': 900},
+          {'2': 'API_OPAQUE', '3': 1001},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'apiLevel',
+    },
+    {
+      '1': 'strip_enum_prefix',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.pb.GoFeatures.StripEnumPrefix',
+      '8': {
+        '17': 1,
+        '19': [6, 7, 1],
+        '20': [
+          {'2': 'STRIP_ENUM_PREFIX_KEEP', '3': 900},
+        ],
+        '22': {'1': 1001},
+      },
+      '10': 'stripEnumPrefix',
+    },
   ],
   '4': [GoFeatures_APILevel$json, GoFeatures_StripEnumPrefix$json],
 };

@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: confa/server/v1/service.proto
-//
-// @dart = 2.12
+// Generated from confa/server/v1/service.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -102,4 +103,45 @@ const CreateChannelResponse$json = {
 final $typed_data.Uint8List createChannelResponseDescriptor = $convert.base64Decode(
     'ChVDcmVhdGVDaGFubmVsUmVzcG9uc2USMwoHY2hhbm5lbBgBIAEoCzIZLmNvbmZhLmNoYW5uZW'
     'wudjEuQ2hhbm5lbFIHY2hhbm5lbA==');
+
+@$core.Deprecated('Use editChannelRequestDescriptor instead')
+const EditChannelRequest$json = {
+  '1': 'EditChannelRequest',
+  '2': [
+    {'1': 'server_id', '3': 1, '4': 1, '5': 9, '10': 'serverId'},
+    {'1': 'channel_id', '3': 2, '4': 1, '5': 9, '10': 'channelId'},
+    {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'type', '3': 4, '4': 1, '5': 14, '6': '.confa.server.v1.EditChannelRequest.ChannelType', '10': 'type'},
+  ],
+  '4': [EditChannelRequest_ChannelType$json],
+};
+
+@$core.Deprecated('Use editChannelRequestDescriptor instead')
+const EditChannelRequest_ChannelType$json = {
+  '1': 'ChannelType',
+  '2': [
+    {'1': 'TEXT', '2': 0},
+    {'1': 'VOICE', '2': 1},
+  ],
+};
+
+/// Descriptor for `EditChannelRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List editChannelRequestDescriptor = $convert.base64Decode(
+    'ChJFZGl0Q2hhbm5lbFJlcXVlc3QSGwoJc2VydmVyX2lkGAEgASgJUghzZXJ2ZXJJZBIdCgpjaG'
+    'FubmVsX2lkGAIgASgJUgljaGFubmVsSWQSEgoEbmFtZRgDIAEoCVIEbmFtZRJDCgR0eXBlGAQg'
+    'ASgOMi8uY29uZmEuc2VydmVyLnYxLkVkaXRDaGFubmVsUmVxdWVzdC5DaGFubmVsVHlwZVIEdH'
+    'lwZSIiCgtDaGFubmVsVHlwZRIICgRURVhUEAASCQoFVk9JQ0UQAQ==');
+
+@$core.Deprecated('Use editChannelResponseDescriptor instead')
+const EditChannelResponse$json = {
+  '1': 'EditChannelResponse',
+  '2': [
+    {'1': 'channel', '3': 1, '4': 1, '5': 11, '6': '.confa.channel.v1.Channel', '10': 'channel'},
+  ],
+};
+
+/// Descriptor for `EditChannelResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List editChannelResponseDescriptor = $convert.base64Decode(
+    'ChNFZGl0Q2hhbm5lbFJlc3BvbnNlEjMKB2NoYW5uZWwYASABKAsyGS5jb25mYS5jaGFubmVsLn'
+    'YxLkNoYW5uZWxSB2NoYW5uZWw=');
 

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:confa/bloc/connection_cubit.dart';
 import 'package:confa/bloc/voice_bloc.dart';
 import 'package:confa/router.dart';
 import 'package:confa/services/connection_manager.dart';
@@ -64,6 +64,7 @@ class _ConfaAppState extends State<ConfaApp> {
       providers: [
         Provider<HubsManager>.value(value: widget.hubsManager),
         BlocProvider<VoiceBloc>(create: (context) => VoiceBloc()),
+        BlocProvider<ConnectionCubit>(create: (context) => ConnectionCubit(widget.hubsManager)),
       ],
       child: ConfaColorBuilder(
         builder: (lightTheme, darkTheme) {

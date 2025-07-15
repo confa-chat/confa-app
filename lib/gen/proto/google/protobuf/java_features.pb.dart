@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/java_features.proto
-//
-// @dart = 2.12
+// Generated from google/protobuf/java_features.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -15,33 +16,33 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'java_features.pbenum.dart';
 
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
+
 export 'java_features.pbenum.dart';
 
 class JavaFeatures_NestInFileClassFeature extends $pb.GeneratedMessage {
   factory JavaFeatures_NestInFileClassFeature() => create();
-  JavaFeatures_NestInFileClassFeature._() : super();
-  factory JavaFeatures_NestInFileClassFeature.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory JavaFeatures_NestInFileClassFeature.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  JavaFeatures_NestInFileClassFeature._();
+
+  factory JavaFeatures_NestInFileClassFeature.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory JavaFeatures_NestInFileClassFeature.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JavaFeatures.NestInFileClassFeature', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   JavaFeatures_NestInFileClassFeature clone() => JavaFeatures_NestInFileClassFeature()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   JavaFeatures_NestInFileClassFeature copyWith(void Function(JavaFeatures_NestInFileClassFeature) updates) => super.copyWith((message) => updates(message as JavaFeatures_NestInFileClassFeature)) as JavaFeatures_NestInFileClassFeature;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static JavaFeatures_NestInFileClassFeature create() => JavaFeatures_NestInFileClassFeature._();
+  @$core.override
   JavaFeatures_NestInFileClassFeature createEmptyInstance() => create();
   static $pb.PbList<JavaFeatures_NestInFileClassFeature> createRepeated() => $pb.PbList<JavaFeatures_NestInFileClassFeature>();
   @$core.pragma('dart2js:noInline')
@@ -57,27 +58,19 @@ class JavaFeatures extends $pb.GeneratedMessage {
     $core.bool? useOldOuterClassnameDefault,
     JavaFeatures_NestInFileClassFeature_NestInFileClass? nestInFileClass,
   }) {
-    final $result = create();
-    if (legacyClosedEnum != null) {
-      $result.legacyClosedEnum = legacyClosedEnum;
-    }
-    if (utf8Validation != null) {
-      $result.utf8Validation = utf8Validation;
-    }
-    if (largeEnum != null) {
-      $result.largeEnum = largeEnum;
-    }
-    if (useOldOuterClassnameDefault != null) {
-      $result.useOldOuterClassnameDefault = useOldOuterClassnameDefault;
-    }
-    if (nestInFileClass != null) {
-      $result.nestInFileClass = nestInFileClass;
-    }
-    return $result;
+    final result = create();
+    if (legacyClosedEnum != null) result.legacyClosedEnum = legacyClosedEnum;
+    if (utf8Validation != null) result.utf8Validation = utf8Validation;
+    if (largeEnum != null) result.largeEnum = largeEnum;
+    if (useOldOuterClassnameDefault != null) result.useOldOuterClassnameDefault = useOldOuterClassnameDefault;
+    if (nestInFileClass != null) result.nestInFileClass = nestInFileClass;
+    return result;
   }
-  JavaFeatures._() : super();
-  factory JavaFeatures.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory JavaFeatures.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  JavaFeatures._();
+
+  factory JavaFeatures.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
+  factory JavaFeatures.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'JavaFeatures', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'legacyClosedEnum')
@@ -88,21 +81,17 @@ class JavaFeatures extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   JavaFeatures clone() => JavaFeatures()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   JavaFeatures copyWith(void Function(JavaFeatures) updates) => super.copyWith((message) => updates(message as JavaFeatures)) as JavaFeatures;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static JavaFeatures create() => JavaFeatures._();
+  @$core.override
   JavaFeatures createEmptyInstance() => create();
   static $pb.PbList<JavaFeatures> createRepeated() => $pb.PbList<JavaFeatures>();
   @$core.pragma('dart2js:noInline')
@@ -116,57 +105,57 @@ class JavaFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool get legacyClosedEnum => $_getBF(0);
   @$pb.TagNumber(1)
-  set legacyClosedEnum($core.bool v) { $_setBool(0, v); }
+  set legacyClosedEnum($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
   $core.bool hasLegacyClosedEnum() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLegacyClosedEnum() => clearField(1);
+  void clearLegacyClosedEnum() => $_clearField(1);
 
   @$pb.TagNumber(2)
   JavaFeatures_Utf8Validation get utf8Validation => $_getN(1);
   @$pb.TagNumber(2)
-  set utf8Validation(JavaFeatures_Utf8Validation v) { setField(2, v); }
+  set utf8Validation(JavaFeatures_Utf8Validation value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasUtf8Validation() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUtf8Validation() => clearField(2);
+  void clearUtf8Validation() => $_clearField(2);
 
   /// Allows creation of large Java enums, extending beyond the standard
   /// constant limits imposed by the Java language.
   @$pb.TagNumber(3)
   $core.bool get largeEnum => $_getBF(2);
   @$pb.TagNumber(3)
-  set largeEnum($core.bool v) { $_setBool(2, v); }
+  set largeEnum($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLargeEnum() => $_has(2);
   @$pb.TagNumber(3)
-  void clearLargeEnum() => clearField(3);
+  void clearLargeEnum() => $_clearField(3);
 
-  ///  Whether to use the old default outer class name scheme, or the new feature
-  ///  which adds a "Proto" suffix to the outer class name.
+  /// Whether to use the old default outer class name scheme, or the new feature
+  /// which adds a "Proto" suffix to the outer class name.
   ///
-  ///  Users will not be able to set this option, because we removed it in the
-  ///  same edition that it was introduced. But we use it to determine which
-  ///  naming scheme to use for outer class name defaults.
+  /// Users will not be able to set this option, because we removed it in the
+  /// same edition that it was introduced. But we use it to determine which
+  /// naming scheme to use for outer class name defaults.
   @$pb.TagNumber(4)
   $core.bool get useOldOuterClassnameDefault => $_getBF(3);
   @$pb.TagNumber(4)
-  set useOldOuterClassnameDefault($core.bool v) { $_setBool(3, v); }
+  set useOldOuterClassnameDefault($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(4)
   $core.bool hasUseOldOuterClassnameDefault() => $_has(3);
   @$pb.TagNumber(4)
-  void clearUseOldOuterClassnameDefault() => clearField(4);
+  void clearUseOldOuterClassnameDefault() => $_clearField(4);
 
   /// Whether to nest the generated class in the generated file class. This is
   /// only applicable to *top-level* messages, enums, and services.
   @$pb.TagNumber(5)
   JavaFeatures_NestInFileClassFeature_NestInFileClass get nestInFileClass => $_getN(4);
   @$pb.TagNumber(5)
-  set nestInFileClass(JavaFeatures_NestInFileClassFeature_NestInFileClass v) { setField(5, v); }
+  set nestInFileClass(JavaFeatures_NestInFileClassFeature_NestInFileClass value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasNestInFileClass() => $_has(4);
   @$pb.TagNumber(5)
-  void clearNestInFileClass() => clearField(5);
+  void clearNestInFileClass() => $_clearField(5);
 }
 
 class Java_features {
@@ -177,5 +166,5 @@ class Java_features {
 }
 
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
