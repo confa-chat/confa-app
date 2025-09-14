@@ -23,6 +23,11 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 export 'type.pbenum.dart';
 
 /// A protocol buffer message type.
+///
+/// New usages of this message as an alternative to DescriptorProto are strongly
+/// discouraged. This message does not reliability preserve all information
+/// necessary to model the schema and preserve semantics. Instead make use of
+/// FileDescriptorSet which preserves the necessary information.
 class Type extends $pb.GeneratedMessage {
   factory Type({
     $core.String? name,
@@ -133,6 +138,11 @@ class Type extends $pb.GeneratedMessage {
 }
 
 /// A single field of a message type.
+///
+/// New usages of this message as an alternative to FieldDescriptorProto are
+/// strongly discouraged. This message does not reliability preserve all
+/// information necessary to model the schema and preserve semantics. Instead
+/// make use of FileDescriptorSet which preserves the necessary information.
 class Field extends $pb.GeneratedMessage {
   factory Field({
     Field_Kind? kind,
@@ -294,6 +304,11 @@ class Field extends $pb.GeneratedMessage {
 }
 
 /// Enum type definition.
+///
+/// New usages of this message as an alternative to EnumDescriptorProto are
+/// strongly discouraged. This message does not reliability preserve all
+/// information necessary to model the schema and preserve semantics. Instead
+/// make use of FileDescriptorSet which preserves the necessary information.
 class Enum extends $pb.GeneratedMessage {
   factory Enum({
     $core.String? name,
@@ -397,6 +412,11 @@ class Enum extends $pb.GeneratedMessage {
 }
 
 /// Enum value definition.
+///
+/// New usages of this message as an alternative to EnumValueDescriptorProto are
+/// strongly discouraged. This message does not reliability preserve all
+/// information necessary to model the schema and preserve semantics. Instead
+/// make use of FileDescriptorSet which preserves the necessary information.
 class EnumValue extends $pb.GeneratedMessage {
   factory EnumValue({
     $core.String? name,
@@ -466,6 +486,10 @@ class EnumValue extends $pb.GeneratedMessage {
 
 /// A protocol buffer option, which can be attached to a message, field,
 /// enumeration, etc.
+///
+/// New usages of this message as an alternative to FileOptions, MessageOptions,
+/// FieldOptions, EnumOptions, EnumValueOptions, ServiceOptions, or MethodOptions
+/// are strongly discouraged.
 class Option extends $pb.GeneratedMessage {
   factory Option({
     $core.String? name,

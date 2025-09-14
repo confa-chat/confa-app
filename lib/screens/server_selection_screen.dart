@@ -11,7 +11,8 @@ part 'server_selection_screen.g.dart';
 
 @TypedGoRoute<ServerSelectionScreenRoute>(path: '/hub/:hubUrl/servers')
 @immutable
-class ServerSelectionScreenRoute extends GoRouteData with _$ServerSelectionScreenRoute {
+class ServerSelectionScreenRoute extends GoRouteData
+    with _$ServerSelectionScreenRoute {
   final Uri hubUrl;
   const ServerSelectionScreenRoute({required this.hubUrl});
 
@@ -51,10 +52,16 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   }
 
   Future<List<ServerInfo>> _loadServers() async {
-    final response = await context.hub.nodeClient.listServerIDs(ListServersRequest());
+    final response = await context.hub.nodeClient.listServerIDs(
+      ListServersRequest(),
+    );
 
     final servers = response.serverIds.map((id) {
-      return ServerInfo(id: id, name: _generateServerName(id), description: "Server ID: $id");
+      return ServerInfo(
+        id: id,
+        name: _generateServerName(id),
+        description: "Server ID: $id",
+      );
     }).toList();
 
     return servers;
@@ -82,11 +89,14 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     // Check if we're on desktop platforms
-    final isDesktop = Platform.isLinux || Platform.isWindows || Platform.isMacOS;
+    final isDesktop =
+        Platform.isLinux || Platform.isWindows || Platform.isMacOS;
     // Use a more compact layout on desktop
     final isCompact = isDesktop;
     // Determine the width of the container based on platform
-    final containerWidth = isCompact ? 600.0 : MediaQuery.of(context).size.width;
+    final containerWidth = isCompact
+        ? 600.0
+        : MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -107,7 +117,10 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Available Servers', style: Theme.of(context).textTheme.titleLarge),
+              Text(
+                'Available Servers',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 16),
               Expanded(
                 child: FutureBuilder<List<ServerInfo>>(
@@ -130,14 +143,21 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                            const Icon(
+                              Icons.error_outline,
+                              size: 48,
+                              color: Colors.red,
+                            ),
                             const SizedBox(height: 16),
                             Text(
                               'Error Loading Servers',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: 8),
-                            Text(snapshot.error.toString(), textAlign: TextAlign.center),
+                            Text(
+                              snapshot.error.toString(),
+                              textAlign: TextAlign.center,
+                            ),
                             const SizedBox(height: 16),
                             ElevatedButton.icon(
                               // onPressed: null,
@@ -155,7 +175,11 @@ class _ServerSelectionScreenState extends State<ServerSelectionScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.dns_outlined, size: 48, color: Colors.grey),
+                            const Icon(
+                              Icons.dns_outlined,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
                             const SizedBox(height: 16),
                             Text(
                               'No Servers Available',

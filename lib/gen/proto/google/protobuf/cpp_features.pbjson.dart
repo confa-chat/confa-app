@@ -57,7 +57,7 @@ const CppFeatures$json = {
       '4': 1,
       '5': 8,
       '8': {
-        '17': 2,
+        '17': 1,
         '19': [6, 1],
         '20': [
           {'2': 'false', '3': 900},
@@ -91,7 +91,7 @@ final $typed_data.Uint8List cppFeaturesDescriptor = $convert.base64Decode(
     'cmFtbWluZy1ndWlkZXMvZW51bS8jY3BwIGZvciBtb3JlIGluZm9ybWF0aW9uUhBsZWdhY3lDbG'
     '9zZWRFbnVtEmYKC3N0cmluZ190eXBlGAIgASgOMhoucGIuQ3BwRmVhdHVyZXMuU3RyaW5nVHlw'
     'ZUIpiAEBmAEEmAEBogELEgZTVFJJTkcYhAeiAQkSBFZJRVcY6QeyAQMI6AdSCnN0cmluZ1R5cG'
-    'USZAoaZW51bV9uYW1lX3VzZXNfc3RyaW5nX3ZpZXcYAyABKAhCKIgBApgBBpgBAaIBChIFZmFs'
+    'USZAoaZW51bV9uYW1lX3VzZXNfc3RyaW5nX3ZpZXcYAyABKAhCKIgBAZgBBpgBAaIBChIFZmFs'
     'c2UYhAeiAQkSBHRydWUY6QeyAQMI6QdSFmVudW1OYW1lVXNlc1N0cmluZ1ZpZXciRQoKU3RyaW'
     '5nVHlwZRIXChNTVFJJTkdfVFlQRV9VTktOT1dOEAASCAoEVklFVxABEggKBENPUkQQAhIKCgZT'
     'VFJJTkcQAw==');

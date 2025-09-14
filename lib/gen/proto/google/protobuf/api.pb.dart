@@ -28,6 +28,11 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 /// sometimes simply referred to as "APIs" in other contexts, such as the name of
 /// this message itself. See https://cloud.google.com/apis/design/glossary for
 /// detailed terminology.
+///
+/// New usages of this message as an alternative to ServiceDescriptorProto are
+/// strongly discouraged. This message does not reliability preserve all
+/// information necessary to model the schema and preserve semantics. Instead
+/// make use of FileDescriptorSet which preserves the necessary information.
 class Api extends $pb.GeneratedMessage {
   factory Api({
     $core.String? name,
@@ -37,6 +42,7 @@ class Api extends $pb.GeneratedMessage {
     $1.SourceContext? sourceContext,
     $core.Iterable<Mixin>? mixins,
     $0.Syntax? syntax,
+    $core.String? edition,
   }) {
     final result = create();
     if (name != null) result.name = name;
@@ -46,6 +52,7 @@ class Api extends $pb.GeneratedMessage {
     if (sourceContext != null) result.sourceContext = sourceContext;
     if (mixins != null) result.mixins.addAll(mixins);
     if (syntax != null) result.syntax = syntax;
+    if (edition != null) result.edition = edition;
     return result;
   }
 
@@ -62,6 +69,7 @@ class Api extends $pb.GeneratedMessage {
     ..aOM<$1.SourceContext>(5, _omitFieldNames ? '' : 'sourceContext', subBuilder: $1.SourceContext.create)
     ..pc<Mixin>(6, _omitFieldNames ? '' : 'mixins', $pb.PbFieldType.PM, subBuilder: Mixin.create)
     ..e<$0.Syntax>(7, _omitFieldNames ? '' : 'syntax', $pb.PbFieldType.OE, defaultOrMaker: $0.Syntax.SYNTAX_PROTO2, valueOf: $0.Syntax.valueOf, enumValues: $0.Syntax.values)
+    ..aOS(8, _omitFieldNames ? '' : 'edition')
     ..hasRequiredFields = false
   ;
 
@@ -155,9 +163,24 @@ class Api extends $pb.GeneratedMessage {
   $core.bool hasSyntax() => $_has(6);
   @$pb.TagNumber(7)
   void clearSyntax() => $_clearField(7);
+
+  /// The source edition string, only valid when syntax is SYNTAX_EDITIONS.
+  @$pb.TagNumber(8)
+  $core.String get edition => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set edition($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasEdition() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearEdition() => $_clearField(8);
 }
 
 /// Method represents a method of an API interface.
+///
+/// New usages of this message as an alternative to MethodDescriptorProto are
+/// strongly discouraged. This message does not reliability preserve all
+/// information necessary to model the schema and preserve semantics. Instead
+/// make use of FileDescriptorSet which preserves the necessary information.
 class Method extends $pb.GeneratedMessage {
   factory Method({
     $core.String? name,
@@ -166,7 +189,10 @@ class Method extends $pb.GeneratedMessage {
     $core.String? responseTypeUrl,
     $core.bool? responseStreaming,
     $core.Iterable<$0.Option>? options,
+  @$core.Deprecated('This field is deprecated.')
     $0.Syntax? syntax,
+  @$core.Deprecated('This field is deprecated.')
+    $core.String? edition,
   }) {
     final result = create();
     if (name != null) result.name = name;
@@ -176,6 +202,7 @@ class Method extends $pb.GeneratedMessage {
     if (responseStreaming != null) result.responseStreaming = responseStreaming;
     if (options != null) result.options.addAll(options);
     if (syntax != null) result.syntax = syntax;
+    if (edition != null) result.edition = edition;
     return result;
   }
 
@@ -192,6 +219,7 @@ class Method extends $pb.GeneratedMessage {
     ..aOB(5, _omitFieldNames ? '' : 'responseStreaming')
     ..pc<$0.Option>(6, _omitFieldNames ? '' : 'options', $pb.PbFieldType.PM, subBuilder: $0.Option.create)
     ..e<$0.Syntax>(7, _omitFieldNames ? '' : 'syntax', $pb.PbFieldType.OE, defaultOrMaker: $0.Syntax.SYNTAX_PROTO2, valueOf: $0.Syntax.valueOf, enumValues: $0.Syntax.values)
+    ..aOS(8, _omitFieldNames ? '' : 'edition')
     ..hasRequiredFields = false
   ;
 
@@ -267,14 +295,38 @@ class Method extends $pb.GeneratedMessage {
   $pb.PbList<$0.Option> get options => $_getList(5);
 
   /// The source syntax of this method.
+  ///
+  /// This field should be ignored, instead the syntax should be inherited from
+  /// Api. This is similar to Field and EnumValue.
+  @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(7)
   $0.Syntax get syntax => $_getN(6);
+  @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(7)
   set syntax($0.Syntax value) => $_setField(7, value);
+  @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(7)
   $core.bool hasSyntax() => $_has(6);
+  @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(7)
   void clearSyntax() => $_clearField(7);
+
+  /// The source edition string, only valid when syntax is SYNTAX_EDITIONS.
+  ///
+  /// This field should be ignored, instead the edition should be inherited from
+  /// Api. This is similar to Field and EnumValue.
+  @$core.Deprecated('This field is deprecated.')
+  @$pb.TagNumber(8)
+  $core.String get edition => $_getSZ(7);
+  @$core.Deprecated('This field is deprecated.')
+  @$pb.TagNumber(8)
+  set edition($core.String value) => $_setString(7, value);
+  @$core.Deprecated('This field is deprecated.')
+  @$pb.TagNumber(8)
+  $core.bool hasEdition() => $_has(7);
+  @$core.Deprecated('This field is deprecated.')
+  @$pb.TagNumber(8)
+  void clearEdition() => $_clearField(8);
 }
 
 /// Declares an API Interface to be included in this interface. The including

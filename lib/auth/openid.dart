@@ -4,7 +4,10 @@ import 'package:openid_client/openid_client.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:openid_client/openid_client_io.dart' as io;
 
-Future<Credential> authenticateOIDC(Client client, {List<String> scopes = const []}) async {
+Future<Credential> authenticateOIDC(
+  Client client, {
+  List<String> scopes = const [],
+}) async {
   // create a function to open a browser with an url
   urlLauncher(String url) async {
     var uri = Uri.parse(url);
@@ -34,6 +37,9 @@ Future<Credential> authenticateOIDC(Client client, {List<String> scopes = const 
   return c;
 }
 
-Future<Credential?> getRedirectResult(Client client, {List<String> scopes = const []}) async {
+Future<Credential?> getRedirectResult(
+  Client client, {
+  List<String> scopes = const [],
+}) async {
   return null;
 }

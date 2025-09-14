@@ -55,6 +55,11 @@ dependencies:
   async: ^2.12.0
   file_selector: ^1.0.3
   package_info_plus: ^8.3.0
+  rust_lib_confa:
+    path: rust_builder
+  flutter_rust_bridge: 2.11.1
+  json_serializable: ^6.11.1
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +69,8 @@ dev_dependencies:
   protoc_plugin: ^22.0.1
   go_router_builder: ^3.0.0
   build_verify: ^3.1.0
+  integration_test:
+    sdk: flutter
   # isolate_generator:
   #   path: ../isolate_generator
 

@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [$connectScreenRoute];
 
 RouteBase get $connectScreenRoute => GoRouteData.$route(
   path: '/connect',
-
   factory: _$ConnectScreenRoute._fromState,
 );
 

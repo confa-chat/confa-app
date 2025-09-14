@@ -4,7 +4,11 @@ class LoadingBuilder<T extends Object> extends StatelessWidget {
   final Future<T> future;
   final Widget Function(BuildContext context, T data) builder;
 
-  const LoadingBuilder({super.key, required this.future, required this.builder});
+  const LoadingBuilder({
+    super.key,
+    required this.future,
+    required this.builder,
+  });
 
   @override
   Widget build(BuildContext context) {

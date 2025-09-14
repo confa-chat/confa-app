@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
 import 'package:confa/auth/auth.dart';
 import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
 import 'package:confa/services/connection_manager.dart';
@@ -19,7 +18,7 @@ class ConnectionCubit extends Cubit<ConnectionState> {
 
   // Known Nodes
   final List<NodeInfo> _knownNodes = [
-    // if (kDebugMode) NodeInfo(name: "Local Node", address: Uri.parse("http://localhost:38100")),
+    if (kDebugMode) NodeInfo(name: "Local Node", address: Uri.parse("http://localhost:38100")),
     NodeInfo(name: "Konfach", address: Uri.parse("https://confa-node.konfach.ru")),
   ];
 
@@ -70,7 +69,31 @@ class ConnectionCubit extends Cubit<ConnectionState> {
     }
   }
 
-  Future<void> authenticateWithProvider(AuthProvider provider) async {}
+  Future<void> authenticateWithProvider(AuthProvider provider) async {
+    final versionState = await _hubsManager.checkVersion(_selectedNode.address);
+    final authProviders = await _hubsManager.listAuthProvidersOnHub(_selectedNode.address);
+
+    emit(
+      ConnectionInfoAuthenticationInProgress(
+        knownNodes: _knownNodes,
+        selectedNode: _selectedNode,
+        authProviders: authProviders,
+        versionInfo: versionState,
+      ),
+    );
+
+    final authState = await HubsManager().authOnProvider(_selectedNode.address, provider);
+
+    emit(
+      ConnectionInfoAuthenticated(
+        knownNodes: _knownNodes,
+        selectedNode: _selectedNode,
+        authProviders: authProviders,
+        versionInfo: versionState,
+        authState: authState,
+      ),
+    );
+  }
 
   Future<void> signOut() async {
     _hubsManager.clearSavedAuth(_selectedNode.address);

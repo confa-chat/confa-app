@@ -26,7 +26,11 @@ class UserProfileWidget extends StatelessWidget {
       case UserStatus.idle:
         return Icon(Icons.mode_standby, size: statusSize, color: Colors.orange);
       case UserStatus.doNotDisturb:
-        return Icon(Icons.do_not_disturb_on, size: statusSize, color: Colors.red);
+        return Icon(
+          Icons.do_not_disturb_on,
+          size: statusSize,
+          color: Colors.red,
+        );
       case UserStatus.offline:
         return Icon(Icons.circle, size: statusSize, color: Colors.grey);
     }
@@ -49,7 +53,10 @@ class UserProfileWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: Theme.of(context).highlightColor,
-                    child: Icon(Icons.person, color: Theme.of(context).primaryColor),
+                    child: Icon(
+                      Icons.person,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   _getStatus(),
                 ],

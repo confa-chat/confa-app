@@ -25,6 +25,7 @@ const Api$json = {
     {'1': 'source_context', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.SourceContext', '10': 'sourceContext'},
     {'1': 'mixins', '3': 6, '4': 3, '5': 11, '6': '.google.protobuf.Mixin', '10': 'mixins'},
     {'1': 'syntax', '3': 7, '4': 1, '5': 14, '6': '.google.protobuf.Syntax', '10': 'syntax'},
+    {'1': 'edition', '3': 8, '4': 1, '5': 9, '10': 'edition'},
   ],
 };
 
@@ -35,7 +36,8 @@ final $typed_data.Uint8List apiDescriptor = $convert.base64Decode(
     'Lk9wdGlvblIHb3B0aW9ucxIYCgd2ZXJzaW9uGAQgASgJUgd2ZXJzaW9uEkUKDnNvdXJjZV9jb2'
     '50ZXh0GAUgASgLMh4uZ29vZ2xlLnByb3RvYnVmLlNvdXJjZUNvbnRleHRSDXNvdXJjZUNvbnRl'
     'eHQSLgoGbWl4aW5zGAYgAygLMhYuZ29vZ2xlLnByb3RvYnVmLk1peGluUgZtaXhpbnMSLwoGc3'
-    'ludGF4GAcgASgOMhcuZ29vZ2xlLnByb3RvYnVmLlN5bnRheFIGc3ludGF4');
+    'ludGF4GAcgASgOMhcuZ29vZ2xlLnByb3RvYnVmLlN5bnRheFIGc3ludGF4EhgKB2VkaXRpb24Y'
+    'CCABKAlSB2VkaXRpb24=');
 
 @$core.Deprecated('Use methodDescriptor instead')
 const Method$json = {
@@ -47,7 +49,23 @@ const Method$json = {
     {'1': 'response_type_url', '3': 4, '4': 1, '5': 9, '10': 'responseTypeUrl'},
     {'1': 'response_streaming', '3': 5, '4': 1, '5': 8, '10': 'responseStreaming'},
     {'1': 'options', '3': 6, '4': 3, '5': 11, '6': '.google.protobuf.Option', '10': 'options'},
-    {'1': 'syntax', '3': 7, '4': 1, '5': 14, '6': '.google.protobuf.Syntax', '10': 'syntax'},
+    {
+      '1': 'syntax',
+      '3': 7,
+      '4': 1,
+      '5': 14,
+      '6': '.google.protobuf.Syntax',
+      '8': {'3': true},
+      '10': 'syntax',
+    },
+    {
+      '1': 'edition',
+      '3': 8,
+      '4': 1,
+      '5': 9,
+      '8': {'3': true},
+      '10': 'edition',
+    },
   ],
 };
 
@@ -57,8 +75,9 @@ final $typed_data.Uint8List methodDescriptor = $convert.base64Decode(
     '5yZXF1ZXN0VHlwZVVybBIrChFyZXF1ZXN0X3N0cmVhbWluZxgDIAEoCFIQcmVxdWVzdFN0cmVh'
     'bWluZxIqChFyZXNwb25zZV90eXBlX3VybBgEIAEoCVIPcmVzcG9uc2VUeXBlVXJsEi0KEnJlc3'
     'BvbnNlX3N0cmVhbWluZxgFIAEoCFIRcmVzcG9uc2VTdHJlYW1pbmcSMQoHb3B0aW9ucxgGIAMo'
-    'CzIXLmdvb2dsZS5wcm90b2J1Zi5PcHRpb25SB29wdGlvbnMSLwoGc3ludGF4GAcgASgOMhcuZ2'
-    '9vZ2xlLnByb3RvYnVmLlN5bnRheFIGc3ludGF4');
+    'CzIXLmdvb2dsZS5wcm90b2J1Zi5PcHRpb25SB29wdGlvbnMSMwoGc3ludGF4GAcgASgOMhcuZ2'
+    '9vZ2xlLnByb3RvYnVmLlN5bnRheEICGAFSBnN5bnRheBIcCgdlZGl0aW9uGAggASgJQgIYAVIH'
+    'ZWRpdGlvbg==');
 
 @$core.Deprecated('Use mixinDescriptor instead')
 const Mixin$json = {

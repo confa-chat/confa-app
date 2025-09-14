@@ -1,23 +1,22 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
-import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/node/v1/service.pb.dart';
+import 'package:confa/gen/proto/confa/voice/v1/voice_relay.pbgrpc.dart';
 import 'package:confa/services/connection_manager.dart';
-import 'package:confa/voice/listener.dart';
-import 'package:confa/voice/recorder.dart';
 import 'package:meta/meta.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:confa/src/rust/api/voice.dart' as libconfa_voice;
 
 part 'voice_event.dart';
 part 'voice_state.dart';
 
 class VoiceBloc extends Bloc<VoiceEvent, VoiceState> {
-  StreamSubscription? _voiceStreamSubscription;
   HubConnection? _hubConn;
-  VoiceRelayServiceClient? _voiceRelay;
 
-  (VoiceChatRecorder, Future<void>)? _recorder;
-  final Map<String, (VoiceChatListener, Future<void>)> _listeners = {};
+  // this object need to be kept to maintain the voice channel
+  // ignore: unused_field
+  libconfa_voice.VoiceConnectionManager? _voiceConnection;
 
   VoiceBloc() : super(VoiceInitial()) {
     on<JoinVoiceChannel>(_onJoinVoiceChannel);
@@ -33,61 +32,23 @@ class VoiceBloc extends Bloc<VoiceEvent, VoiceState> {
         await Permission.microphone.request();
       }
 
-      await _voiceStreamSubscription?.cancel();
-
-      _hubConn = event.conn;
-      _voiceRelay = await event.conn.voiceRelayClient(event.voiceRelayId);
-      final recorder = VoiceChatRecorder(
-        _voiceRelay!,
-        event.serverId,
-        event.channelId,
-        event.conn.usersRepo.currentUserId,
+      final resp = await event.conn.nodeClient.listVoiceRelays(ListVoiceRelaysRequest());
+      final voiceRelay = resp.voiceRelays.firstWhere(
+        (relay) => relay.id == event.voiceRelayId,
+        orElse: () => throw Exception('Voice relay not found'),
       );
 
-      _recorder = (recorder, recorder.record());
+      final voiceConnection = await libconfa_voice.VoiceConnectionManager.newInstance(
+        relayAddress: "http://${voiceRelay.address}",
+      );
 
-      _voiceStreamSubscription = _voiceRelay!
-          .joinChannel(
-            JoinChannelRequest(
-              serverId: event.serverId,
-              channelId: event.channelId,
-              userId: event.conn.usersRepo.currentUserId,
-            ),
-          )
-          .listen(
-            (resp) {
-              add(
-                VoiceChannelUpdateReceived(
-                  resp.usersState,
-                  serverId: event.serverId,
-                  channelId: event.channelId,
-                  voiceRelayId: event.voiceRelayId,
-                ),
-              );
+      await voiceConnection.voiceJoin(
+        serverId: event.serverId,
+        channelId: event.channelId,
+        userId: event.conn.usersRepo.currentUserId,
+      );
 
-              for (final userID in resp.usersState.userIds) {
-                if (userID == event.conn.usersRepo.currentUserId) {
-                  continue;
-                }
-
-                if (!_listeners.containsKey(userID)) {
-                  final listener = VoiceChatListener(
-                    _voiceRelay!,
-                    event.serverId,
-                    event.channelId,
-                    userID,
-                  );
-                  _listeners[event.conn.usersRepo.currentUserId] = (listener, listener.listen());
-                }
-              }
-            },
-            onError: (error) {
-              add(VoiceServerError(error.toString()));
-            },
-            onDone: () {
-              add(VoiceServerDisconnect());
-            },
-          );
+      _voiceConnection = voiceConnection;
     } catch (e) {
       emit(VoiceError(e.toString()));
     }
@@ -129,31 +90,15 @@ class VoiceBloc extends Bloc<VoiceEvent, VoiceState> {
   }
 
   Future<void> _onLeaveVoiceChannel(LeaveVoiceChannel event, Emitter<VoiceState> emit) async {
-    // Future.wait<void>([_recorder!.stop(), _listener!.stop(), _soundFuture!.timeout(Duration(seconds: 3))]);
-
-    if (_recorder != null) {
-      await Future.wait([_recorder!.$1.stop(), _recorder!.$2]);
-      _recorder = null;
-    }
-
-    for (final listener in _listeners.entries) {
-      await Future.wait([listener.value.$1.stop(), listener.value.$2]);
-    }
-
-    _listeners.clear();
-
-    await _voiceStreamSubscription?.cancel();
-    _voiceStreamSubscription = null;
-    // TODO currently not implemented await _voiceRelay!.leaveChannel();
-    _voiceRelay = null;
+    _voiceConnection = null;
     _hubConn = null;
     emit(VoiceDisconnected());
   }
 
   @override
   Future<void> close() {
-    _voiceStreamSubscription?.cancel();
-    // _voiceRelay?.leaveChannel();
+    _voiceConnection = null;
+    _hubConn = null;
     return super.close();
   }
 }

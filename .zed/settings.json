@@ -1,0 +1,10 @@
+{
+  "lsp": {
+    "dart": {
+      "binary": {
+        "path": "/usr/bin/fvm",
+        "arguments": ["dart", "language-server", "--protocol=lsp"]
+      }
+    }
+  }
+}

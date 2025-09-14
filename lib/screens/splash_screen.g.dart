@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [$splashScreenRoute];
 
 RouteBase get $splashScreenRoute => GoRouteData.$route(
   path: '/splash',
-
   factory: _$SplashScreenRoute._fromState,
 );
 

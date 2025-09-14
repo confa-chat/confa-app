@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [$updateScreenRoute];
 
 RouteBase get $updateScreenRoute => GoRouteData.$route(
   path: '/update',
-
   factory: _$UpdateScreenRoute._fromState,
 );
 

@@ -17,7 +17,11 @@ class TextChatWidget extends StatefulWidget {
   final String serverId;
   final String channelId;
 
-  const TextChatWidget({super.key, required this.serverId, required this.channelId});
+  const TextChatWidget({
+    super.key,
+    required this.serverId,
+    required this.channelId,
+  });
 
   @override
   State<TextChatWidget> createState() => _TextChatWidgetState();
@@ -51,7 +55,10 @@ class _TextChatWidgetState extends State<TextChatWidget> {
 
     final msgs = await context.hub.chatClient.getMessageHistory(
       GetMessageHistoryRequest(
-        channel: TextChannelRef(channelId: widget.channelId, serverId: widget.serverId),
+        channel: TextChannelRef(
+          channelId: widget.channelId,
+          serverId: widget.serverId,
+        ),
         from: lastMessageTimestamp,
         count: 20,
       ),
@@ -76,14 +83,19 @@ class _TextChatWidgetState extends State<TextChatWidget> {
   void initState() {
     final hub = context.hub;
 
-    final channelRef = TextChannelRef(channelId: widget.channelId, serverId: widget.serverId);
+    final channelRef = TextChannelRef(
+      channelId: widget.channelId,
+      serverId: widget.serverId,
+    );
 
     newMessageHandler(StreamNewMessagesResponse event) async {
       final msg = await hub.chatClient.getMessage(
         GetMessageRequest(channel: channelRef, messageId: event.messageId),
       );
 
-      _users[msg.message.senderId] ??= await hub.usersRepo.getUser(msg.message.senderId);
+      _users[msg.message.senderId] ??= await hub.usersRepo.getUser(
+        msg.message.senderId,
+      );
 
       setState(() {
         _messages.insert(0, msg.message);
@@ -138,7 +150,10 @@ class _TextChatWidgetState extends State<TextChatWidget> {
           send: (text, attachmentIds) async {
             context.hub.chatClient.sendMessage(
               SendMessageRequest(
-                channel: TextChannelRef(channelId: widget.channelId, serverId: widget.serverId),
+                channel: TextChannelRef(
+                  channelId: widget.channelId,
+                  serverId: widget.serverId,
+                ),
                 content: text,
                 attachmentIds: attachmentIds,
               ),
@@ -208,7 +223,9 @@ class _MessageListTileState extends State<MessageListTile> {
         if (attachmentsList.images.isNotEmpty)
           Wrap(
             children: attachmentsList.images.map((attachment) {
-              final imageUrl = context.hub.baseUri.replace(path: attachment.url).toString();
+              final imageUrl = context.hub.baseUri
+                  .replace(path: attachment.url)
+                  .toString();
 
               return ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 300),
@@ -263,7 +280,11 @@ class MessageInput extends StatefulWidget {
   final Future<void> Function(String text, List<String> attachmentIds) send;
   final HubConnection hubConnection;
 
-  const MessageInput({super.key, required this.send, required this.hubConnection});
+  const MessageInput({
+    super.key,
+    required this.send,
+    required this.hubConnection,
+  });
 
   @override
   State<MessageInput> createState() => _MessageInputState();
@@ -311,7 +332,9 @@ class _MessageInputState extends State<MessageInput> {
     }
   }
 
-  Stream<UploadAttachmentRequest> _fileUploadStream(file_selector.XFile file) async* {
+  Stream<UploadAttachmentRequest> _fileUploadStream(
+    file_selector.XFile file,
+  ) async* {
     yield UploadAttachmentRequest(info: AttachmentUploadInfo(name: file.name));
     await for (final chunk in file.openRead().chunked(1024 * 1024)) {
       yield UploadAttachmentRequest(data: chunk);
@@ -327,7 +350,9 @@ class _MessageInputState extends State<MessageInput> {
 
     try {
       for (final file in _selectedFiles) {
-        final response = await context.hub.chatClient.uploadAttachment(_fileUploadStream(file));
+        final response = await context.hub.chatClient.uploadAttachment(
+          _fileUploadStream(file),
+        );
         _uploadedAttachmentIds.add(response.attachmentId);
       }
     } catch (e) {
@@ -420,7 +445,9 @@ class _MessageInputState extends State<MessageInput> {
                 ),
               ),
               IconButton(
-                icon: _isUploading ? const CircularProgressIndicator() : const Icon(Icons.send),
+                icon: _isUploading
+                    ? const CircularProgressIndicator()
+                    : const Icon(Icons.send),
                 onPressed: _isUploading ? null : _sendMessage,
                 tooltip: 'Send message',
               ),

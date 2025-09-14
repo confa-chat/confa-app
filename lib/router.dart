@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:confa/screens/connect_screen.dart';
 import 'package:confa/screens/server_screen.dart';
 import 'package:confa/screens/server_selection_screen.dart';
-import 'package:confa/services/shared_storage.dart';
 
 /// Combines all route definitions from across the app
 List<RouteBase> get $appRoutes => [
@@ -33,8 +32,11 @@ GoRouter appRouter(String initialRoute) => GoRouter(
 class SaveLastRouteObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (route is ServerScreenRoute) {
-      SharedStorage.instance.saveLastRoute(route.settings.name!);
-    }
+    // if (route.settings is ServerScreenRoute) {
+    //   final ServerScreenRoute serverScreenRoute = route.settings as ServerScreenRoute;
+    //   SharedStorage.instance.saveLastRoute(
+    //     SavedRoute(hubID: serverScreenRoute.hubUrl, serverID: serverScreenRoute.serverID),
+    //   );
+    // }
   }
 }

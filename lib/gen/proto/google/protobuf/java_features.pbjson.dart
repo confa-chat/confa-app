@@ -88,7 +88,7 @@ const JavaFeatures$json = {
       '5': 14,
       '6': '.pb.JavaFeatures.NestInFileClassFeature.NestInFileClass',
       '8': {
-        '17': 2,
+        '17': 1,
         '19': [3, 6, 8],
         '20': [
           {'2': 'LEGACY', '3': 900},
@@ -101,6 +101,9 @@ const JavaFeatures$json = {
   ],
   '3': [JavaFeatures_NestInFileClassFeature$json],
   '4': [JavaFeatures_Utf8Validation$json],
+  '9': [
+    {'1': 6, '2': 7},
+  ],
 };
 
 @$core.Deprecated('Use javaFeaturesDescriptor instead')
@@ -156,10 +159,10 @@ final $typed_data.Uint8List javaFeaturesDescriptor = $convert.base64Decode(
     'ZF9vdXRlcl9jbGFzc25hbWVfZGVmYXVsdBgEIAEoCEIoiAEBmAEBogEJEgR0cnVlGIQHogEKEg'
     'VmYWxzZRjpB7IBBgjpByDpB1IbdXNlT2xkT3V0ZXJDbGFzc25hbWVEZWZhdWx0EpABChJuZXN0'
     'X2luX2ZpbGVfY2xhc3MYBSABKA4yNy5wYi5KYXZhRmVhdHVyZXMuTmVzdEluRmlsZUNsYXNzRm'
-    'VhdHVyZS5OZXN0SW5GaWxlQ2xhc3NCKogBApgBA5gBBpgBCKIBCxIGTEVHQUNZGIQHogEHEgJO'
+    'VhdHVyZS5OZXN0SW5GaWxlQ2xhc3NCKogBAZgBA5gBBpgBCKIBCxIGTEVHQUNZGIQHogEHEgJO'
     'TxjpB7IBAwjpB1IPbmVzdEluRmlsZUNsYXNzGnwKFk5lc3RJbkZpbGVDbGFzc0ZlYXR1cmUiWA'
     'oPTmVzdEluRmlsZUNsYXNzEh4KGk5FU1RfSU5fRklMRV9DTEFTU19VTktOT1dOEAASBgoCTk8Q'
     'ARIHCgNZRVMQAhIUCgZMRUdBQ1kQAxoIIgYI6Qcg6QdKCAgBEICAgIACIkYKDlV0ZjhWYWxpZG'
     'F0aW9uEhsKF1VURjhfVkFMSURBVElPTl9VTktOT1dOEAASCwoHREVGQVVMVBABEgoKBlZFUklG'
-    'WRAC');
+    'WRACSgQIBhAH');
 

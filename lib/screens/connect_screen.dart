@@ -33,7 +33,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize the connection sequence
+    // FIXME connect to first node for testing
     context.read<ConnectionCubit>().connectToNode();
   }
 

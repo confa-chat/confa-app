@@ -1,3 +1,4 @@
+import 'package:confa/services/shared_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:confa/gen/proto/confa/channel/v1/channels.pb.dart';
 import 'package:confa/gen/proto/confa/server/v1/service.pb.dart';
@@ -20,10 +21,15 @@ class ServerScreenRoute extends GoRouteData with _$ServerScreenRoute {
 
   const ServerScreenRoute({required this.hubUrl, required this.serverID});
 
+  Future<HubConnection> loadServer(HubsManager manager) async {
+    await SharedStorage.instance.saveLastRoute(SavedRoute(hubID: hubUrl, serverID: serverID));
+    return await manager.getHubConnection(hubUrl);
+  }
+
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return LoadingBuilder(
-      future: context.manager.getHubConnection(hubUrl),
+      future: loadServer(context.manager),
       builder: (context, hub) {
         return Provider.value(
           value: hub,

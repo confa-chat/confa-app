@@ -10,13 +10,12 @@ List<RouteBase> get $appRoutes => [$serverScreenRoute];
 
 RouteBase get $serverScreenRoute => GoRouteData.$route(
   path: '/hub/:hubUrl/server/:serverID',
-
   factory: _$ServerScreenRoute._fromState,
 );
 
 mixin _$ServerScreenRoute on GoRouteData {
   static ServerScreenRoute _fromState(GoRouterState state) => ServerScreenRoute(
-    hubUrl: Uri.parse(state.pathParameters['hubUrl']!)!,
+    hubUrl: Uri.parse(state.pathParameters['hubUrl']!),
     serverID: state.pathParameters['serverID']!,
   );
 

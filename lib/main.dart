@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:confa/screens/server_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:confa/bloc/connection_cubit.dart';
@@ -9,6 +10,8 @@ import 'package:confa/services/shared_storage.dart';
 import 'package:confa/theme.dart';
 import 'package:l/l.dart';
 import 'package:provider/provider.dart';
+import 'package:confa/src/rust/frb_generated.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main([List<String>? args]) {
   // final logFile = File('log.txt').openWrite();
@@ -29,6 +32,8 @@ void main([List<String>? args]) {
 }
 
 void run() async {
+  await RustLib.init();
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await SharedStorage.init();
@@ -38,14 +43,15 @@ void run() async {
   var initialRoute = '/connect'; // Default route
 
   final lastRoute = SharedStorage.instance.getLastRoute();
-  if (lastRoute != null && !lastRoute.contains(':hubID')) {
-    initialRoute = lastRoute;
+  if (lastRoute != null && lastRoute.serverID != null) {
+    initialRoute = ServerScreenRoute(
+      hubUrl: lastRoute.hubID,
+      serverID: lastRoute.serverID!,
+    ).location;
   }
 
   runApp(ConfaApp(hubsManager: hubsManager, initialRoute: initialRoute));
 }
-
-void runWithLogger(Widget app) {}
 
 class ConfaApp extends StatefulWidget {
   final String initialRoute;

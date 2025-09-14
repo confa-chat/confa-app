@@ -8,7 +8,7 @@ import 'package:confa/gen/proto/confa/chat/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
 import 'package:confa/gen/proto/confa/node/v1/service.pbgrpc.dart';
 import 'package:confa/gen/proto/confa/server/v1/service.pbgrpc.dart';
-import 'package:confa/gen/proto/confa/voice_relay/v1/service.pbgrpc.dart';
+import 'package:confa/gen/proto/confa/voice/v1/voice_relay.pbgrpc.dart';
 import 'package:confa/repo/user.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -42,15 +42,12 @@ class HubsManager {
   }
 
   Future<void> clearSavedAuth(Uri hub) async {
-    final providers = await listAuthProvidersOnHub(hub);
-    final authState = await AuthState.tryLoadSavedAuth(hub, providers);
+    AuthState.removeSavedAuth(hub);
   }
 
   Future<AuthState> authOnProvider(Uri hub, AuthProvider provider) async {
     final authState = await AuthState.authenticate(hub, provider);
-
     await connect(hub, authState);
-
     return authState;
   }
 

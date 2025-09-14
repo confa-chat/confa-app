@@ -19,13 +19,19 @@ class UsersRepo {
     ServerServiceClient serverClient,
   ) async {
     final currentUserResp = await nodeClient.currentUser(CurrentUserRequest());
-    final repo = UsersRepo._create(nodeClient, serverClient, currentUserResp.user.id);
+    final repo = UsersRepo._create(
+      nodeClient,
+      serverClient,
+      currentUserResp.user.id,
+    );
     await repo.currentUser();
     return repo;
   }
 
   Future<void> loadServerUsers(String serverId) async {
-    final resp = await serverClient.listUsers(ListUsersRequest(serverId: serverId));
+    final resp = await serverClient.listUsers(
+      ListUsersRequest(serverId: serverId),
+    );
 
     for (final user in resp.users) {
       _cache[user.id] = user;

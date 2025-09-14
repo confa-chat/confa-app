@@ -8,11 +8,12 @@ plugins:
     opt: grpc
 inputs:
   - module: buf.build/protocolbuffers/wellknowntypes
+  - git_repo: https://github.com/confa-chat/proto
 
   # - git_repo: https://github.com/confa-chat/hub
   # subdir: proto
-  - directory: ../confa-node/proto
+  # - directory: ../confa-node/proto
 
   # - git_repo: https://github.com/confa-chat/voice-relay
   # subdir: proto
-  - directory: ../confa-voice-relay/proto
+  # - directory: ../confa-voice-relay/proto

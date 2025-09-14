@@ -23,7 +23,8 @@ final class ConnectionInfoLoaded extends ConnectionState {
   });
 }
 
-final class ConnectionInfoAuthenticationInProgress extends ConnectionInfoLoaded {
+final class ConnectionInfoAuthenticationInProgress
+    extends ConnectionInfoLoaded {
   ConnectionInfoAuthenticationInProgress({
     required super.knownNodes,
     required super.selectedNode,

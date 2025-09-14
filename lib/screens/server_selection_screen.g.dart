@@ -10,14 +10,13 @@ List<RouteBase> get $appRoutes => [$serverSelectionScreenRoute];
 
 RouteBase get $serverSelectionScreenRoute => GoRouteData.$route(
   path: '/hub/:hubUrl/servers',
-
   factory: _$ServerSelectionScreenRoute._fromState,
 );
 
 mixin _$ServerSelectionScreenRoute on GoRouteData {
   static ServerSelectionScreenRoute _fromState(GoRouterState state) =>
       ServerSelectionScreenRoute(
-        hubUrl: Uri.parse(state.pathParameters['hubUrl']!)!,
+        hubUrl: Uri.parse(state.pathParameters['hubUrl']!),
       );
 
   ServerSelectionScreenRoute get _self => this as ServerSelectionScreenRoute;

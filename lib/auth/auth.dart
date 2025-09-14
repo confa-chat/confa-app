@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:confa/gen/proto/confa/node/v1/auth_provider.pb.dart';
 import 'package:l/l.dart';
@@ -38,8 +40,9 @@ class AuthState {
   final Uri hub;
   final String providerName;
   final Credential _credential;
+  final StreamSubscription<TokenResponse> _updateController;
 
-  AuthState._(this.hub, this.providerName, this._credential);
+  AuthState._(this.hub, this.providerName, this._credential, this._updateController);
 
   static Future<AuthState?> tryLoadSavedAuth(Uri hub, List<AuthProvider> providers) async {
     final savedAuthJson = await SharedPreferencesAsync().getString(_hubAuthKey(hub));
@@ -57,11 +60,35 @@ class AuthState {
       return null;
     }
 
-    return AuthState._(hub, savedHubAuth.providerName, savedHubAuth.credential);
+    await for (final exception in savedHubAuth.credential.validateToken()) {
+      l.w('Saved credential is invalid: $exception');
+      return null;
+    }
+
+    final updateController = savedHubAuth.credential.onTokenChanged.listen((_) async {
+      await _staticSaveAuth(hub, savedHubAuth.providerName, savedHubAuth.credential);
+    });
+
+    final authState = AuthState._(
+      hub,
+      savedHubAuth.providerName,
+      savedHubAuth.credential,
+      updateController,
+    );
+    await authState._saveAuth();
+    return authState;
+  }
+
+  static Future<void> removeSavedAuth(Uri hub) async {
+    await SharedPreferencesAsync().remove(_hubAuthKey(hub));
   }
 
   Future<void> _saveAuth() async {
-    final saved = _SavedAuth(providerName: providerName, credential: _credential);
+    await _staticSaveAuth(hub, providerName, _credential);
+  }
+
+  static Future<void> _staticSaveAuth(Uri hub, String providerName, Credential credential) async {
+    final saved = _SavedAuth(providerName: providerName, credential: credential);
     await SharedPreferencesAsync().setString(_hubAuthKey(hub), jsonEncode(saved.toJson()));
   }
 
@@ -80,7 +107,11 @@ class AuthState {
         ),
       );
 
-      final auth = AuthState._(hub, authProvider.name, creds);
+      final updateController = creds.onTokenChanged.listen((_) async {
+        await _staticSaveAuth(hub, authProvider.name, creds);
+      });
+
+      final auth = AuthState._(hub, authProvider.name, creds, updateController);
       await auth._saveAuth();
       return auth;
     }
@@ -105,6 +136,7 @@ class AuthState {
   }
 
   Future<void> logout() async {
+    await _updateController.cancel();
     await _clearSavedAuth();
   }
 
