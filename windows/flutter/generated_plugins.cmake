@@ -11,7 +11,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
   rust_lib_confa
-  streaming_sound
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
