@@ -23,6 +23,8 @@ linter:
     - prefer_relative_imports
     - directives_ordering
 
+formatter:
+  page_width: 80
 # analyzer:
 #   exclude:
 #     - path/to/excluded/files/**

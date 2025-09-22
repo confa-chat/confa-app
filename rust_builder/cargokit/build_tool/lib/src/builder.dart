@@ -145,6 +145,7 @@ class RustBuilder {
         'run',
         _toolchain,
         'cargo',
+        if (environment.isAndroid) 'ndk',
         'build',
         ...extraArgs,
         '--manifest-path',
@@ -158,6 +159,7 @@ class RustBuilder {
         environment.targetTempDir,
       ],
       environment: await _buildEnvironment(),
+      workingDirectory: environment.manifestDir,
     );
     return path.join(
       environment.targetTempDir,
