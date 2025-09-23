@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:confa/auth/auth.dart';
@@ -18,7 +20,8 @@ class ConnectionCubit extends Cubit<ConnectionState> {
 
   // Known Nodes
   final List<NodeInfo> _knownNodes = [
-    if (kDebugMode) NodeInfo(name: "Local Node", address: Uri.parse("http://localhost:38100")),
+    if (kDebugMode && Platform.isLinux)
+      NodeInfo(name: "Local Node", address: Uri.parse("http://localhost:38100")),
     NodeInfo(name: "Konfach", address: Uri.parse("https://confa-node.konfach.ru")),
   ];
 
