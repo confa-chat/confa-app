@@ -60,6 +60,8 @@ class AuthState {
       return null;
     }
 
+    await savedHubAuth.credential.getTokenResponse(true);
+
     await for (final exception in savedHubAuth.credential.validateToken()) {
       l.w('Saved credential is invalid: $exception');
       return null;
