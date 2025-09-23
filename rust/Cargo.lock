@@ -882,14 +882,14 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 
 [[package]]
 name = "libc"
-version = "0.2.175"
+version = "0.2.176"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6a82ae493e598baaea5209805c49bbf2ea7de956d50d7da0da1164f9c6d28543"
+checksum = "58f929b4d672ea937a23a1ab494143d968337a5f47e56d0815df1e0890ddf174"
 
 [[package]]
 name = "libconfa"
 version = "0.1.0"
-source = "git+https://github.com/confa-chat/libconfa.git#9a2c26c842c010a4208fffbd55241baf114d6b18"
+source = "git+https://github.com/confa-chat/libconfa.git#954911faca0c08fb025fab6568b5c5085146c1af"
 dependencies = [
  "anyhow",
  "async-broadcast",
@@ -1035,7 +1035,7 @@ dependencies = [
 [[package]]
 name = "om-fork-ep-miniaudio-sys"
 version = "2.6.2"
-source = "git+https://github.com/royalcat/miniaudio-rs.git#bc15e47e48c0776e88ff7486c22a017c44505f67"
+source = "git+https://github.com/royalcat/miniaudio-rs.git#90edde8593016d798eaf7088d8fa62280fd2bef2"
 dependencies = [
  "bindgen",
  "bitflags",
@@ -1046,7 +1046,7 @@ dependencies = [
 [[package]]
 name = "om-fork-miniaudio"
 version = "0.12.2"
-source = "git+https://github.com/royalcat/miniaudio-rs.git#bc15e47e48c0776e88ff7486c22a017c44505f67"
+source = "git+https://github.com/royalcat/miniaudio-rs.git#90edde8593016d798eaf7088d8fa62280fd2bef2"
 dependencies = [
  "bitflags",
  "om-fork-ep-miniaudio-sys",
@@ -1494,9 +1494,9 @@ checksum = "0bf256ce5efdfa370213c1dabab5935a12e49f2c58d15e9eac2870d3b4f27263"
 
 [[package]]
 name = "tempfile"
-version = "3.22.0"
+version = "3.23.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84fa4d11fadde498443cca10fd3ac23c951f0dc59e080e9f4b93d4df4e4eea53"
+checksum = "2d31c77bdf42a745371d260a26ca7163f1e0924b64afa0b688e61b5a9fa02f16"
 dependencies = [
  "fastrand",
  "getrandom",
